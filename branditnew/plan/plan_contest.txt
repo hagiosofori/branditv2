@@ -1,0 +1,102 @@
+design for the contests feature of the site.
+
+* models identified.
+: user [from django]
+    * fields
+    : firstname [found within django auth] 
+    : lastname [found within django auth]
+    : username [found within django auth]
+    : email [found within django auth]
+    : hashed password [found within django auth]
+    : is_active [for soft-delete].
+    : is_superuser
+    : last_login []
+    : date_joined [handled by default by django]
+
+
+    * methods/attributes
+    : create_user(username, email=None, password=None, **extra_fields) -> creates, saves and returns a user.
+    : authenticate(request, username=None, password=None, **kwargs)
+    : is_authenticated
+    : username_validator
+    : get_username()
+    : get_full_name()
+    : get_short_name() -> returns the first name only
+    : set_password(raw_password) -> takes care of the hashing. if left blank, you'll never be able to login with this user. unless pasword is changed
+    : check_password(raw_password)
+    : email_user(subject, message, from_email=None, **kwargs) -> sends email to the user.
+    : create_superuser(username, email, password, **extra_fields)
+
+    * utility functions
+    : get_user(request) returns the user model instance associated with the request's session.
+    : 
+
+: users
+    : one-to-one link to user's table
+    : user_type [1: admin, 2: client, 3: brandlancer]
+    : tel
+    : activation key
+    : activation_status
+    : points
+    : skills
+    : profile_img
+    : address
+    : bio
+    : date_of_birth
+    : how_found_us
+    : points
+    : created_at = models.DateTimeField(auto_now_add=True)
+    : updated_at = models.DateTimeField(auto_now=True)
+    
+
+
+: contests
+    : client.
+    : title
+    : about
+    : prize.
+    : end_date
+    : is_paid_for
+    : category
+    : top
+    : hidden
+    : nda
+    : seal
+    : cost
+    : files
+    : created_at
+    : updated_at
+    : closed
+    : verified
+
+
+: category
+    : name
+    : prize_lower_limit
+    : parent_category
+
+: skills
+    : name
+
+
+: user_type
+    : name
+    : type_id
+
+
+* features and their design
+: sign up [as either brandlancer or client]
+    : clicking on the sign up/Register link takes you to the form for filling your details to sign up.
+    : on submitting, you're taken to your dashboard, an email is sent for you to click and validate.
+    : until you validate, it should show on your dashboard that you've not validated.
+    
+: create contest.
+: ability to select add-on services.
+: save a contest as draft for later editing.
+: edit/delete a contest before checkout.
+: display price of total cost close to submit button
+: latest contest added for approval to admin's panel
+: allow for comments from brandlancer [approved by admin]
+: submission of design by brandlancers.
+: allow client to select [mark] one design as winner and edit request.
+: winning design display as portfolion on brandlancer's dashboard.

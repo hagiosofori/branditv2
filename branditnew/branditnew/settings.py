@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #brandit apps
+    'branditnew.contests',
+
+    #django installed
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
