@@ -34,7 +34,7 @@ design for the contests feature of the site.
 : users
     : one-to-one link to user's table
     : user_type [1: admin, 2: client, 3: brandlancer]
-    : tel
+    : tel -> numbers, can be null, 
     : activation key
     : activation_status
     : points
@@ -44,7 +44,6 @@ design for the contests feature of the site.
     : bio
     : date_of_birth
     : how_found_us
-    : points
     : created_at = models.DateTimeField(auto_now_add=True)
     : updated_at = models.DateTimeField(auto_now=True)
     
@@ -89,7 +88,9 @@ design for the contests feature of the site.
     : clicking on the sign up/Register link takes you to the form for filling your details to sign up.
     : on submitting, you're taken to your dashboard, an email is sent for you to click and validate.
     : until you validate, it should show on your dashboard that you've not validated.
-    
+
+: login [django has a user login form]
+
 : create contest.
 : ability to select add-on services.
 : save a contest as draft for later editing.
