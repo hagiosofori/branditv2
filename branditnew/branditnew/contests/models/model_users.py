@@ -16,6 +16,7 @@ class Skills(models.Model):
         ['photoshop', 'Photoshop'],
         ['coralDraw', 'Coral Draw'],
     ]
+
     name = models.CharField(max_length=100, choices=SKILLS_CHOICES, blank=False, null=False)
 
 
@@ -38,7 +39,7 @@ class Profile(models.Model):
 
 
 
-    user = models.OneToOneField(User, 
+    user = models.OneToOneField(User,
     on_delete=models.CASCADE)     #using django's built-in user class, along with our extra fields in this class
     user_type = models.CharField(choices=USER_TYPE_CHOICES, max_length=6, default=CLIENT, blank=False, null=False) #usertype, either admin, client or brandlancer
     telephone = models.CharField #user's telephone number
@@ -58,13 +59,13 @@ class Profile(models.Model):
 
     
     def __str__(self):
-        return self.user.fullname()
+        return self.user.get_full_name()
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
        Profile.objects.create(user=instance)
-        
+     
     
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

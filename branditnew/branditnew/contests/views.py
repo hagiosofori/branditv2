@@ -9,4 +9,4 @@ def index(request):
 
 
 def signup(request):
-    
+    return ''

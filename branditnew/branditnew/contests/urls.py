@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^$', views.index, name='contest-index'),
 
     url(r'^signup/', views.signup, name='signup'),
-    
+
 ]
