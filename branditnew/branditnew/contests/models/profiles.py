@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from . import skills
 
 class Skills(models.Model):
     class Meta:
@@ -39,14 +39,13 @@ class Profile(models.Model):
 
 
 
-    user = models.OneToOneField(User,
-    on_delete=models.CASCADE)     #using django's built-in user class, along with our extra fields in this class
+    user = models.OneToOneField(User, on_delete=models.CASCADE)     #using django's built-in user class, along with our extra fields in this class
     user_type = models.CharField(choices=USER_TYPE_CHOICES, max_length=6, default=CLIENT, blank=False, null=False) #usertype, either admin, client or brandlancer
     telephone = models.CharField #user's telephone number
     activation_key = models.CharField(max_length=50)
     is_activated = models.BooleanField(default=False) #value representing whether the account is activated or not
     points = models.DecimalField(max_digits=10000, decimal_places=0)
-    skills = models.ForeignKey('Skills', on_delete='SET_NULL')
+    skills = models.ForeignKey(Skills, on_delete=models.DO_NOTHING)
     profile_image = models.ImageField(upload_to='uploads/profile_images/%Y/%m/%d')
     address = models.CharField(max_length=50)
     bio = models.TextField()
@@ -59,7 +58,7 @@ class Profile(models.Model):
 
     
     def __str__(self):
-        return self.user.get_full_name()
+        return self.bio
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
