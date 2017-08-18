@@ -1,16 +1,16 @@
 from django.db import models
 from . import contest
 from . import categories
-
+from django.contrib.auth.models import User
 
 class Contest(models.Model):
-    client = models.ForeignKey('User', on_delete=models.CASCADE) #the client who creates the contest
+    client = models.ForeignKey(User, on_delete=models.CASCADE) #the client who creates the contest
     title = models.CharField(max_length=50) #the title of the contest
     about = models.TextField() #more detailed information on the contest
     prize = models.PositiveIntegerField() #the prize brandlancer gets for winning the contest for the contest
     end_date = models.DateField() #the end date of the contest
     is_paid_for = models.BooleanField(default=False) #whether the client has paid for the contest
-    category = models.ForeignKey('Category', on_delete=models.SET_NULL) #category to which the contest belongs
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True) #category to which the contest belongs
     is_top = models.BooleanField(default=False)
     is_hidden = models.BooleanField(default=False)
     is_nda = models.BooleanField(default=False)

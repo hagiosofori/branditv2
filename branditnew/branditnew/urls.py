@@ -18,10 +18,6 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    #eg: brandit.express
-    #for now, the home page is the contests homepage.
-    url(r'^', include('branditnew.contests.urls')),
-
     #eg: brandit.express/contests/
     url(r'^contests/', include('branditnew.contests.urls')),
 
