@@ -9,4 +9,5 @@ def index(request):
 
 
 def signup(request):
-    return '<h1>Sign up routing is working <h1>'
+    return render(request, "signup.html")
+

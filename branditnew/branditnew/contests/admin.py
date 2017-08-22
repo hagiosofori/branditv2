@@ -8,4 +8,10 @@ from .models import user_type
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
-    fields = 
+    fields = ['user_type', 'phone_number', 'activation_key', 'is_activated', 'points', 'skills', 'profile_image', 'address', 'bio', 'date_of_birth', 'how_found_us'];
+
+admin.site.register(profiles.Profile, ProfilesAdmin)
+admin.site.register(skills.Skill)
+admin.site.register(user_type.User_type)
+admin.site.register(contest.Contest)
+admin.site.register(categories.Category)
