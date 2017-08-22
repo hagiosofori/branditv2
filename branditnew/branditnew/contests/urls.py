@@ -7,6 +7,9 @@ urlpatterns = [
     #eg: brandit.express/contests/ OR brandit.express/
     url(r'^$', views.index, name='contest-index'),
 
+    url(r'^dashboard/', views.dashboard, name='dashboard'),
+
     url(r'^signup/', views.signup, name='signup'),
 
+    url(r'^create-contest/', views.create_contest, name='create_contest')
 ]

@@ -1,9 +1,24 @@
 {% extends "contests/base.html" %}
 
 {% block content %}
-    <form>
-        {% csrf_token %}
+    <h2>Sign up</h2>
 
-        <input type='submit' value="Submit" />
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+        <div class="form-group">    
+            {{field.label_tag}}<br>
+                {{field}}
+                {% if field.help_text %}
+                    <small style="color: grey">{{field.help_text }}</small>
+                    {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+        </div>
+        </p>
+        {% endfor %}
+        <button type='submit'>Sign up</button>
     </form>
 {% endblock content %}

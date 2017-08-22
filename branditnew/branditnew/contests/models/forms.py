@@ -7,7 +7,7 @@ from . import skills
 
 
 
-class SignupForm(UserCreationForm):
+class SignUpForm(UserCreationForm):
     phone_number = forms.CharField(
         required=True,
         max_length=30,
@@ -16,7 +16,7 @@ class SignupForm(UserCreationForm):
     # skills = forms.ModelChoiceField(
     #     queryset=skills.objects.all()
     # )
-    date_of_birth = forms.DateField(
+    birth_date = forms.DateField(
         help_text='Required. Format: YYYY-MM-DD'
     )
 
@@ -24,4 +24,3 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password', ]
-

@@ -1,0 +1,10 @@
+{% extends "contests/base.html" %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+
+    <h2>{{ request.user.first_name }} welcome </h2>
+
+    <a href='{% url view.create_contest %}'> Click here to create a contest </a>
+
+{% endblock content %}
