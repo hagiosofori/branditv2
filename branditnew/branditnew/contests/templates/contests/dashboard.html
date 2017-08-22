@@ -3,8 +3,8 @@
 {% block content %}
     <h1>Dashboard</h1>
 
-    <h2>{{ request.user.first_name }} welcome </h2>
+    {% comment %} <h2>{{ request.user.first_name }} welcome </h2> {% endcomment %}
 
-    <a href='{% url view.create_contest %}'> Click here to create a contest </a>
+    <a href='../create-contest'> Click here to create a contest </a>
 
 {% endblock content %}

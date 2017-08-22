@@ -35,9 +35,17 @@ def signup(request):
 
 
 def dashboard(request):
-    return render(request, "    contests/dashboard.html")
+    return render(request, "contests/dashboard.html")
 
 
 
 def create_contest(request):
+    if request.method == request.POST:
+        form = forms.CreateContestForm(request.POST)
+        if form.is_valid():
+            contest = form.save()
+            return redirect('')
+    else:
+        form = forms.CreateContestForm()
+        return redirect("http://0:8080/contests/dashboard.html")
     return render(request, "contests/create-contest.html")

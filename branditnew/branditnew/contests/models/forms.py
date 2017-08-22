@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 from django import forms
+from .contest import Contest
 from . import skills
 
 
@@ -24,3 +25,21 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password', ]
+
+
+class CreateContestForm(forms.ModelForm):
+    class Meta:
+        model = Contest
+        fields = [
+            'client', 
+            'title', 
+            'about', 
+            'prize', 
+            'end_date', 
+            'is_top', 
+            'is_hidden', 
+            'is_nda', 
+            'is_sealed', 
+            'cost', 
+            'files',
+        ]
