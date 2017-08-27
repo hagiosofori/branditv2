@@ -1,0 +1,7 @@
+* completed models for contests
+
+* completed login
+
+* completed signup
+
+* 
