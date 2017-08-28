@@ -3,3 +3,5 @@
 * change db from sqlite to mysql, or whichever one you'll use on the server.
 
 * read on deployment for django.
+
+* fix the render/redirect thing. redirect isn't working, so we're using render as c/o

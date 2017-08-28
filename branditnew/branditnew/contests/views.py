@@ -44,8 +44,7 @@ def create_contest(request):
         form = forms.CreateContestForm(request.POST)
         if form.is_valid():
             contest = form.save()
-            return redirect('')
+            return redirect('dashboard')
     else:
         form = forms.CreateContestForm()
-        return redirect("http://0:8080/contests/dashboard.html")
-    return render(request, "contests/create-contest.html")
+        return render(request, "contests/create-contest.html", {'form': form})
