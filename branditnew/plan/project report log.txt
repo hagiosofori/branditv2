@@ -4,4 +4,6 @@
 
 * completed signup
 
+* completed v1 of contest creation
+
 * 

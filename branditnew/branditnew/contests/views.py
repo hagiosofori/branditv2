@@ -2,13 +2,22 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, reverse
+from django.views.generic.list import ListView
+from django.template import loader
 
 from branditnew.contests.models import forms
+from branditnew.contests.models.contest import Contest
 
 # Create your views here.
 
 def index(request):
-    return render(request, "contests/index.html")
+    contests_list = Contest.objects.all()
+    print(contests_list)
+    template = loader.get_template('contests/index.html')
+    context = {
+        'contests_list': contests_list,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 

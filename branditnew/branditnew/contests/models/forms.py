@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .contest import Contest
 from . import skills
-
+from .entries import Entry
 
 
 
@@ -28,6 +28,10 @@ class SignUpForm(UserCreationForm):
 
 
 class CreateContestForm(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super(CreateContestForm, self).__init__(*args, **kwargs)
+    #     # self.fields['client'].queryset=
+
     class Meta:
         model = Contest
         fields = [
@@ -43,4 +47,20 @@ class CreateContestForm(forms.ModelForm):
             'cost',
             'category', 
             # 'files',  #file submission still doesn't work. fix it.
+        ]
+
+class ContestEntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = [
+            'contest',
+            'brandlancer',
+            # 'files',
+            'message',
+            'sub',
+            'boost',
+            'hide',
+            'cost',
+            'number_of_likes',
+            'is_winner',
         ]
