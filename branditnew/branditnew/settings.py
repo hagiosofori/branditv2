@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     #brandit apps
     'branditnew.contests',
 
+    #third party
+    # 'widget-tweaks',
+
     #django installed
     'django.contrib.admin',
     'django.contrib.auth',

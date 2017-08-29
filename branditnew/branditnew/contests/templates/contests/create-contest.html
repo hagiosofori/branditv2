@@ -2,7 +2,7 @@
 
 {% block title %}
     Create a Contest
-{% endblock title %}
+{% endblock title %}    q
 
 {% block content %}
     <h1>Create Contest Page </h1>
@@ -13,6 +13,7 @@
     <p>
     <div class='form-group'>
     {{ field.label_tag }}
+    {% comment %} {% render_field field class='form-control' %} {% endcomment %}
     {{ field }}
     {% if field.help_text %}
         <small style='color: grey'>{{ field.help_text }} </small>

@@ -35,11 +35,12 @@ class CreateContestForm(forms.ModelForm):
             'title', 
             'about', 
             'prize', 
-            'end_date', 
+            'end_date',
             'is_top', 
             'is_hidden', 
             'is_nda', 
             'is_sealed', 
-            'cost', 
-            'files',
+            'cost',
+            'category', 
+            # 'files',  #file submission still doesn't work. fix it.
         ]
