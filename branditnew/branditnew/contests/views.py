@@ -51,19 +51,25 @@ def dashboard(request):
 def create_contest(request):
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST)
-        form.is_valid()
-        print(form)
-        print(request.POST)
-        print(form.is_valid())
-
+        
         if form.is_valid():
             print('form is valid')
             contest = form.save()
             print(contest)
             return HttpResponse('Form is valid and saved')
-
-        return render(request, "contests/create-contest.html", {'form': form})
     else:
         form = forms.CreateContestForm()
-        print(form.is_valid())
-    return render(request, "contests/create-contest.html", {'form': form})
+        return render(request, "contests/create-contest.html", {'form': form})
+
+
+def submit_entry(request):
+    if request.method == "POST":
+        form = forms.ContestEntryForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return render(request, "contests/dashboard.html")
+
+    else:
+        form = forms.ContestEntryForm()
+        return render(request, "contests/submit_contest_entry.html", {'form': form})

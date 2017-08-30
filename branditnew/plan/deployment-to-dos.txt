@@ -1,3 +1,5 @@
+* filter the brandlancer list to exclude clients, only brandlancers should show
+
 * change all urls to generic ones, so they work on the deployment server
 
 * change db from sqlite to mysql, or whichever one you'll use on the server.

@@ -6,4 +6,6 @@
 
 * completed v1 of contest creation
 
+* completed v1 of contest entry submission
+
 * 
