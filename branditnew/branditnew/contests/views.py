@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.template import loader
 
@@ -73,3 +73,9 @@ def submit_entry(request):
     else:
         form = forms.ContestEntryForm()
         return render(request, "contests/submit_contest_entry.html", {'form': form})
+
+
+
+def contest_details(request, contest_id):
+    contest = get_object_or_404(Contest, pk=contest_id)
+    return render(request, 'contests/contest_details.html', {'contest': contest})

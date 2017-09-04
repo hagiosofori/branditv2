@@ -8,7 +8,20 @@ from .models import user_type
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
-    fields = ['user_name', 'user_type', 'phone_number', 'activation_key', 'is_activated', 'points', 'skills', 'profile_image', 'address', 'bio', 'date_of_birth', 'how_found_us']
+    fields = [
+        'user_name', 
+        'user_type', 
+        'phone_number', 
+        'activation_key', 
+        'is_activated', 
+        'points', 
+        'skills', 
+        'profile_image', 
+        'address', 
+        'bio', 
+        'date_of_birth', 
+        'how_found_us',
+    ]
 
 admin.site.register(profiles.Profile, ProfilesAdmin)
 admin.site.register(skills.Skill)

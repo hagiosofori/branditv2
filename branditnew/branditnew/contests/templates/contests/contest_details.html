@@ -1,0 +1,19 @@
+{% extends "contests/base.html" %}
+
+{{% block title %}
+    Contest Details
+{% endblock title %}}
+
+{% block content %}
+    <h1>Contest: {{ contest }}</h1>
+    {{ contest.about}}
+    {{contest.prize}}
+    {{ contest.end_date }}
+    {{ contest.is_hidden }}
+    {{contest.client}}
+    {% for entry in contest.entry_set.all %}
+        {{ entry }}
+
+    {% endfor %}
+    
+{% endblock content %}

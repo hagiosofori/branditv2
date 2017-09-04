@@ -15,3 +15,6 @@ class Entry(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     number_of_likes = models.DecimalField(max_digits=10000000, decimal_places=0, default=0)
     is_winner = models.BooleanField(default=False)
+
+    # def __str__(self):
+    #     self.message
