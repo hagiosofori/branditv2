@@ -61,7 +61,7 @@ class Profile(models.Model):
 
     
     def __str__(self):
-        return self.bio
+        return self.user_name
     
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

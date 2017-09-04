@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
@@ -17,7 +17,7 @@ def index(request):
     context = {
         'contests_list': contests_list,
     }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render( context))
 
 
 
@@ -31,21 +31,27 @@ def signup(request):
             user.profile.birth_date = form.cleaned_data.get('birth_date')
             user.profile.phone_number = form.cleaned_data.get('phone_number')
             user.profile.user_name=user.username
-            print(user.profile.user_name)
             raw_password = form.cleaned_data.get('password1')
-            # user.save()
+            user.save()
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return render(request, "contests/dashboard.html")
+            template = loader.get_template('contests/dashboard.html')
+            context = {}
+            return HttpResponse(template.render(context, request))
 
     else:
         form = forms.SignUpForm()
     return render(request, "contests/signup.html", {'form': form})
 
 
+def loggedin(request):
+    print('redirecting to dashboard')
+    return redirect(reverse('contests:dashboard'))
+
 
 def dashboard(request):
-    return render(request, "contests/dashboard.html")
+    template = loader.get_template('contests/dashboard.html')
+    return HttpResponse(template.render())
 
 
 

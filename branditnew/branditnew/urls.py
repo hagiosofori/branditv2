@@ -18,6 +18,8 @@ from django.contrib import admin
 
 
 urlpatterns = [
+    # url(r'^', include('django.contrib.auth.urls')),
+
     #eg: brandit.express/contests/
     url(r'^contests/', include('branditnew.contests.urls')),
 

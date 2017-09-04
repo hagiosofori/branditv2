@@ -134,4 +134,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 
 #where the user should be directed to after logging in
-LOGIN_REDIRECT_URL = os.path.join(BASE_DIR, 'contests/')
+LOGIN_REDIRECT_URL = os.path.join(BASE_DIR, 'contests/loggedin')
