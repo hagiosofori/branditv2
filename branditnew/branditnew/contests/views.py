@@ -29,10 +29,11 @@ def signup(request):
             user = form.save()
             user.refresh_from_db() #load the profile instance created by the signal
             user.profile.birth_date = form.cleaned_data.get('birth_date')
-            
             user.profile.phone_number = form.cleaned_data.get('phone_number')
+            user.profile.user_name=user.username
+            print(user.profile.user_name)
             raw_password = form.cleaned_data.get('password1')
-            user.save()
+            # user.save()
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             return render(request, "contests/dashboard.html")
@@ -62,7 +63,7 @@ def create_contest(request):
         return render(request, "contests/create-contest.html", {'form': form})
 
 
-def submit_entry(request):
+def submit_entry(request, contest_id):
     if request.method == "POST":
         form = forms.ContestEntryForm(request.POST)
 
@@ -71,7 +72,7 @@ def submit_entry(request):
             return render(request, "contests/dashboard.html")
 
     else:
-        form = forms.ContestEntryForm()
+        form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
         return render(request, "contests/submit_contest_entry.html", {'form': form})
 
 
