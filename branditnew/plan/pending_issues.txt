@@ -1,3 +1,7 @@
 * transfer the user_type reference from hard-coded to from db.
 
+* ensure that only desired values are showing in dropdowns
+
+* create contest page: the client id should be the current logged-in person's id. the field should be hidden, and after submission of the form, and before submission.
+
 * 

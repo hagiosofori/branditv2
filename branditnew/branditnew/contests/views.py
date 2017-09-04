@@ -62,8 +62,10 @@ def create_contest(request):
         if form.is_valid():
             print('form is valid')
             contest = form.save()
+
             print(contest)
-            return HttpResponse('Form is valid and saved')
+            return redirect(reverse('contests:dashboard'))
+
     else:
         form = forms.CreateContestForm()
         return render(request, "contests/create-contest.html", {'form': form})
