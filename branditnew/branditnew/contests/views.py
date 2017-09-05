@@ -71,6 +71,7 @@ def create_contest(request):
         return render(request, "contests/create-contest.html", {'form': form})
 
 
+
 def submit_entry(request, contest_id):
     if request.method == "POST":
         form = forms.ContestEntryForm(request.POST)
