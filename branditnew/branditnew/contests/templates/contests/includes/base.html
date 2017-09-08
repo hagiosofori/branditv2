@@ -4,19 +4,17 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    {% include "contests/includes/head.html" %}
-    <body>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+{% include "contests/includes/head.html" %}
+
+<body>
         {% include "contests/includes/nav.html" %}
-        <div class="container">
-        {% block content %} <h1>Pulling from the base file</h1> {% endblock content%}
+        <div class='container'> 
+            {% block content %} {% endblock content %} 
         </div>
+        {% include "contests/includes/footer.html" %}
+</body>
 
-        <footer>
-
-        </footer>
-        {% comment %} Bootstrap and jQuery inclusion {% endcomment %}
-
-       {% include "contests/includes/footer.html" %}
-    </body>
 </html>
