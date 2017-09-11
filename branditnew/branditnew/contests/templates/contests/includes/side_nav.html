@@ -1,0 +1,126 @@
+{% load static %}
+
+<!-- Navigation -->
+<div class="agiletopbar">
+    <div class="wthreenavigation">
+        <div class="menu-wrap">
+        <nav class="menu">
+            <div class="icon-list">
+                <a href="index.php"><i class="fa fa-fw fa-home"></i><span>Home</span></a>
+                <a href="dashboard.php"><i class="fa fa-fw fa-dashboard"></i><span>Dashboard</span></a>
+                <a href="post-project.php"><i class="fa fa-fw fa-folder"></i><span>Start a Project</span></a>
+                <a href="post-contest.php"><i class="fa fa-fw fa-folder"></i><span>Start a Contest</span></a>
+                <a href="ongoing-contest.php"><i class="fa fa-fw fa-folder-open"></i><span>Ongoing Contest</span></a>
+                <a href="#print"><i class="fa fa-fw fa-print"></i><span>Order Print</span></a>
+                <a href="faq.php"><i class="fa fa-fw fa-paw"></i><span>FAQ</span></a>
+                <a href="contact.php"><i class="fa fa-fw fa-envelope"></i><span>Contact</span></a>
+            </div>
+        </nav>
+        <button class="close-button" id="close-button">Close Menu</button>
+    </div>
+    <button class="menu-button" id="open-button"> </button>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<!-- //Navigation -->
+
+<!-- header -->
+<header>
+<div class="w3ls-header"><!--header-one--> 
+    <div class="w3ls-header-left">
+        <a href="help.html" class="white-text"><i class="fa fa-question-circle " aria-hidden="true"></i> Help</a>
+    </div>
+    <div class="w3ls-header-right">
+        <ul>
+            <li class="dropdown head-dpdn">
+                <?php 
+                    if( $user->isLoggedIn() ) {
+                ?>
+                <a href="dashboard.php" aria-expanded="false"><i class="fa fa-home" aria-hidden="true"></i>Howdy!, <?php echo $username; ?></a>
+                <?php }else{ ?>
+                <a href="https://brandit.express/signin.php" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a>
+                <?php } ?>
+            </li>
+            <?php if( $user->isLoggedIn() ) { ?>
+            <li class="dropdown head-dpdn">
+                <a href="http://brandit.express/logout.php"><i class="fa fa-lock" aria-hidden="true"></i> Logout</a>
+            </li>
+            <?php } ?>       
+                
+            <li class="dropdown head-dpdn">
+                <!-- <i class="fa fa-globe white-text" aria-hidden="true"></i> -->
+                <select class="currencySwitcher" id="currencySwitcher">
+                    <option value="GHS">GHS</option>
+                    <option value="NGN">NGN</option>
+                    <option value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="clearfix"> </div> 
+</div>
+<div class="container">
+    <div class="agile-its-header">
+        <div class="logo">
+            <h1><a href="https://brandit.express/"><img src="https://brandit.express/images/logo.png" alt="" class="img-responsive logo" /> </a></h1>
+        </div>
+        <div class="agileits_search">
+        <a class="post-w3layouts-ad" href="#" data-toggle="modal" data-target="#modalStart">Start Here! </a>
+        
+        <!-- <a class="post-w3layouts-ad" href="post-contest.php" id="post-contest-link">Start Here! </a> -->
+        </div>	
+        <div class="clearfix"></div>
+    </div>
+</div>
+</header>
+
+<!-- Modal start here-->
+<div id="modalStart" class="modal fade" role="dialog">
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content" style="background:transparent; ">
+        <div class="modal-body no-padding">
+              <div id="container">
+                <div class="whole">
+                    <div class="type"><p>Contests</p>	</div>
+                    <div class="plan">
+                        <div class="content">
+                            <ul>
+                                <li>Post a contest</li>
+                                <li>Set a prize</li>
+                                <li>Review entries</li>
+                                <li>Choose a winner</li>
+                            </ul>
+
+                        </div>
+                        <div class="price">
+                              <a href="post-contest.php" id="post-contest-link" class="bottom"><p class="cart">Post a Contest</p></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="whole">
+                    <div class="type bg-magenta" style="border:1px solid #d94378 "><p>Projects</p></div>
+                    <div class="plan">
+                        <div class="content">
+                            <ul>
+                                <li>Post a project</li>
+                                <li>Set a budget</li>
+                                <li>Review Designs</li>
+                                <li>Select a design</li>
+                            </ul>
+
+                        </div>
+                        
+                        <div class="price">
+                              <a href="post-project.php" id="post-project-link" class="bottom"><p class="cart">Post a Project</p></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

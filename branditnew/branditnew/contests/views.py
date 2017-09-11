@@ -44,6 +44,23 @@ def signup(request):
     return render(request, "contests/signup.html", {'form': form})
 
 
+
+def signin(request):
+    if request.method == "POST":
+        form = forms.SignInForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username, password)
+            if request.user.is_authenticated:
+                login(request, user)
+                return redirect(reverse('contests:dashboard'))
+            else:
+                return redirect(reverse('contests:index'))
+
+
+
 def loggedin(request):
     print('redirecting to dashboard')
     return redirect(reverse('contests:dashboard'))

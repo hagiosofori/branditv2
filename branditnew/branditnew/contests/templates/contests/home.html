@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <title> {% block title %} {% endblock title %} | Brandit</title>
+    {% include "contests/includes/head.html" %}    
+</head>
+<body>
+        {% include "contests/includes/nav.html" %}
+        <div class='container'> 
+            <br><br>
+                {% block content %} {% endblock content %} 
+        </div>
+        {% include "contests/includes/footer.html" %}
+</body>
+
+</html>

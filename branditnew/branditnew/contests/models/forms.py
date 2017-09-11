@@ -68,3 +68,12 @@ class ContestEntryForm(forms.ModelForm):
             'boost',
             'hide',
         ]
+
+
+class SignInForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'password',
+        ]
