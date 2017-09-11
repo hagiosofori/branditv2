@@ -6,7 +6,10 @@
 
 {% block content %}
     <h1>Contest: {{ contest }}</h1>
+    <br>
+    <h3>Contest Brief</h3>
     {{ contest.about}}
+    
     {{contest.prize}}
     {{ contest.end_date }}
     {{ contest.is_hidden }}

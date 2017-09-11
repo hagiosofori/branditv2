@@ -1,11 +1,14 @@
 {% extends "contests/includes/base.html" %}
-
 {% block content %}
     <h2>Sign up</h2>
 
     <form method="post">
         {% csrf_token %}
-        {% for field in form %}
+
+        {% include "contests/includes/form_snippet.html" %}
+        
+
+        {% comment %} {% for field in form %}
         <p>
         <div class="form-group">    
             {{field.label_tag}}<br>
@@ -18,7 +21,7 @@
                 {% endif %}
         </div>
         </p>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
         <button type='submit'>Sign up</button>
     </form>
 {% endblock content %}
