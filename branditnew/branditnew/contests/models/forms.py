@@ -70,10 +70,6 @@ class ContestEntryForm(forms.ModelForm):
         ]
 
 
-class SignInForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = [
-            'email',
-            'password',
-        ]
+class SignInForm(forms.Form):
+    username = forms.CharField(label='Username')
+    password = forms.CharField(label='Password', widget=forms.PasswordInput())

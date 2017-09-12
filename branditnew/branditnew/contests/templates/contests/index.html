@@ -1,27 +1,28 @@
 {% extends "contests/includes/base.html" %} {% block title %} Contests {% endblock title %} {% block content %}
 <h4><strong><center>All Contests</center></strong></h4>
 <br><br> {% for contest in contests_list %}
-<div class="card">
-    <div class="card-block">
-        <div class="card-title">
-            <a href="{% url 'contests:contest_details' contest.id %}">
-                <h4>{{ contest.title }}</h4>
-            </a>
-        </div>
-        <br>
-        <div class="card-block">
-            {{ contest.about }} ...
-        </div>
+<div class="card shadow">
+    <div class="card-block ">
+        <center>
+            <div class="card-title">
+                <a href="{% url 'contests:contest_details' contest.id %}">
+                    <h4>{{ contest.title }}</h4>
+                </a>
+                <hr>
+            </div>
+            <br>
+            <div class="card-block">
+                {{ contest.about }} ...
+            </div>
+        </center>
+        <hr>
         <div class="card-block">
             <a href="#" class="card-link">Card link</a>
             <a href="#" class="card-link">Another link</a>
         </div>
     </div>
 </div>
-<hr>
-<div class="clearfix"></div>
-{% empty %}
+<br><br> {% empty %}
 <h3>No contests yet</h3>
 
-{% endfor %} 
-{% endblock content %}
+{% endfor %} {% endblock content %}

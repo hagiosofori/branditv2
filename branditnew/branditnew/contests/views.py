@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, reverse, get_object_or_404
@@ -37,7 +37,8 @@ def signup(request):
             login(request, user)
             template = loader.get_template('contests/dashboard.html')
             context = {}
-            return HttpResponse(template.render(context, request))
+
+        return HttpResponse(template.render(context, request))
 
     else:
         form = forms.SignUpForm()
@@ -46,18 +47,27 @@ def signup(request):
 
 
 def signin(request):
+    form = forms.SignInForm()
+
     if request.method == "POST":
         form = forms.SignInForm(request.POST)
 
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username, password)
-            if request.user.is_authenticated:
+            user_name = form.cleaned_data.get('username')
+            pword = form.cleaned_data.get('password')
+            user = authenticate(username=user_name, password=pword)
+            if user is not None:
                 login(request, user)
+                print (request.__dict__)
                 return redirect(reverse('contests:dashboard'))
-            else:
-                return redirect(reverse('contests:index'))
+            # else:
+            #     return redirect(reverse('contests:index'))
+        
+        
+    context = {
+        'form': form
+    }
+    return render(request, 'contests/login.html',context)
 
 
 
@@ -67,9 +77,9 @@ def loggedin(request):
 
 
 def dashboard(request):
+    print(request.user.username)
     template = loader.get_template('contests/dashboard.html')
-    return HttpResponse(template.render())
-
+    return render(request, 'contests/dashboard.html')
 
 
 def create_contest(request):

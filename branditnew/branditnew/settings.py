@@ -36,7 +36,8 @@ INSTALLED_APPS = [
 
     #third party
     # 'widget-tweaks',
-    'crispy_forms',
+    # 'crispy_forms',
+    'bootstrap4',
 
     #django installed
     'django.contrib.admin',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
 
 MIDDLEWARE = [
@@ -137,4 +139,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 #where the user should be directed to after logging in
 LOGIN_REDIRECT_URL = os.path.join(BASE_DIR, 'contests:loggedin')
 
-CRISPY_TEMPLATE_PACK = 'uni_form'
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
