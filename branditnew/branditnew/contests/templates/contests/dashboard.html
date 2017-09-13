@@ -1,12 +1,54 @@
-{% extends "contests/includes/base.html" %} 
-{% block title %} Dashboard {% endblock title %} 
+{% extends "contests/includes/base.html" %} {% block title %} Dashboard {% endblock title %} {% block content %}
+<h1>Dashboard</h1>
+{% load bootstrap4 %}
+<br>
+<div class="container">
+    <center>
+        <div class="btn-toolbar-lg" role="toolbar" aria-label="Basic example">
+            <a class="btn btn-warning btn-lg mr-1"  href="contests:index"> Order Print </button>
+            <a class = "btn btn-warning btn-lg" href="{% url 'contests:create_contest' %}"> Create Contest </a>
 
-{% block content %}
-<h1>Dashboard</h1><br>
-
-<h2> welcome {{ request.user }}</h2>
-<div class="card">
-    <a href="{% url 'contests:create_contest' %}"> Click here to create a contest </a>
+        </div>
+    </center>
 
 </div>
-{% endblock content %}
+
+<br>
+
+<div class="row">
+    <div class=" card col-8 shadow">
+        <br>
+        <h2>News Feed</h2>
+        <hr>
+        {% for contest in request.user.contests_list %}
+
+        <hr>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-4 ml-auto">
+
+        <div class="card shadow">
+            <div class="container "><br>
+                <h2> welcome {{ request.user }}</h2>
+                <a class="btn btn-primary" href="">Edit Profile</a>
+                <br>
+                <hr>
+                <h4>Details</h4>
+                <span><strong>Phone Number: </strong>{{ request.user.profile.phone_number }}</span>
+                <br>
+                <hr>
+                <h4>Skills</h4>
+                <span>{{ request.user.profile.skills }}</span>
+                <br>
+                <hr>
+                <h4>Funds</h4>
+                <br>
+                <hr>
+                <h4>Statistics</h4><br>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br> {% endblock content %}

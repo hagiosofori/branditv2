@@ -1,27 +1,21 @@
 {% extends "contests/includes/base.html" %}
-{% block content %}
-    <h2>Sign up</h2>
 
+{% block title %}
+    Signup
+{% endblock title %}
+
+{% block content %}
+{% load bootstrap4 %}
+<center><h2>Sign up</h2></center>
+<div class="card col-md-4 col-md-offset-4 shadow" style="width: 25rem;">
+    <div class="card-body">
     <form method="post">
         {% csrf_token %}
-
-        {% include "contests/includes/form_snippet.html" %}
-        
-
-        {% comment %} {% for field in form %}
-        <p>
-        <div class="form-group">    
-            {{field.label_tag}}<br>
-                {{field}}
-                {% if field.help_text %}
-                    <small style="color: grey">{{field.help_text }}</small>
-                    {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                {% endif %}
-        </div>
-        </p>
-        {% endfor %} {% endcomment %}
-        <button type='submit'>Sign up</button>
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type='submit' class="btn btn-primary">Sign up</button>
+        {% endbuttons %}
     </form>
+    </div>
+</div>
 {% endblock content %}

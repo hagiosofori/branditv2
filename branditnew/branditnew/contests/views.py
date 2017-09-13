@@ -4,33 +4,34 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.template import loader
+from django.contrib.auth.decorators import login_required
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.contest import Contest
 
 # Create your views here.
 
+
 def index(request):
     contests_list = Contest.objects.all()
-    print(contests_list)
     template = loader.get_template('contests/index.html')
     context = {
         'contests_list': contests_list,
     }
-    return HttpResponse(template.render( context))
-
+    return HttpResponse(template.render(context))
 
 
 def signup(request):
+    form = forms.SignUpForm() 
     if request.method == 'POST':
         form = forms.SignUpForm(request.POST)
 
         if form.is_valid():
             user = form.save()
-            user.refresh_from_db() #load the profile instance created by the signal
+            user.refresh_from_db()  # load the profile instance created by the signal
             user.profile.birth_date = form.cleaned_data.get('birth_date')
             user.profile.phone_number = form.cleaned_data.get('phone_number')
-            user.profile.user_name=user.username
+            user.profile.user_name = user.username
             raw_password = form.cleaned_data.get('password1')
             user.save()
             user = authenticate(username=user.username, password=raw_password)
@@ -38,15 +39,17 @@ def signup(request):
             template = loader.get_template('contests/dashboard.html')
             context = {}
 
-        return HttpResponse(template.render(context, request))
 
-    else:
-        form = forms.SignUpForm()
+            return render(request, 'contests/dashboard.html', context)
+        else:
+            print("form is not valid")
+            print(form.error_messages)
+
+    print("didn't submit the data")
     return render(request, "contests/signup.html", {'form': form})
 
 
-
-def signin(request):
+def signin(request): 
     form = forms.SignInForm()
 
     if request.method == "POST":
@@ -58,17 +61,13 @@ def signin(request):
             user = authenticate(username=user_name, password=pword)
             if user is not None:
                 login(request, user)
-                print (request.__dict__)
                 return redirect(reverse('contests:dashboard'))
-            # else:
-            #     return redirect(reverse('contests:index'))
-        
-        
+
     context = {
         'form': form
     }
-    return render(request, 'contests/login.html',context)
-
+    print(form.errors_messages)
+    return render(request, 'contests/login.html', context)
 
 
 def loggedin(request):
@@ -76,8 +75,8 @@ def loggedin(request):
     return redirect(reverse('contests:dashboard'))
 
 
+@login_required(login_url="contests:login")
 def dashboard(request):
-    print(request.user.username)
     template = loader.get_template('contests/dashboard.html')
     return render(request, 'contests/dashboard.html')
 
@@ -85,7 +84,7 @@ def dashboard(request):
 def create_contest(request):
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST)
-        
+
         if form.is_valid():
             print('form is valid')
             contest = form.save()
@@ -95,8 +94,7 @@ def create_contest(request):
 
     else:
         form = forms.CreateContestForm()
-        return render(request, "contests/create-contest.html", {'form': form})
-
+        return render(request, "contests/create_contest.html", {'form': form})
 
 
 def submit_entry(request, contest_id):
@@ -108,9 +106,9 @@ def submit_entry(request, contest_id):
             return render(request, "contests/dashboard.html")
 
     else:
-        form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
+        form = forms.ContestEntryForm(
+            initial={'contest': contest_id, 'brandlancer': request.user.id})
         return render(request, "contests/submit_contest_entry.html", {'form': form})
-
 
 
 def contest_details(request, contest_id):

@@ -8,19 +8,20 @@
 
 {% block content %}
 {% load bootstrap4 %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-<div class="card col-md-4 col-md-offset-4" style="width: 25rem; height:25rem">
+
+<div class="card col-md-4 col-md-offset-4 shadow" style="width: 25rem; ">
     <div class="card-body">
-      <h4 class="card-title">Login</h4>
+      <center><h4 class="card-title">Login</h4></center>
       <form method="post" class="form" action="{% url 'contests:login' %}">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-        <button type="submit">{% bootstrap_icon "star" %} Login</button>
+        <center><button type="submit" class="btn btn-primary">{% bootstrap_icon "star" %} Login</button></center>
         {% endbuttons %}
     </form>
     </div>
-    <a href="{% url 'contests:signup' %}" class="card-link">Don't have an account? Click here to sign up</a>
+    <center><a href="{% url 'contests:signup' %}" class="card-link">Don't have an account? Click here to sign up</a></center><br>
+    
   </div>    
 </div><br><br>
     

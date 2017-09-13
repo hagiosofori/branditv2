@@ -7,7 +7,6 @@ from . import skills
 from .entries import Entry
 
 
-
 class SignUpForm(UserCreationForm):
     phone_number = forms.CharField(
         required=True,
@@ -18,19 +17,16 @@ class SignUpForm(UserCreationForm):
     #     queryset=skills.objects.all()
     # )
     birth_date = forms.DateField(
-        help_text='Required. Format: YYYY-MM-DD'
+        help_text='Required. Format: YYYY-MM-DD', widget=forms.TextInput(attrs={'class': 'datepicker'})
     )
-
 
     class Meta:
         model = User
         fields = [
-            'first_name', 
-            'last_name', 
-            'username', 
-            'email', 
-            'password', 
-            
+            'first_name',
+            'last_name',
+            'username',
+            'email',
         ]
 
 
@@ -42,26 +38,27 @@ class CreateContestForm(forms.ModelForm):
     class Meta:
         model = Contest
         fields = [
-            'client', 
-            'title', 
-            'about', 
-            'prize', 
+            'client',
+            'title',
+            'about',
+            'prize',
             'end_date',
-            'is_top', 
-            'is_hidden', 
-            'is_nda', 
-            'is_sealed', 
+            'is_top',
+            'is_hidden',
+            'is_nda',
+            'is_sealed',
             'cost',
-            'category', 
+            'category',
             # 'files',  #file submission still doesn't work. fix it.
         ]
+
 
 class ContestEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = [
-            'contest', #should be set by clicking on the 'submit' for the contest, which leads to this form
-            'brandlancer', #should be set by who is logged in
+            'contest',  # should be set by clicking on the 'submit' for the contest, which leads to this form
+            'brandlancer',  # should be set by who is logged in
             # 'files',
             'message',
             'sub',
