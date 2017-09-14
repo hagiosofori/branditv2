@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.admin import widgets
 
 from django import forms
 from .contest import Contest
@@ -40,9 +41,9 @@ class CreateContestForm(forms.ModelForm):
         fields = [
             'client',
             'title',
+            'end_date',
             'about',
             'prize',
-            'end_date',
             'is_top',
             'is_hidden',
             'is_nda',
@@ -51,6 +52,16 @@ class CreateContestForm(forms.ModelForm):
             'category',
             # 'files',  #file submission still doesn't work. fix it.
         ]
+        widgets = {
+            'client': forms.HiddenInput(),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+        
+        labels = {
+            'title': "Give a title to your contest",
+            'end_date': "When should the contest end?",
+
+        }
 
 
 class ContestEntryForm(forms.ModelForm):

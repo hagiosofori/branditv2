@@ -14,6 +14,5 @@ urlpatterns = [
     url(r'^(?P<contest_id>[0-9]+)/', views.contest_details, name='contest_details'),
 
     url(r'^login/$', auth_views.login, {'template_name':'contests/login.html'}, name='login'),
-    url(r'^loggedin/$', views.loggedin, name='loggedin'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'contests/index.html'}, name='logout'),
 ]

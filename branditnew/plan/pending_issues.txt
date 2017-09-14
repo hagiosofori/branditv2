@@ -5,3 +5,5 @@
 * create contest page: the client id should be the current logged-in person's id. the field should be hidden, and after submission of the form, and before submission.
 
 * http://brandit.express/hub/index.php/start-contest/ use the fields on this page to add more fields to the contest model
+
+* fix glyphicons 

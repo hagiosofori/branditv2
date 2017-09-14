@@ -12,6 +12,7 @@ from branditnew.contests.models.contest import Contest
 # Create your views here.
 
 
+
 def index(request):
     contests_list = Contest.objects.all()
     template = loader.get_template('contests/index.html')
@@ -19,6 +20,7 @@ def index(request):
         'contests_list': contests_list,
     }
     return HttpResponse(template.render(context))
+
 
 
 def signup(request):
@@ -38,8 +40,6 @@ def signup(request):
             login(request, user)
             template = loader.get_template('contests/dashboard.html')
             context = {}
-
-
             return render(request, 'contests/dashboard.html', context)
         else:
             print("form is not valid")
@@ -47,6 +47,7 @@ def signup(request):
 
     print("didn't submit the data")
     return render(request, "contests/signup.html", {'form': form})
+
 
 
 def signin(request): 
@@ -70,10 +71,6 @@ def signin(request):
     return render(request, 'contests/login.html', context)
 
 
-def loggedin(request):
-    print('redirecting to dashboard')
-    return redirect(reverse('contests:dashboard'))
-
 
 @login_required(login_url="contests:login")
 def dashboard(request):
@@ -81,23 +78,28 @@ def dashboard(request):
     return render(request, 'contests/dashboard.html')
 
 
+
 def create_contest(request):
+    form = forms.CreateContestForm()
+    
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST)
 
         if form.is_valid():
             print('form is valid')
-            contest = form.save()
-
+            contest = form.save(commit=False)
+            contest.client = request.user
+            contest.save()
             print(contest)
             return redirect(reverse('contests:dashboard'))
 
-    else:
-        form = forms.CreateContestForm()
-        return render(request, "contests/create_contest.html", {'form': form})
+    return render(request, "contests/create_contest.html", {'form': form})
+
 
 
 def submit_entry(request, contest_id):
+    form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
+
     if request.method == "POST":
         form = forms.ContestEntryForm(request.POST)
 
@@ -105,10 +107,8 @@ def submit_entry(request, contest_id):
             form.save()
             return render(request, "contests/dashboard.html")
 
-    else:
-        form = forms.ContestEntryForm(
-            initial={'contest': contest_id, 'brandlancer': request.user.id})
-        return render(request, "contests/submit_contest_entry.html", {'form': form})
+    return render(request, "contests/submit_contest_entry.html", {'form': form})
+
 
 
 def contest_details(request, contest_id):
