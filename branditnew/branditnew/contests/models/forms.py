@@ -57,14 +57,14 @@ class CreateContestForm(forms.ModelForm):
         ]
         widgets = {
             'cost': forms.HiddenInput(),
-            'end_date': forms.DateInput(attrs={'type': 'number'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
             # 'preferred_colors': forms.TextInput(attrs={'type': 'color'}),
             
         }
         
         labels = {
             'title': "Give a title to your contest",
-            'end_date': "For how many days should the contest run?",
+            'end_date': "When should the contest end?",
             'prize': 'What is your contest award?',
             'category': 'What do you want designed?',
             'target_audience': 'Describe the target audience of the design',
@@ -79,7 +79,7 @@ class CreateContestForm(forms.ModelForm):
         }
 
         help_texts = {
-            'end_date': 'Minimum is 3 days',
+            'end_date': 'Minimum is 3 days from today',
             'prize': 'Minimum prize amount is GHS300',
             
         }

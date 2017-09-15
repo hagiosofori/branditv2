@@ -12,10 +12,12 @@
     {% include "contests/includes/head.html" %}    
 </head>
 <body>
-        {% include "contests/includes/nav.html" %}
-        <div class='container'> 
-            <br><br>
+        
+        <div id="main"> 
+                {% include "contests/includes/nav.html" %}
+                <div class="container">
                 {% block content %} {% endblock content %} 
+                </div>
         </div>
         {% include "contests/includes/footer.html" %}
 </body>

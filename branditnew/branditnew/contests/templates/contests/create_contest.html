@@ -7,7 +7,7 @@
         <br>
         <h1>Create a Contest</h1>
         <hr>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <br> {% csrf_token %} 
             {% bootstrap_field form.title %} 
             {% bootstrap_field form.end_date %} 
@@ -18,7 +18,7 @@
             {% bootstrap_field form.target_audience %} 
             {% bootstrap_field form.design_details %}
             {% bootstrap_field form.would_like_to_print %}
-        </form>
+        
         <br><br><br>
     </div>
     <div class="col-md-1"></div>
@@ -65,6 +65,7 @@
         <br>
         <button type='submit' class="btn btn-success btn-block ">Post Contest</button> {% endbuttons %}
     </div>
+</form>
 </div>
 
 <style>

@@ -5,13 +5,16 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.template import loader
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.contest import Contest
 
 # Create your views here.
 
-
+def test(request):
+    template = loader.get_template('contests/includes/side_nav.html')
+    return(HttpResponse(template.render()))
 
 def index(request):
     contests_list = Contest.objects.all()
@@ -80,19 +83,22 @@ def dashboard(request):
 
 
 def create_contest(request):
-    form = forms.CreateContestForm(initial={'would_like_to_print':True, 'end_date':'3',})
+    form = forms.CreateContestForm(initial={'would_like_to_print':True,})
     
     if request.method == 'POST':
-        form = forms.CreateContestForm(request.POST)
-
+        form = forms.CreateContestForm(request.POST, request.FILES)
+        
         if form.is_valid():
             print('form is valid')
             contest = form.save(commit=False)
             contest.client = request.user
+            contest.cost = 300
+            print(contest.end_date)
             contest.save()
             print(contest)
             return redirect(reverse('contests:dashboard'))
 
+    
     return render(request, "contests/create_contest.html", {'form': form})
 
 
@@ -101,7 +107,7 @@ def submit_entry(request, contest_id):
     form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
 
     if request.method == "POST":
-        form = forms.ContestEntryForm(request.POST)
+        form = forms.ContestEntryForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
