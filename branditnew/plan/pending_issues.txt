@@ -7,3 +7,7 @@
 * http://brandit.express/hub/index.php/start-contest/ use the fields on this page to add more fields to the contest model
 
 * fix glyphicons 
+
+* implement breadcrumbs
+
+* about field of contests is currently redundant... if it remains so, we might have to remove it from the contests model.

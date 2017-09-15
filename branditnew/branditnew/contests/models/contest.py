@@ -19,6 +19,13 @@ class Contest(models.Model):
     files = models.FileField(upload_to='uploads/%Y/%m/%d/') #files associated with contest
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    preferred_style = models.TextField(blank=True, null=True)
+    preferred_colors = models.CharField(max_length=50, blank=True, null=True)
+    target_audience = models.TextField(blank=True, null=True)
+    design_details = models.TextField(blank=True, null=True)
+    would_like_to_print = models.BooleanField()
+    logo = models.FileField(upload_to='', blank=True, null=True)
+    sketch = models.FileField(upload_to='', blank=True, null=True)
 
     def __str__(self):
         return self.title

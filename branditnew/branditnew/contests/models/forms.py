@@ -39,10 +39,8 @@ class CreateContestForm(forms.ModelForm):
     class Meta:
         model = Contest
         fields = [
-            'client',
             'title',
             'end_date',
-            'about',
             'prize',
             'is_top',
             'is_hidden',
@@ -50,17 +48,40 @@ class CreateContestForm(forms.ModelForm):
             'is_sealed',
             'cost',
             'category',
+            'preferred_style',
+            'preferred_colors',
+            'target_audience',
+            'design_details',
+            'would_like_to_print',
             # 'files',  #file submission still doesn't work. fix it.
         ]
         widgets = {
-            'client': forms.HiddenInput(),
-            'end_date': forms.DateInput(attrs={'type': 'date'}),
+            'cost': forms.HiddenInput(),
+            'end_date': forms.DateInput(attrs={'type': 'number'}),
+            # 'preferred_colors': forms.TextInput(attrs={'type': 'color'}),
+            
         }
         
         labels = {
             'title': "Give a title to your contest",
-            'end_date': "When should the contest end?",
+            'end_date': "For how many days should the contest run?",
+            'prize': 'What is your contest award?',
+            'category': 'What do you want designed?',
+            'target_audience': 'Describe the target audience of the design',
+            'preferred_style': 'Describe the style you prefer',
+            'preferred_colors': 'Describe your preferred colors',
+            'design_details': 'Describe any details you want on the design',
+            'would_like_to_print': 'Would you like to print after the contest is completed?',
+            'is_top': '',
+            'is_hidden': '',
+            'is_nda': '',
+            'is_sealed': '',
+        }
 
+        help_texts = {
+            'end_date': 'Minimum is 3 days',
+            'prize': 'Minimum prize amount is GHS300',
+            
         }
 
 

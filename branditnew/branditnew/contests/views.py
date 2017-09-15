@@ -80,7 +80,7 @@ def dashboard(request):
 
 
 def create_contest(request):
-    form = forms.CreateContestForm()
+    form = forms.CreateContestForm(initial={'would_like_to_print':True, 'end_date':'3',})
     
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST)
