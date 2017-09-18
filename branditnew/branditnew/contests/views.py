@@ -97,7 +97,6 @@ def create_contest(request):
             contest.save()
             print(contest)
             return redirect(reverse('contests:dashboard'))
-
     
     return render(request, "contests/create_contest.html", {'form': form})
 

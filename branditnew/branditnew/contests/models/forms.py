@@ -54,6 +54,9 @@ class CreateContestForm(forms.ModelForm):
             'design_details',
             'would_like_to_print',
             # 'files',  #file submission still doesn't work. fix it.
+            'logo',
+            'sketch',
+            'files',
         ]
         widgets = {
             'cost': forms.HiddenInput(),
@@ -76,6 +79,8 @@ class CreateContestForm(forms.ModelForm):
             'is_hidden': '',
             'is_nda': '',
             'is_sealed': '',
+            'logo': 'Upload a logo you want to include in the design [Optional]',
+            'sketch': 'Upload a sketch or image that would help explain your request [Optional]',
         }
 
         help_texts = {
@@ -91,7 +96,7 @@ class ContestEntryForm(forms.ModelForm):
         fields = [
             'contest',  # should be set by clicking on the 'submit' for the contest, which leads to this form
             'brandlancer',  # should be set by who is logged in
-            # 'files',
+            'files',
             'message',
             'sub',
             'boost',
