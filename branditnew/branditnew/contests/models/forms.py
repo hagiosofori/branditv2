@@ -96,13 +96,20 @@ class ContestEntryForm(forms.ModelForm):
         fields = [
             # 'contest',  # should be set by clicking on the 'submit' for the contest, which leads to this form
             # 'brandlancer',  # should be set by who is logged in
-            
+            'title',
             'files',
             'message',
             'sub',
             'boost',
             'hide',
         ]
+
+        labels = {
+            'files': 'File',
+            'sub': '',
+            'boost': '',
+            'hide': '',
+        }
 
 
 class SignInForm(forms.Form):

@@ -78,7 +78,11 @@ def signin(request):
 @login_required(login_url="contests:login")
 def dashboard(request):
     template = loader.get_template('contests/dashboard.html')
-    return render(request, 'contests/dashboard.html')
+    contests = Contest.objects.all()
+    context = {
+        'contests': contests,
+    }
+    return render(request, 'contests/dashboard.html', context)
 
 
 
@@ -92,7 +96,7 @@ def create_contest(request):
             print('form is valid')
             contest = form.save(commit=False)
             contest.client = request.user
-            contest.cost = 300
+            contest.cost = 300 #create a way to get this from the form
             print(contest.end_date)
             contest.save()
             print(contest)
@@ -109,8 +113,12 @@ def submit_entry(request, contest_id):
         form = forms.ContestEntryForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
-            return render(request, "contests/dashboard.html")
+            entry = form.save(commit=False)
+            current_contest = Contest.objects.get(pk=contest_id)
+            entry.contest = current_contest
+            entry.brandlancer = request.user
+            entry.save()
+            return redirect(reverse("contests:dashboard"))
 
     return render(request, "contests/submit_contest_entry.html", {'form': form})
 
@@ -118,5 +126,4 @@ def submit_entry(request, contest_id):
 
 def contest_details(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
-    print(contest.__dict__)
     return render(request, 'contests/contest_details.html', {'contest': contest})

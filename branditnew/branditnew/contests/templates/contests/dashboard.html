@@ -1,28 +1,25 @@
-{% extends "contests/includes/base.html" %} {% block title %} Dashboard {% endblock title %} {% block content %}
+{% extends "contests/includes/base.html" %} {% block title %} Dashboard {% endblock title %} 
+
+{% block content %}
 <h1>Dashboard</h1>
-{% load bootstrap4 %}
-<br>
+
 <div class="container">
     <center>
-        <div class="btn-toolbar-lg" role="toolbar" aria-label="Basic example">
-            <a class="btn btn-warning btn-lg mr-1"  href="contests:index"> Order Print </button>
+        <div class="btn-toolbar-lg" role="toolbar">
+            <a class="btn btn-warning btn-lg mr-1" href="contests:index"> Order Print </button>
             <a class = "btn btn-warning btn-lg" href="{% url 'contests:create_contest' %}"> Create Contest </a>
-
         </div>
     </center>
-
 </div>
-
 <br>
-
 <div class="row">
-    <div class=" card col-8 shadow">
+    <div class="card col-8 shadow">
         <br>
         <h2>News Feed</h2>
         <hr>
-        {% for contest in request.user.contests_list %}
-
-        <hr>
+        {% for contest in contests %}
+            {{ contest }}
+            <br>
         {% endfor %}
     </div>
 
@@ -30,25 +27,24 @@
 
         <div class="card shadow">
             <div class="container "><br>
-                <h2> welcome {{ request.user }}</h2>
-                <a class="btn btn-primary" href="">Edit Profile</a>
-                <br>
+                <h2> Welcome {{ request.user }} <a class="btn btn-primary float-right" href="">Edit Profile</a></h2>
                 <hr>
-                <h4>Details</h4>
-                <span><strong>Phone Number: </strong>{{ request.user.profile.phone_number }}</span>
+                <h4>Profile</h4>
+                <span><b>Phone Number: </b>{{ request.user.profile.phone_number }}</span>
                 <br>
                 <hr>
                 <h4>Skills</h4>
                 <span>{{ request.user.profile.skills }}</span>
-                <br>
-                <hr>
+                <br><hr>
                 <h4>Funds</h4>
-                <br>
-                <hr>
+
+                <br><hr>
                 <h4>Statistics</h4><br>
                 <hr>
             </div>
         </div>
     </div>
 </div>
-<br><br> {% endblock content %}
+<br><br> 
+
+{% endblock content %}

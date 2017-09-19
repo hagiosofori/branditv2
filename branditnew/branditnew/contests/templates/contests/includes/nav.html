@@ -2,9 +2,9 @@
 
 <div class="header">
 <div class="container">
-    <ul>
+    <ul style="height:2rem;">
         <li class="color2"><span><img src="{% static 'contests/images/svg/time' %}" aria-hidden="true"></span>Free and Fast Delivery</li>
-        <li class="color1"><span><img src="{% static 'contests/images/svg/phone' %}" aria-hidden="true"></span>0549-2424-05</li>
+        <li class="color1"><span><img src="{% static 'contests/images/svg/phone' %}" aria-hidden="true"></span>+233 54-924-2405</li>
         <li class="color3"><span><img src="{% static 'contests/images/svg/envelope' %}" aria-hidden="true"></span><a href="mailto:print@brandit.express">print@brandit.express</a></li>
     </ul>
 </div>
@@ -23,13 +23,10 @@
     {% include "contests/includes/side_nav.html" %}
     <div class="col-md-3 header-right footer-bottom">
         <ul>
-            <li><a href="{% url 'contests:login' %}" class="use1" data-toggle="modal" data-target=><span>Login</span></a>
-                
-            </li>
+            <li><a href="{% url 'contests:login' %}" class="use1" data-toggle="modal" data-target=><span>Login</span></a></li>
             <li><a class="fb" href="#"></a></li>
             <li><a class="twi" href="#"></a></li>
             <li><a class="insta" href="#"></a></li>
-            {% comment %} <li><a class="you" href="#"></a></li> {% endcomment %}
         </ul>
 
     </div>
