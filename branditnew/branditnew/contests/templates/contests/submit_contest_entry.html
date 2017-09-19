@@ -5,10 +5,92 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Submit Contest Entry</h1>
+
+<style>
+    .help-block {
+        color: #868e96;
+        font-size: 16px !important;
+    }
+</style>
+
+
+
+{% load bootstrap4 %}
     <form method="POST" enctype="multipart/form-data">
+        <div class="card col-md-7 container shadow"><br>
+            <h1>Submit an Entry</h1><hr>    
+        
         {% csrf_token %}
-    {{ form.as_p }}
-    <input type=submit value="Submit">
+        {% bootstrap_form form exclude='hide,boost,sub,brandlancer' %}
+        <br>
+    
+        </div>
+
+<div class="col-md-1"></div>
+    <div class="col-md-4 ml-auto card container " style="height:33rem;">
+            <br>
+            <h4>Get the most from your entry!</h4>
+            <hr><br>
+            <div class="row">
+                <div class="col-3">
+                    <center>{% bootstrap_field form.boost %}</center>
+                    <h4>GHS25</h4><br>
+                    <center>{% bootstrap_field form.hide %}</center>
+                    <h4>GHS15</h4><br>
+                    
+                </div>
+                <div class="col-9">
+                    <button type="button" class="btn btn-danger btn-block" onclick="triggerCheckbox('#id_boost')">BOOST ENTRY</button>
+                    <center>
+                        <div class="help-block">Keep your entry among the top of the list</div>
+                    </center><br><br>
+                    <button type="button" class="btn  btn-block" onclick="triggerCheckbox('#id_hide')">HIDDEN</button>
+                    <center>
+                        <div class="help-block">Hide all entries (this would ensure designers submit more original works)</div>
+                    </center><br>
+                </div>
+                
+            </div>
+
+            {% buttons %}
+            <br>
+            <center>
+                    <h4>Total: <span id="totalCost">300</span>  points</h4>
+                </center>
+
+            <div class="col-md-12"><center>
+            <button type='submit' class="btn btn-success btn-block">Submit Entry</button>
+            </center>
+        </div>
+            {% endbuttons %}
     </form>
+
+
+
+
+    <script>
+            function triggerCheckbox(checkbox) {
+                console.log("method called");
+                var button = $(checkbox);
+                if (button.prop("checked") == true) {
+                    button.prop("checked", false);
+                    $("#totalCost").text("0");
+        
+                } else {
+                    button.prop("checked", true);
+                    $("#totalCost").text("0");
+                }
+            }
+        
+            $('input:checkbox').change(
+                function () {
+                    if ($(this).is(':checked')) {
+                        var newTotal = parseInt($('#totalCost').val());
+                        newTotal = newTotal + parseInt('30');
+                        $("#totalCost").text(newTotal);
+                    }
+                });
+
+            </script>
+
 {% endblock content %}

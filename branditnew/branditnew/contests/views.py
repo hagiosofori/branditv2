@@ -118,4 +118,5 @@ def submit_entry(request, contest_id):
 
 def contest_details(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
+    print(contest.__dict__)
     return render(request, 'contests/contest_details.html', {'contest': contest})

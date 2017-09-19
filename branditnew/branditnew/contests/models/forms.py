@@ -94,8 +94,9 @@ class ContestEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = [
-            'contest',  # should be set by clicking on the 'submit' for the contest, which leads to this form
-            'brandlancer',  # should be set by who is logged in
+            # 'contest',  # should be set by clicking on the 'submit' for the contest, which leads to this form
+            # 'brandlancer',  # should be set by who is logged in
+            
             'files',
             'message',
             'sub',
