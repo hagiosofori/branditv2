@@ -13,3 +13,5 @@
 * testing for every object's method
 
 * something should show that you have logged in.
+
+* enter the correct redirect url for hubtel.
