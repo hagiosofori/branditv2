@@ -1,4 +1,5 @@
-{% extends "contests/includes/base.html" %} {% block title %} Dashboard {% endblock title %} 
+{% extends "contests/includes/base.html" %} 
+{% block title %} Dashboard {% endblock title %} 
 
 {% block content %}
 <h1>Dashboard</h1>
@@ -17,6 +18,7 @@
         <br>
         <h2>News Feed</h2>
         <hr>
+        <h4>Contests:</h4>
         {% for contest in contests %}
             {{ contest }}
             <br>
@@ -30,7 +32,7 @@
                 <h2> Welcome {{ request.user }} <a class="btn btn-primary float-right" href="">Edit Profile</a></h2>
                 <hr>
                 <h4>Profile</h4>
-                <span><b>Phone Number: </b>{{ request.user.profile.phone_number }}</span>
+                <span><b>Phone Number: </b><span class="float-right">{{ request.user.profile.phone_number }}</span></span>
                 <br>
                 <hr>
                 <h4>Skills</h4>

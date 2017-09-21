@@ -1,13 +1,15 @@
-* transfer the user_type reference from hard-coded to from db.
+* hubtel integration
 
-* ensure that only desired values are showing in dropdowns
-
-* create contest page: the client id should be the current logged-in person's id. the field should be hidden, and after submission of the form, and before submission.
-
-* http://brandit.express/hub/index.php/start-contest/ use the fields on this page to add more fields to the contest model
+* transfer the user_type reference being used from hard-coded to the ones from db.
 
 * fix glyphicons 
 
 * implement breadcrumbs
 
 * about field of contests is currently redundant... if it remains so, we might have to remove it from the contests model.
+
+* owner of the contest should not see the submit entry button for their contest.
+
+* testing for every object's method
+
+* something should show that you have logged in.

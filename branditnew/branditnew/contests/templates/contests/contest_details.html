@@ -2,9 +2,10 @@
 {% block title %} Contest Details {% endblock title %}} 
 
 {% block content %}
+{% load static %}
 <div class="card container">
     <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <div class="row container">
         <h1><span>{{ contest }} </span></h1>
         <br>
@@ -13,7 +14,7 @@
         <div class="row">
         <div class="col-md-3"><b>Contest Holder: </b>{{ contest.client }}</div>
         <div class="col-md-3"><b>Category: </b>{{ contest.category }}</div>
-        <div class="col-md-3"><b>Ends in: </b> <span id="end_date"></span> </div>
+        <div class="col-md-3"><b>Ends on: </b> <span id="end_date">{{ contest.end_date }}</span> </div>
         <div class="col-md-3"><a href="{% url 'contests:submit_entry' contest.id %}" class="btn btn-dark float-right">Submit Entry</a>
         </div>
         
@@ -21,16 +22,26 @@
     </span>
         <hr><br>
         <h3>Contest Brief</h3>
-        {{ contest.about }} <hr><br>
+        <p style="text-align: justify">{{ contest.about }} </p>
+        <hr><br>
+        <h3>Client's Preferred Styles</h3>
+        <p> {{ contest.preferred_styles }} [if none, display none]</p>
+        <hr><br>
+        <h3>Client's Preferred Colors</h3>
+        <p> {{ contest.preferred_colors }} [if none, display none]</p>
+        <hr><br>
 
                         
     </div>
-    <div class-"col-md-4 container" style="width: 20rem;">
+    <div class="col-md-1"></div>
+    <div class-"col-md-4 container float-right" style="width: 20rem;">
        <center> <br>
            <h4 class="card-title">WINNER</h4> <hr>           
-        <img class="card-img-top" src="" alt="WINNER IMAGE HERE">
+        <!-- if there is a winner, display the winner, else display another image saying there's no winner yet. image should probably be in the static files. -->
+
+           <img class="card-img-top" src="{% static 'contests/images/no-winners-yet.png' %}" alt="WINNER IMAGE HERE">
                     <div class="card-body">
-                      <p class="card-title">No winners yet</p>
+                      <p class="card-title"></p>
             </div>
         </center>
     </div>
@@ -38,18 +49,17 @@
 
     <h3>Entries:</h3><br>
     {% for entry in contest.entry_set.all%} 
-    <div class="col-md-3 card container" style="width: 20rem;">
-            <img class="card-img-top" src="/uploads/{{ entry.files }}" alt="{{ contest }}">
+    <div class="col-md-4 card"><br>
+            <img class="card-img-top" src="{{ entry.files.url }}" alt="{{ entry }}">
             <div class="card-body">
-              <p class="card-text">{{ entry }}</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <p class="card-text">{{ entry }}, designed by @{{ entry.brandlancer }} </p>
+              <a href="#" class="btn btn-primary">Make winner</a>
     </div>
     </div>
-    <div class="col-md-1"></div>
     {% endfor %}
     <br>
 
     
-</div>
+</div><br><br>
 
 {% endblock content %}
