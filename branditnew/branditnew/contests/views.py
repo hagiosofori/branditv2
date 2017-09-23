@@ -99,31 +99,31 @@ def create_contest(request):
             contest.client = request.user
             contest.cost = 300 #create a way to get this from the form
             print(contest.end_date)
-            
+            """
             #hubtel payment code.
-            # merchant_account_name = ""
-            # hubtel_payment_url = "api.hubtel.com/"+merchant_account_name+"v1/"+merchant_account_name+"onlinecheckout/invoice/create"
-            # hubtel_post_data = {
-            #     "invoice":{
-            #         "total_amount": contest.cost,
-            #         "description": contest.title,
+            merchant_account_name = ""
+            hubtel_payment_url = "api.hubtel.com/"+merchant_account_name+"v1/"+merchant_account_name+"onlinecheckout/invoice/create"
+            hubtel_post_data = {
+                "invoice":{
+                    "total_amount": contest.cost,
+                    "description": contest.title,
 
-            #     },
-            #     "store":{
-            #         "name": "Brandit",
-            #         "tagline" "Africa’s largest online graphic design marketplace ",
-            #         "phone": "+233 549 2424 05",
-            #         "logo_url": "https://brandit.express/images/logo.png"
-            #         "website_url": "https://brandit.express/dashboard.php",
-            #     }
-            #     "actions":{
-            #         "cancel_url": "http://brandit.express/create_contest",
-            #         "return_url": "http://brandit.express/dashboard"
-            #     }
-            # }
+                },
+                "store":{
+                    "name": "Brandit",
+                    "tagline" "Africa’s largest online graphic design marketplace ",
+                    "phone": "+233 549 2424 05",
+                    "logo_url": "https://brandit.express/images/logo.png"
+                    "website_url": "https://brandit.express/dashboard.php",
+                }
+                "actions":{
+                    "cancel_url": "http://brandit.express/create_contest",
+                    "return_url": "http://brandit.express/dashboard"
+                }
+            }
 
-            # response = requests.post(hubtel_payment_url, json=hubtel_post_data)
-            
+            response = requests.post(hubtel_payment_url, json=hubtel_post_data)
+            """
             #check if the payment has been made, and update db accordingly before saving.
             contest.save()
             return redirect(reverse('contests:dashboard'))
