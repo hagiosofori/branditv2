@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^dashboard/', views.dashboard, name='dashboard'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^create_contest/', views.create_contest, name='create_contest'),
+    url(r'^(?P<contest_id>[0-9]+)/entries/(?P<entry_id>[0-9]+)/make_winner/', views.make_winner, name="make_winner"),
     url(r'^(?P<contest_id>[0-9]+)/submit_entry/', views.submit_entry, name='submit_entry'),
     url(r'^(?P<contest_id>[0-9]+)/', views.contest_details, name='contest_details'),
     url(r'^contest_list/', views.contest_list, name="contest_list"),

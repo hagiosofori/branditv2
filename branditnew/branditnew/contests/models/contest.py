@@ -44,6 +44,7 @@ class Contest(models.Model):
         upload_to=user_directory_path, blank=True, null=True)
     sketch = models.FileField(
         upload_to=user_directory_path, blank=True, null=True)
+    is_closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

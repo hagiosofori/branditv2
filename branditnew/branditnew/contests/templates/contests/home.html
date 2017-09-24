@@ -9,36 +9,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
     crossorigin="anonymous"></script>
 
-    <style>
-        .carousel-control 			 { width:  4%; }
-        .carousel-control.left,.carousel-control.right {margin-left:15px;background-image:none;}
-        @media (max-width: 767px) {
-            .carousel-inner .active.left { left: -100%; }
-            .carousel-inner .next        { left:  100%; }
-            .carousel-inner .prev		 { left: -100%; }
-            .active > div { display:none; }
-            .active > div:first-child { display:block; }
-        
-        }
-        @media (min-width: 767px) and (max-width: 992px ) {
-            .carousel-inner .active.left { left: -50%; }
-            .carousel-inner .next        { left:  50%; }
-            .carousel-inner .prev		 { left: -50%; }
-            .active > div { display:none; }
-            .active > div:first-child { display:block; }
-            .active > div:first-child + div { display:block; }
-        }
-        @media (min-width: 992px ) {
-            .carousel-inner .active.left { left: -25%; }
-            .carousel-inner .next        { left:  25%; }
-            .carousel-inner .prev		 { left: -25%; }	
-        }
-        
-</style> 
-
-
-
-
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -63,70 +33,45 @@
         </a>
 </div>
 <br><br>
-<h4>Top Contests </h4><br>
+<h4>Some of our Top Contests </h4><br>
 
 
 
-<div class="carousel slide" data-ride="carousel" data-type="multi" data-interval="3000" id="myCarousel">
-  <div class="carousel-inner">
-    
+<div class="row ">
 
-
-<div class="row container ">
-
-        {% for contest in contests %}
+        {% for contest in top_contests %}
         
         <div class="col-md-4">
-            <div class="card">
+            <div class="card" style="height:40rem; width:20rem">
                     {% if contest.logo %}
-                <img class="card-img-top" src="{{ contest.logo.url }}" alt="{{ entry }}">
+                <img class="card-img-top" src="{{ contest.logo.url }}" alt="{{ entry }}" >
                 
                     {% else %}
-                    <img class="card-img-top" src="{% static 'contests/images/img-placeholder.png' %}" alt="{{ entry }}">
+                    <img class="card-img-top" src="{% static 'contests/images/img-placeholder.png' %}" alt="{{ entry }}" height="50%" width="30%">
                     
                     {% endif %}
-                    <div class="card-body">            
+                    <div class="card-body ">            
                     <div class="row">
                         <div class="col-md-6"><h4>{{ contest }}</h4>
                         </div>
-                        <div class="col-md-6"><a href="{% url 'contests:contest_details' contest.id %}" class="btn btn-dark float-right">View Details</a>
+                        <div class="col-md-6"><a href="{% url 'contests:contest_details' contest.id %}" class="btn btn-warning float-right">View Details</a>
                         </div>
                     </div>
                     <br>
-                    <p>{{ contest.about|truncatechars:300 }} ... </p>
-                  <a href="#" style="text-align: justify" class="btn btn-dark btn-block"><center>Submit Entry for this contest</center></a>
+                    <p style="text-align: justify">{{ contest.about|truncatechars:300 }} ... </p>
+                  <a href="{% url 'contests:submit_entry' contest.id %}"  class="btn btn-warning float-right" style="position:absolute; bottom:0"><center>Submit Entry for this contest</center></a><br>
         </div>
         </div>
+    </div>
         {% endfor %}
 
-    </div>
+    
 </div>
-
-
-
-</div>
-<a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-<a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <br>
 <hr>
-<h4>Recently Completed Contests</h4><br>
-<hr>
 
-
+<br>
 <h4>Some of Our Clients </h4>
 <br>
 <div class="row">

@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.contest import Contest
+from branditnew.contests.models.entries import Entry
 import requests
 
 # Create your views here.
@@ -17,15 +18,20 @@ def test(request):
     template = loader.get_template('contests/home.html')
     return(HttpResponse(template.render()))
 
+
+
 def home(request):
     return redirect(reverse('contests:index'))
 
 
+
 def index(request):
-    contests_list = Contest.objects.filter(is_top="True", is_sealed="False", is_verified="True")
+    top_contests = Contest.objects.filter(is_top="True", is_sealed="False", is_verified="True")
+    completed_contests = Contest.objects.filter(is_closed=True)[:3]
     template = loader.get_template('contests/home.html')
     context = {
-        'contests': contests_list,
+        'top_contests': top_contests,
+        'closed_contests': completed_contests,
     }
     return HttpResponse(template.render(context))
 
@@ -50,10 +56,7 @@ def signup(request):
             context = {}
             return render(request, 'contests/dashboard.html', context)
         else:
-            print("form is not valid")
-            print(form.error_messages)
-
-    print("didn't submit the data")
+            
     return render(request, "contests/signup.html", {'form': form})
 
 
@@ -75,7 +78,6 @@ def signin(request):
     context = {
         'form': form
     }
-    print(form.errors_messages)
     return render(request, 'contests/login.html', context)
 
 
@@ -83,7 +85,7 @@ def signin(request):
 @login_required(login_url="contests:login")
 def dashboard(request):
     template = loader.get_template('contests/dashboard.html')
-    contests = Contest.objects.all()
+    contests = Contest.objects.filter(client=request.user)
     context = {
         'contests': contests,
     }
@@ -98,11 +100,9 @@ def create_contest(request):
         form = forms.CreateContestForm(request.POST, request.FILES)
         
         if form.is_valid():
-            print('form is valid')
             contest = form.save(commit=False)
             contest.client = request.user
             contest.cost = 300 #create a way to get this from the form
-            print(contest.end_date)
             """
             #hubtel payment code.
             merchant_account_name = ""
@@ -156,7 +156,12 @@ def submit_entry(request, contest_id):
 
 def contest_details(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
-    return render(request, 'contests/contest_details.html', {'contest': contest})
+    winning_entry = Entry.objects.get(is_winner=True)
+    context = {
+        'contest': contest,
+        'winning_entry': winning_entry,
+    }
+    return render(request, 'contests/contest_details.html', context)
 
 
 def contest_list(request):
@@ -166,3 +171,19 @@ def contest_list(request):
         'contests_list': contests_list,
     }
     return HttpResponse(template.render(context))
+
+
+
+def make_winner(request, contest_id, entry_id):
+    contest = Contest.objects.get(id=contest_id)
+    entry = Entry.objects.get(pk=entry_id, contest__id=contest_id)
+    current_winners = Entry.objects.get(is_winner=True, contest__id=contest_id)
+    current_winners.is_winner = False
+
+    entry.is_winner = True
+    contest.is_closed = True
+    contest.save()
+    entry.save()
+    current_winners.save()
+    return redirect(reverse('contests:contest_details', args=(contest_id)))
+

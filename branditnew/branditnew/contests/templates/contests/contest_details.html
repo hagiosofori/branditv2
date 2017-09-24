@@ -12,10 +12,10 @@
     </div>
     <span>
         <div class="row">
-        <div class="col-md-3"><b>Contest Holder: </b>{{ contest.client }}</div>
-        <div class="col-md-3"><b>Category: </b>{{ contest.category }}</div>
-        <div class="col-md-3"><b>Ends on: </b> <span id="end_date">{{ contest.end_date }}</span> </div>
-        <div class="col-md-3"><a href="{% url 'contests:submit_entry' contest.id %}" class="btn btn-dark float-right">Submit Entry</a>
+        <div class="col-md-3"><b>Contest Holder: <br> </b>{{ contest.client }}</div>
+        <div class="col-md-3"><b>Category: <br> </b>{{ contest.category }}</div>
+        <div class="col-md-3"><b>Ends on: </b> <br>  <span id="end_date">{{ contest.end_date }}</span> </div>
+        <div class="col-md-3"><a href="{% url 'contests:submit_entry' contest.id %}" class="btn btn-warning float-right">Submit an Entry</a>
         </div>
         
     </div>
@@ -25,10 +25,18 @@
         <p style="text-align: justify">{{ contest.about }} </p>
         <hr><br>
         <h3>Client's Preferred Styles</h3>
-        <p> {{ contest.preferred_styles }} [if none, display none]</p>
+        {% if contest.preferred_styles %}
+        <p> {{ contest.preferred_styles }} </p>
+        {% else %}
+        <p> N/A </p>
+        {% endif %}
         <hr><br>
         <h3>Client's Preferred Colors</h3>
-        <p> {{ contest.preferred_colors }} [if none, display none]</p>
+        {% if contest.preferred_colors %}
+        <p> {{ contest.preferred_colors }} </p>
+        {% else %}
+        <p>N/A</p>
+        {% endif %}
         <hr><br>
 
                         
@@ -39,25 +47,45 @@
            <h4 class="card-title">WINNER</h4> <hr>           
         <!-- if there is a winner, display the winner, else display another image saying there's no winner yet. image should probably be in the static files. -->
 
+
+        {% if winning_entry %}
+        <img class="card-img-top" src="{{ winning_entry.files.url }}" alt="WINNER IMAGE HERE">
+        <div class="card-body">
+          <p class="card-title">{{ winning_entry.title }}, designed by @{{ winning_entry.brandlancer }} </p></p>
+</div>
+
+        {% else %}
            <img class="card-img-top" src="{% static 'contests/images/no-winners-yet.png' %}" alt="WINNER IMAGE HERE">
                     <div class="card-body">
                       <p class="card-title"></p>
             </div>
+            
+        {% endif %}
         </center>
     </div>
 </div>
 
     <h3>Entries:</h3><br>
-    {% for entry in contest.entry_set.all%} 
-    <div class="col-md-3 card"><br>
+    {% if contest.entry_set.all %}
+    {% for entry in contest.entry_set.all %} 
+    <div class="col-md-4 ">
+            <div class="card">
             <img class="card-img-top" src="{{ entry.files.url }}" alt="{{ entry }}">
             <div class="card-body">
               <p class="card-text">{{ entry }}, designed by @{{ entry.brandlancer }} </p>
-              <a href="#" class="btn btn-primary">Make winner</a>
+              {% ifequal request.user contest.client %}
+              <a href="{% url 'contests:make_winner' contest_id=contest.id entry_id=entry.id %}" class="btn btn-primary">Make winner</a>
+              
+              {% endifequal %}
+              
     </div>
     </div>
-    <div class="col-md-1"></div>
+</div>
     {% endfor %}
+    
+    {% else %}
+    <p>No entries yet. Be the first to submit an entry!</p>
+    {% endif %}
     <br>
 
     
