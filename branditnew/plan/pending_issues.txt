@@ -1,5 +1,9 @@
 * hubtel integration
 
+* showing the winning picture
+
+* convert everything to bootstrap 4
+
 * transfer the user_type reference being used from hard-coded to the ones from db.
 
 * correct calculation of the total cost the contest creator is incurring

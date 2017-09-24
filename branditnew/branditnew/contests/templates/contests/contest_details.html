@@ -49,13 +49,14 @@
 
     <h3>Entries:</h3><br>
     {% for entry in contest.entry_set.all%} 
-    <div class="col-md-4 card"><br>
+    <div class="col-md-3 card"><br>
             <img class="card-img-top" src="{{ entry.files.url }}" alt="{{ entry }}">
             <div class="card-body">
               <p class="card-text">{{ entry }}, designed by @{{ entry.brandlancer }} </p>
               <a href="#" class="btn btn-primary">Make winner</a>
     </div>
     </div>
+    <div class="col-md-1"></div>
     {% endfor %}
     <br>
 

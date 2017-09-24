@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^create_contest/', views.create_contest, name='create_contest'),
     url(r'^(?P<contest_id>[0-9]+)/submit_entry/', views.submit_entry, name='submit_entry'),
     url(r'^(?P<contest_id>[0-9]+)/', views.contest_details, name='contest_details'),
+    url(r'^contest_list/', views.contest_list, name="contest_list"),
 
     url(r'^login/$', auth_views.login, {'template_name':'contests/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'contests/index.html'}, name='logout'),

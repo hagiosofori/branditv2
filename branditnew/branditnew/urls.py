@@ -17,9 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import static
 from . import settings
+from .contests import views
 
 urlpatterns = [
-    # url(r'^', include('django.contrib.auth.urls')),
+    url(r'^$', views.home, name="home" ),
 
     #eg: brandit.express/contests/
     url(r'^contests/', include('branditnew.contests.urls')),

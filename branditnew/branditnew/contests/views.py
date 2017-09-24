@@ -14,14 +14,18 @@ import requests
 # Create your views here.
 
 def test(request):
-    template = loader.get_template('contests/includes/side_nav.html')
+    template = loader.get_template('contests/home.html')
     return(HttpResponse(template.render()))
 
+def home(request):
+    return redirect(reverse('contests:index'))
+
+
 def index(request):
-    contests_list = Contest.objects.all()
-    template = loader.get_template('contests/index.html')
+    contests_list = Contest.objects.filter(is_top="True", is_sealed="False", is_verified="True")
+    template = loader.get_template('contests/home.html')
     context = {
-        'contests_list': contests_list,
+        'contests': contests_list,
     }
     return HttpResponse(template.render(context))
 
@@ -153,3 +157,12 @@ def submit_entry(request, contest_id):
 def contest_details(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
     return render(request, 'contests/contest_details.html', {'contest': contest})
+
+
+def contest_list(request):
+    contests_list = Contest.objects.all()
+    template = loader.get_template('contests/contest_list.html')
+    context = {
+        'contests_list': contests_list,
+    }
+    return HttpResponse(template.render(context))
