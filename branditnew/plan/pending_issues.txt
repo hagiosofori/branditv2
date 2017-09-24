@@ -1,6 +1,16 @@
-* hubtel integration
+* create table to store prices of various parts of the app, for easy changing.
+    * cost of top contest
+    * cost of sealed contest.
+    * cost of nda
+    * cost of private contest.
+    * cost of boosted entry
+    * cost of hidden entry.
+    * cost of normal entry.
 
-* showing the winning picture
+
+* hubtel integration kinda DONE
+
+* showing the winning picture DONE
 
 * convert everything to bootstrap 4
 

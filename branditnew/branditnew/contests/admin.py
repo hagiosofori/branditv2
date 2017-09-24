@@ -6,6 +6,7 @@ from .models import profiles
 from .models import skills
 from .models import user_type
 from .models import entries
+from .models import prices
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
@@ -30,3 +31,4 @@ admin.site.register(user_type.User_type)
 admin.site.register(contest.Contest)
 admin.site.register(categories.Category)
 admin.site.register(entries.Entry)
+admin.site.register(prices.Price)

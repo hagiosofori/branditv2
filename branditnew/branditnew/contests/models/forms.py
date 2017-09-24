@@ -102,6 +102,7 @@ class ContestEntryForm(forms.ModelForm):
             'sub',
             'boost',
             'hide',
+            'cost',
         ]
 
         labels = {
@@ -109,6 +110,10 @@ class ContestEntryForm(forms.ModelForm):
             'sub': '',
             'boost': '',
             'hide': '',
+        }
+
+        widgets = {
+            'cost': forms.HiddenInput(),
         }
 
 

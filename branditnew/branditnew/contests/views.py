@@ -55,8 +55,7 @@ def signup(request):
             template = loader.get_template('contests/dashboard.html')
             context = {}
             return render(request, 'contests/dashboard.html', context)
-        else:
-            
+        
     return render(request, "contests/signup.html", {'form': form})
 
 

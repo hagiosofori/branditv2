@@ -69,11 +69,13 @@
 
 
     <script>
-            function triggerCheckbox(checkbox) {
-                console.log("method called");
+            function triggerCheckbox(checkbox, amount) {
+                current_cost = $('#id_cost').val()
+                
                 var button = $(checkbox);
                 if (button.prop("checked") == true) {
                     button.prop("checked", false);
+                    
                     $("#totalCost").text("0");
         
                 } else {
@@ -82,14 +84,6 @@
                 }
             }
         
-            $('input:checkbox').change(
-                function () {
-                    if ($(this).is(':checked')) {
-                        var newTotal = parseInt($('#totalCost').val());
-                        newTotal = newTotal + parseInt('30');
-                        $("#totalCost").text(newTotal);
-                    }
-                });
 
             </script>
 
