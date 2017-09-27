@@ -61,8 +61,6 @@ class CreateContestForm(forms.ModelForm):
         widgets = {
             'cost': forms.HiddenInput(),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
-            # 'preferred_colors': forms.TextInput(attrs={'type': 'color'}),
-            
         }
         
         labels = {
@@ -114,6 +112,7 @@ class ContestEntryForm(forms.ModelForm):
 
         widgets = {
             'cost': forms.HiddenInput(),
+
         }
 
 

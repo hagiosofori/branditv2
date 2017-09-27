@@ -79,6 +79,18 @@
 </style>
 
 <script>
+    var currentCost = $("#id_cost").value();
+
+    function updateCostValue(newValue){
+        $("#id_cost").text = newValue;
+    }
+
+    $("#id_category").onfocusout(
+        function(){
+            //update the cost value.
+        }
+    );
+
     function triggerCheckbox(checkbox) {
         console.log("method called");
         var button = $(checkbox);

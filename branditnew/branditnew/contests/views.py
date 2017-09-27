@@ -10,6 +10,8 @@ from datetime import datetime, timedelta
 from branditnew.contests.models import forms
 from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.entries import Entry
+from branditnew.contests.models.prices import Price
+from branditnew.contests.models.categories import Category
 import requests
 
 # Create your views here.
@@ -131,7 +133,16 @@ def create_contest(request):
             contest.save()
             return redirect(reverse('contests:dashboard'))
     
-    return render(request, "contests/create_contest.html", {'form': form})
+    prices = Price.objects.values()
+    category_prices = Category.objects.values()
+    print(category_prices)
+    print(prices)
+
+    context = {
+        'form': form,
+        'prices': prices,
+    }
+    return render(request, "contests/create_contest.html", context)
 
 
 
@@ -149,7 +160,15 @@ def submit_entry(request, contest_id):
             entry.save()
             return redirect(reverse("contests:dashboard"))
 
-    return render(request, "contests/submit_contest_entry.html", {'form': form})
+    prices = Price.objects.values()
+    print(prices)
+    
+    context = {
+        'form': form,
+        'prices': prices,
+        'category_prices': category_prices,
+    }
+    return render(request, "contests/submit_contest_entry.html", context)
 
 
 
