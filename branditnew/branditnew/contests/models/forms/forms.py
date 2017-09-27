@@ -3,9 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.admin import widgets
 
 from django import forms
-from .contest import Contest
-from . import skills
-from .entries import Entry
+from ..contest import Contest
+from .. import skills
+from ..entries import Entry
 
 
 class SignUpForm(UserCreationForm):

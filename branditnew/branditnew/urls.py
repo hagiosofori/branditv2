@@ -21,7 +21,9 @@ from .contests import views
 
 urlpatterns = [
     url(r'^$', views.home, name="home" ),
-
+    url(r'^signup/', views.signup, name='signup'),
+    url(r'^dashboard/', views.dashboard, name='dashboard'),
+    url(r'^create_project/', views.create_project, name="create_project"),
     #eg: brandit.express/contests/
     url(r'^contests/', include('branditnew.contests.urls')),
 
