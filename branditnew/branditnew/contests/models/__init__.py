@@ -5,3 +5,4 @@ from . import contest
 from . import entries
 from . import forms
 from . import prices
+from . import projects

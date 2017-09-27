@@ -4,7 +4,7 @@
     : edit/delete a project before checkout. [ probably via a modal seeking confirmation for checkout ]
     : display price of selected design close to submit button.
     : display list of client's projects [ under 'my projects' on nav. ]
-    : viewing projects by admin, on admin panel. [ througho nav ].
+    : viewing projects by admin, on admin panel. [ through nav ].
     : submitting design by admin only.
     : automatically generate numerical design label. [ for all designs? or for the designs for the particular project. ]
     : approval of design by client.
@@ -14,13 +14,14 @@ project has the ff fields
 
 : client
 : is complete
-: 
+: title
 
 
 project submissions table.
 : project
 : submission
 : is approved
+: title
 
 
 project submission comments table.

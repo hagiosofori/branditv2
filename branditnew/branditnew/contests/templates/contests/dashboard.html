@@ -4,6 +4,14 @@
 {% block content %}
 <h1>Dashboard</h1>
 
+<div class="container">
+    <center>
+        <div class="btn-toolbar-lg" role="toolbar">
+            <a class="btn btn-warning btn-lg mr-1" href="contests:index"> Create Project </button>
+            <a class = "btn btn-warning btn-lg" href="{% url 'contests:create_contest' %}"> Create Contest </a>
+        </div>
+    </center>
+</div>
 <br>
 <div class="row">
     <div class="card col-8 shadow">
@@ -21,7 +29,7 @@
 
         <div class="card shadow">
             <div class="container "><br>
-                <h2> Welcome {{ request.user.first_name }} <a class="btn btn-primary float-right" href="">Edit Profile</a></h2>
+                <h2> Welcome {{ request.user }} <a class="btn btn-primary float-right" href="">Edit Profile</a></h2>
                 <hr>
                 <h4>Profile</h4>
                 <span><b>Phone Number: </b><span class="float-right">{{ request.user.profile.phone_number }}</span></span>
