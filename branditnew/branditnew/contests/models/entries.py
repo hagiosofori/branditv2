@@ -9,8 +9,8 @@ def user_directory_path(instance, filename):
 class Entry(models.Model):
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     brandlancer = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, blank=True, null=True)
-    files = models.FileField(upload_to=user_directory_path, blank=True, null=True)
+    title = models.CharField(max_length=100,blank=True, null=True)
+    files = models.FileField(upload_to=user_directory_path, blank=True,null=True)
     message = models.TextField(null=True)
     sub = models.BooleanField(default=False)
     boost = models.BooleanField(default=False)

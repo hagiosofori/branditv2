@@ -10,11 +10,12 @@ class Create_Project_Form(forms.ModelForm):
             'description',
             'files',
             'end_date',
-
+            'cost',
         ]
 
         widgets = {
-            'end_date': forms.DateInput(attrs={'type':'date'})
+            'end_date': forms.DateInput(attrs={'type':'date'}),
+            'cost' : forms.HiddenInput()
         }
 
         labels = {

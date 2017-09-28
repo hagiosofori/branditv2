@@ -7,6 +7,15 @@
 
 {% block content %}
     {% load bootstrap4 %}
-
+    <div class=" card col-md-6 md-auto container shadow">
+    <br>    
+    <h1>Create a Project</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <br>{% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <input type="submit" class="btn btn-success btn-block">
+    {% endbuttons %}
+    </form>
     
 {% endblock content %}

@@ -12,6 +12,7 @@ from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
+from branditnew.contests.views.payment_views import make_payment
 import requests
 
 # Create your views here.
@@ -93,7 +94,7 @@ def dashboard(request):
     return render(request, 'contests/dashboard.html', context)
 
 
-
+@login_required(login_url="login")
 def create_contest(request):
     form = forms.CreateContestForm(initial={'would_like_to_print':True,})
     
@@ -104,35 +105,11 @@ def create_contest(request):
             contest = form.save(commit=False)
             contest.client = request.user
             contest.cost = 300 #create a way to get this from the form
-            """
-            #hubtel payment code.
-            merchant_account_name = ""
-            hubtel_payment_url = "api.hubtel.com/"+merchant_account_name+"v1/"+merchant_account_name+"onlinecheckout/invoice/create"
-            hubtel_post_data = {
-                "invoice":{
-                    "total_amount": contest.cost,
-                    "description": contest.title,
-
-                },
-                "store":{
-                    "name": "Brandit",
-                    "tagline" "Africa’s largest online graphic design marketplace ",
-                    "phone": "+233 549 2424 05",
-                    "logo_url": "https://brandit.express/images/logo.png"
-                    "website_url": "https://brandit.express/dashboard.php",
-                }
-                "actions":{
-                    "cancel_url": "http://brandit.express/create_contest",
-                    "return_url": "http://brandit.express/dashboard"
-                }
-            }
-
-            response = requests.post(hubtel_payment_url, json=hubtel_post_data)
-            """
-            #check if the payment has been made, and update db accordingly before saving.
             contest.save()
-            return redirect(reverse('contests:dashboard'))
-    
+            make_payment(request, contest)
+            
+            #check if the payment has been made, and update db accordingly before saving.
+            
     prices = Price.objects.values()
     category_prices = Category.objects.values()
     print(category_prices)
@@ -142,6 +119,7 @@ def create_contest(request):
         'form': form,
         'prices': prices,
     }
+    
     return render(request, "contests/create_contest.html", context)
 
 

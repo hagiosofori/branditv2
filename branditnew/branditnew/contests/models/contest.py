@@ -12,6 +12,7 @@ def user_directory_path(instance, filename):
 class Contest(models.Model):
     # the client who creates the contest
     client = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_draft = models.BooleanField(default=True)
     title = models.CharField(max_length=50)  # the title of the contest
     about = models.TextField()  # more detailed information on the contest
     # the prize brandlancer gets for winning the contest for the contest
