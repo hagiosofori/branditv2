@@ -1,8 +1,9 @@
 from django.shortcuts import reverse, redirect
-
+from django.http import HttpResponse, HttpResponseRedirect
 import requests
+import json
 
-def make_payment(request, item):
+def process_invoice(request, item):
     client_id = "cowuvotv"
     client_secret = "qpjnqjcb"
     hubtel_payment_url = "https://api.hubtel.com/v1/merchantaccount/onlinecheckout/invoice/create"
@@ -24,12 +25,13 @@ def make_payment(request, item):
             "return_url": "http://brandit.express/dashboard"
         }
     }
-
+    print(hubtel_invoice)
     response = requests.post(hubtel_payment_url, json=hubtel_invoice, auth=(client_id, client_secret))
     print('done posting the invoice')
-    print(response.text)
-    response = requests.get(response.response_text)
-    verify_payment(request, response, item)
+    
+    data = response.json()
+    return data
+    # verify_payment(request, response, item)
 
 
 def verify_payment(request, response, item):

@@ -3,6 +3,7 @@ from . import contest
 from . import categories
 import datetime
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>

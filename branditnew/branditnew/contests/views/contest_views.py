@@ -12,7 +12,7 @@ from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
-from branditnew.contests.views.payment_views import make_payment
+from branditnew.contests.views.payment_views import process_invoice
 import requests
 
 # Create your views here.
@@ -97,21 +97,23 @@ def dashboard(request):
 @login_required(login_url="login")
 def create_contest(request):
     form = forms.CreateContestForm(initial={'would_like_to_print':True,})
+    category_prices = Category.objects.values()
     
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST, request.FILES)
-        
         if form.is_valid():
             contest = form.save(commit=False)
             contest.client = request.user
-            contest.cost = 300 #create a way to get this from the form
+            category_cost = Category.objects.get(name=form.cleaned_data.get('category')) 
+            cost = category_cost.prize_lower_limit
+            contest.cost = cost
             contest.save()
-            make_payment(request, contest)
-            
+            data = process_invoice(request, contest)
+            return redirect(data['response_text'])
             #check if the payment has been made, and update db accordingly before saving.
             
     prices = Price.objects.values()
-    category_prices = Category.objects.values()
+    
     print(category_prices)
     print(prices)
 
@@ -144,7 +146,6 @@ def submit_entry(request, contest_id):
     context = {
         'form': form,
         'prices': prices,
-        'category_prices': category_prices,
     }
     return render(request, "contests/submit_contest_entry.html", context)
 

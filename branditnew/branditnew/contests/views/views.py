@@ -12,7 +12,7 @@ from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
-from branditnew.contests.views.payment_views import make_payment
+from branditnew.contests.views.payment_views import process_invoice
 import requests
 
 # Create your views here.
@@ -119,7 +119,7 @@ def create_contest(request):
         'form': form,
         'prices': prices,
     }
-    
+
     return render(request, "contests/create_contest.html", context)
 
 

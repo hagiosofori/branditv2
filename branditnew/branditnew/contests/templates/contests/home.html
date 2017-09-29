@@ -50,7 +50,7 @@
                     <img class="card-img-top" src="{% static 'contests/images/img-placeholder.png' %}" alt="{{ entry }}" height="50%" width="30%">
                     
                     {% endif %}
-                    <div class="card-body ">            
+                    <div class="card-body " style="height:20rem">            
                     <div class="row">
                         <div class="col-md-6"><h4>{{ contest }}</h4>
                         </div>
@@ -59,7 +59,7 @@
                     </div>
                     <br>
                     <p style="text-align: justify">{{ contest.about|truncatechars:300 }} ... </p>
-                  <a href="{% url 'contests:submit_entry' contest.id %}"  class="btn btn-warning float-right" style="position:absolute; bottom:0"><center>Submit Entry for this contest</center></a><br>
+                  <a href="{% url 'contests:submit_entry' contest.id %}"  class="btn btn-warning float-right " style="bottom:0; position:absolute"><center>Submit Entry for this contest</center></a><br>
         </div>
         </div>
     </div>

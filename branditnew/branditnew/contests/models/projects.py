@@ -21,6 +21,7 @@ class Project(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     files = models.FileField(upload_to=project_directory_path, blank=True, null=True)
+    cost = models.PositiveIntegerField()
 
     def __str__(self):
         return self.title
