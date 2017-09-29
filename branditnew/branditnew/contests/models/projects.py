@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from branditnew.contests.models.categories import Category
+from datetime import datetime
 
 def project_submissions_directory_path(instance, filename):
     return 'project_{0}/submissions/{1}'.format(instance.project.id, filename)
@@ -15,7 +16,7 @@ def project_directory_path(instance, filename):
 class Project(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    end_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField()
     is_draft = models.BooleanField(default=True)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)

@@ -10,8 +10,8 @@ import requests
 @login_required(login_url="login")
 def create_project(request):
     form = forms.Create_Project_Form()
-    category_prices = Category.objects.values()
-
+    category_prices = Category.objects.all()
+    print(category_prices[0])
     if request.method == "POST":
         form = forms.Create_Project_Form(request.POST, request.FILES)
         if form.is_valid():

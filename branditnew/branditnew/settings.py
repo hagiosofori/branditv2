@@ -140,3 +140,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 LOGIN_REDIRECT_URL = 'contests:dashboard'
 
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+USE_TZ = True
