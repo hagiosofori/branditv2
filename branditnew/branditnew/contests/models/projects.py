@@ -16,12 +16,11 @@ def project_directory_path(instance, filename):
 class Project(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    end_date = models.DateField()
+    end_date = models.DateField(default=datetime.today)
     is_draft = models.BooleanField(default=True)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     files = models.FileField(upload_to=project_directory_path, blank=True, null=True)
-    cost = models.DecimalField(decimal_places=2, max_digits=1000000000)
 
     def __str__(self):
         return self.title

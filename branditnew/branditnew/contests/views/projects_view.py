@@ -7,17 +7,21 @@ from branditnew.contests.views.payment_views import make_payment, verify_payment
 
 import requests
 
+
+
 @login_required(login_url="login")
 def create_project(request):
     form = forms.Create_Project_Form()
-    category_prices = Category.objects.all()
-    print(category_prices[0])
+    
+
     if request.method == "POST":
         form = forms.Create_Project_Form(request.POST, request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
             project.client = request.user
-            project.cost = 300 #create way to extract this from template
+            category_cost = Category.objects.get(name=form.cleaned_data.get('category')) 
+            cost = category_cost.prize_lower_limit
+            print(cost)
             project.save()
 
             #hubtel payment goes here.
@@ -26,6 +30,5 @@ def create_project(request):
 
     context = {
         'form':form,
-        'category_prices': category_prices,
     }
     return render(request, "contests/create_project.html", context)

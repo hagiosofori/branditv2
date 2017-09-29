@@ -27,7 +27,7 @@ def make_payment(request, item):
 
     response = requests.post(hubtel_payment_url, json=hubtel_invoice, auth=(client_id, client_secret))
     print('done posting the invoice')
-    print(response.__dict__)
+    print(response.text)
     response = requests.get(response.response_text)
     verify_payment(request, response, item)
 

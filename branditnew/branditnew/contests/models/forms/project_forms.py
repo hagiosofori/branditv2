@@ -10,7 +10,6 @@ class Create_Project_Form(forms.ModelForm):
             'description',
             'files',
             'end_date',
-            'cost',
         ]
 
         widgets = {
