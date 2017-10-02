@@ -63,7 +63,7 @@
         </div>
         {% buttons %}
         <center>
-            <h4>Total: GHS 300<span id="totalCost"></span></h4>
+            <h4>Total: GHS<span id="totalCost">0</span>.00</h4>
         </center>
         <hr>
         <center>By clicking 'Post Contest' button you accept our <strong>Terms of Use</strong> and <strong>Privacy Policy</strong></center>
@@ -80,28 +80,67 @@
 </style>
 
 <script>
-    var currentCost = $("#id_cost").value();
+    var category_price = 0;
+    var top_price = 0;
+    var hidden_price = 0;
+    var sealed_price = 0;
+    var nda_price = 0;
 
-    function updateCostValue(newValue){
-        $("#id_cost").text = newValue;
+    var category_costs = "{{ category_prices }}";
+    category_costs = JSON.parse(category_costs.replace(/&quot;/g,'"'));
+
+    function updateCost(){
+        totalCost = category_price + top_price + hidden_price + nda_price + sealed_price;
+        $("#totalCost").text(totalCost);
     }
 
-    $("#id_category").onfocusout(
+    function findCategoryPrice(category_id){
+        var price = 0;
+        $.each(category_costs, function(){
+            if(this.id==category_id){
+                price = this.prize_lower_limit;
+            }
+        });
+        return price;
+    }
+
+    $("#id_category").change(
         function(){
-            //update the cost value.
+            newCategory = $("select option:selected").val();
+            newCategoryPrize = findCategoryPrice(newCategory);
+            console.log('new category prize is '+newCategoryPrize);
+            category_price = newCategoryPrize;
+            updateCost();
         }
     );
 
+    
+
     function triggerCheckbox(checkbox) {
-        console.log("method called");
         var button = $(checkbox);
         if (button.prop("checked") == true) {
             button.prop("checked", false);
-            $("#totalCost").text("0");
+            if(checkbox=="#id_is_nda"){
+                console.log("nda");
+            }else if(checkbox=="#id_is_top"){
+                console.log("top");
+            }else if(checkbox=="#id_is_sealed"){
+                console.log("sealed");
+            }else if(checkbox=="#id_is_hidden"){
+                console.log("hidden");
+            }
 
         } else {
             button.prop("checked", true);
-            $("#totalCost").text("0");
+            if(checkbox=="#id_is_nda"){
+                console.log("nda");
+            }else if(checkbox=="#id_is_top"){
+                console.log("top");
+            }else if(checkbox=="#id_is_sealed"){
+                console.log("sealed");
+            }else if(checkbox=="#id_is_hidden"){
+                console.log("hidden");
+            }
         }
     }
 
@@ -118,8 +157,7 @@
     $(document).ready(function () {
         var now = new Date();
         var numberOfDaysToAdd = 3;
-        now.setDate(now.getDate() + numberOfDaysToAdd);
-        console.log(now+" is the 3 days from today")
+        newDate = now.setDate(now.getDate() + numberOfDaysToAdd);
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var today = now.getFullYear() + "-" + (month) + "-" + (day);

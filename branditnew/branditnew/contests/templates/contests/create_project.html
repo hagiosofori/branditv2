@@ -9,13 +9,77 @@
     {% load bootstrap4 %}
     <div class=" card col-md-6 col-md-offset-3 container shadow">
     <br>    
-    <h1>Create a Project</h1>
-    <form method="POST" enctype="multipart/form-data">
+    <div class="row">
+    <h1 class="col-md-8">Create a Project</h1>
+    <div class="col-md-4">
+    
+<form method="POST" enctype="multipart/form-data">
+        <button class="float-right btn-primary btn">Save As Draft</button>
+    </div>
+        </div>
         <br>{% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-    <input type="submit" class="btn btn-success btn-block">
+    <center>
+            <h4>Total: GHS<span id="totalCost">0</span>.00</h4>
+        </center>
+    <div class="row">
+            <div class="col-md-6"><input type="submit" class="btn btn-primary btn-block" formaction="save_project_as_draft" value="Save As Draft"></input></div>
+        <div class="col-md-6"><button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#verify-project">Submit</button></div>
+    </div>
     {% endbuttons %}
+
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="verify-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"><br><br>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="exampleModalLongTitle">Verify your Project before payment...</h3>
+              <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h5>Title:</h5>
+              <h5>Category:</h5>
+              <h5>Description:</h5>
+              <h5>Files:</h5>
+              <h5>Total Cost:</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary">Proceed to Payment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </form>
+
+
+    <script>
+        var category_costs = "{{ category_prices }}";
+        category_costs = JSON.parse(category_costs.replace(/&quot;/g, '"'));
+
+        function findCategoryPrice(category_id){
+            var price = 0;
+            $.each(category_costs, function(){
+                if(this.id==category_id){
+                    price = this.prize_lower_limit;
+                }
+            });
+            return price;
+        }
     
+        $("#id_category").change(
+            function(){
+                console.log("focusout fxn ran");
+                newCategory = $("select option:selected").val();
+                newCategoryPrize = findCategoryPrice(newCategory);
+                $("#totalCost").text(newCategoryPrize);
+            }
+        );
+    </script>
 {% endblock content %}

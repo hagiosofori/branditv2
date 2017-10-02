@@ -1,3 +1,48 @@
+CURRENT.
+*********************************************************
+* projects.
+
+* saving as draft, and being able to complete it from the dashboard.
+
+* confirmation modal before going to payment.
+
+
+*********************************************************
+
+* change the projects and contests url to projects/* and contests/*,
+    : contests/create.
+    : projects/create.
+    : brandit.express/dashboard.
+
+* work on horizontal nav.
+
+* take all general views and place them in either init, or a file called general_views.py
+
+* create edit profile feature
+
+* change nav to horizontal
+
+* create contest form shouldn't go below the screen. progressive tabs
+
+* reduce size of text field. no less than 60%
+
+: global homepage
+
+
+: print side should only be shown to ghanaian ip addresses.
+
+: design, contest side can be accessed globally.
+-> support for multiple currencies
+
+ip from ghana would go to the
+
+
+global homepage is design, and it shows to everybody.
+
+print is to Ghana only. so ip from outside
+
+print -> brandit.express/printshop
+
 * projects from brandit design doc.
     : client create project.
     : save project as draft for later editing. [ and display on dashboard ]

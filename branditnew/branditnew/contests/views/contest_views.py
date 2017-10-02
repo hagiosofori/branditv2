@@ -12,8 +12,10 @@ from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
+from branditnew.contests.models.projects import *
 from branditnew.contests.views.payment_views import process_invoice
-import requests
+from django.core.serializers.json import DjangoJSONEncoder
+import requests, json
 
 # Create your views here.
 
@@ -88,10 +90,13 @@ def signin(request):
 def dashboard(request):
     template = loader.get_template('contests/dashboard.html')
     contests = Contest.objects.filter(client=request.user)
+    projects = Project.objects.filter(client=request.user)
+
     context = {
         'contests': contests,
+        'projects': projects,
     }
-    return render(request, 'contests/dashboard.html', context)
+    return HttpResponse(template.render(context))
 
 
 @login_required(login_url="login")
@@ -115,11 +120,13 @@ def create_contest(request):
     prices = Price.objects.values()
     
     print(category_prices)
+    print(list(category_prices))
     print(prices)
 
     context = {
         'form': form,
-        'prices': prices,
+        'prices': json.dumps(list(prices), cls=DjangoJSONEncoder),
+        'category_prices': json.dumps(list(category_prices)),
     }
     
     return render(request, "contests/create_contest.html", context)

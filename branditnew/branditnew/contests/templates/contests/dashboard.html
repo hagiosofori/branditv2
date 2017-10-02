@@ -7,7 +7,7 @@
 <div class="container">
     <center>
         <div class="btn-toolbar-lg" role="toolbar">
-            <a class="btn btn-warning btn-lg mr-1" href="{% url 'contests:create_project' %}"> Create Project </button>
+            <a class="btn btn-warning btn-lg mr-1" href="{% url 'create_project' %}"> Create Project </button>
             <a class = "btn btn-warning btn-lg" href="{% url 'contests:create_contest' %}"> Create Contest </a>
         </div>
     </center>
@@ -21,6 +21,15 @@
         <h4>Contests:</h4>
         {% for contest in contests %}
             {{ contest }}
+            <br>
+        {% endfor %}
+        <br><hr><br>
+        <h4>Projects </h4>
+        {% for project in projects %}
+            {{ project }}
+            {% if project.is_draft is True %}
+            <span>Draft</span>
+            {% endif %}
             <br>
         {% endfor %}
     </div>

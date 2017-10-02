@@ -7,7 +7,7 @@ app_name = 'contests'
 
 urlpatterns = [
     url(r'^$', views.views.index, name='index'),
-    url(r'^dashboard/', views.views.dashboard, name='dashboard'),
+    url(r'^dashboard/', views.contest_views.dashboard, name='dashboard'),
     url(r'^signup/', views.signup, name='signup'),
     url(r'^create_contest/', views.contest_views.create_contest, name='create_contest'),
     url(r'^(?P<contest_id>[0-9]+)/entries/(?P<entry_id>[0-9]+)/make_winner/', views.make_winner, name="make_winner"),

@@ -19,7 +19,7 @@ import requests
 
 def test(request):
     template = loader.get_template('contests/home.html')
-    return(HttpResponse(template.render()))
+    return HttpResponse(template.render())
 
 
 

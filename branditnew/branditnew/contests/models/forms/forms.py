@@ -46,7 +46,6 @@ class CreateContestForm(forms.ModelForm):
             'is_hidden',
             'is_nda',
             'is_sealed',
-            'cost',
             'category',
             'preferred_style',
             'preferred_colors',
@@ -59,7 +58,6 @@ class CreateContestForm(forms.ModelForm):
             'files',
         ]
         widgets = {
-            'cost': forms.HiddenInput(),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
         }
         
