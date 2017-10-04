@@ -15,13 +15,15 @@ def project_directory_path(instance, filename):
 
 class Project(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, blank=True, null=True)
     end_date = models.DateField(default=datetime.today)
     is_draft = models.BooleanField(default=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     files = models.FileField(upload_to=project_directory_path, blank=True, null=True)
-    cost = models.PositiveIntegerField()
+    cost = models.PositiveIntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=False)
 
     def __str__(self):
         return self.title

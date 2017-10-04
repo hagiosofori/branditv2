@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^create_project/', views.projects_view.create_project, name="create_project"),
     #eg: brandit.express/contests/
     url(r'^contests/', include('branditnew.contests.urls')),
-
+    url(r'^projects/', include('branditnew.contests.project_urls')),
     #eg: brandit.express/admin
     url(r'^admin/', admin.site.urls),
 

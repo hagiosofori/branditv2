@@ -13,26 +13,33 @@
     <h1 class="col-md-8">Create a Project</h1>
     <div class="col-md-4">
     
-<form method="POST" enctype="multipart/form-data">
-        <button class="float-right btn-primary btn">Save As Draft</button>
+<form class="create-project-form" method="POST" enctype="multipart/form-data">
+    <input type="button" class="btn btn-primary float-right" formaction="{% url 'projects:save_as_draft' %}" value="Save As Draft" onclick="saveDraft()"></input>
     </div>
         </div>
         <br>{% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
+    <br>
     <center>
-            <h4>Total: GHS<span id="totalCost">0</span>.00</h4>
+            <h4>Total: GHS <span id="totalCost">0</span>.00</h4>
         </center>
+        <br>
     <div class="row">
-            <div class="col-md-6"><input type="submit" class="btn btn-primary btn-block" formaction="save_project_as_draft" value="Save As Draft"></input></div>
-        <div class="col-md-6"><button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#verify-project">Submit</button></div>
+            <div class="col-md-6">
+                <input type="button" class="btn btn-primary btn-block" formaction="{% url 'projects:save_as_draft' %}" value="Save As Draft" onclick="saveDraft()"></input>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#verify-project">Submit</button>
+            </div>
     </div>
+    <br>
     {% endbuttons %}
 
 
 
       <!-- Modal -->
-      <div class="modal fade" id="verify-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"><br><br>
+      <div class="modal fade" id="verify-project"  role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"><br><br>
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -58,7 +65,11 @@
 
     </form>
 
-
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    
     <script>
         var category_costs = "{{ category_prices }}";
         category_costs = JSON.parse(category_costs.replace(/&quot;/g, '"'));
@@ -81,5 +92,19 @@
                 $("#totalCost").text(newCategoryPrize);
             }
         );
+
+        function saveDraft() {
+                var url = "{% url 'projects:save_as_draft' %}"; // the script where you handle the form input.
+                $.ajax({
+                       type: "POST",
+                       url: url,
+                       data: $("#create-project-form").serialize(), // serializes the form's elements.
+                       success: function(data){
+                           alert(data); // show response from the view
+                           window.location.href="{% url 'dashboard' %}";
+                       }
+                });
+        }
+
     </script>
 {% endblock content %}
