@@ -10,5 +10,6 @@ urlpatterns = [
 
     url(r'^create', views.projects_view.create_project, name="create_project"),
 
-
+    url(r'^project/(?P<project_id>[0-9]+)/edit', views.projects_view, name="project_edit"),
+    
 ]

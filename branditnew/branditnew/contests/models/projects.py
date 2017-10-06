@@ -23,7 +23,7 @@ class Project(models.Model):
     files = models.FileField(upload_to=project_directory_path, blank=True, null=True)
     cost = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=False)
+    # updated_at = models.DateTimeField(auto_now=False)
 
     def __str__(self):
         return self.title

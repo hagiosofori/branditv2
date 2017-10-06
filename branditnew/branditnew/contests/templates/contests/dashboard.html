@@ -4,15 +4,6 @@
 {% block content %}
 <h1>Dashboard</h1>
 
-<div class="container">
-    <center>
-        <div class="btn-toolbar-lg" role="toolbar">
-            <a class="btn btn-warning btn-lg mr-1" href="{% url 'create_project' %}"> Create Project </button>
-            <a class = "btn btn-warning btn-lg" href="{% url 'contests:create_contest' %}"> Create Contest </a>
-        </div>
-    </center>
-</div>
-<br>
 <div class="row">
     <div class="card col-8 shadow">
         <br>
@@ -25,14 +16,37 @@
         {% endfor %}
         <br><hr><br>
         <h4>Projects </h4>
+        
         {% for project in projects %}
-            {{ project }}
-            {% if project.is_draft is True %}
-            <span>Draft</span>
-            {% endif %}
-            <br>
+        <div class="card shadow">
+            <div class="card-block ">
+                    <div class="card-title" style="height:5rem">
+                        <a href="">
+                            <h4>{{ project }} 
+                                
+                    {% if project.is_draft is True %}
+                                <span>[ Draft ]</span>
+                                
+                            <button class="btn btn-primary float-right">Edit draft</button>
+                            {% endif %}
+                            </h4></a>
+                        <hr>
+                    </div>
+                    <br>
+                    <div class="card-block" style="height:5rem">
+                        {{ project.description }} ...
+                    </div>
+                <hr>
+                <div class="card-block" style="height:1rem">
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
         {% endfor %}
+        <br>
     </div>
+
 
     <div class="col-md-4 ml-auto">
 

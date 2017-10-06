@@ -39,25 +39,25 @@ def create_project(request):
 @csrf_exempt
 def save_as_draft(request):
     if request.method == 'POST':
-        print(request.POST.keys())
-        print(request.FILES.keys())
-        # title = request.POST["title"]
-        # category = request.POST['category']
-        # desc = request.POST['description']
-        # files = request.POST.FILES['files']
-        # end_date = request.POST['end_date']
+        client = request.user
+        if request.POST['title'] is not '':
+            title = request.POST["title"]
+        else:
+            title = 'draft'
+        
+        #fetching category instance using id from POST array. if no category has been set, use the 'draft' category, else django won't let you save.
+        category_id = request.POST['category']
+        if category_id is not '':
+            category = Category.objects.filter(pk=category_id)
+        else:
+            category = Category.objects.get(name="draft")
 
-        # draft = Project.objects.create(title=title, category=category, description=desc, files=files, end_date=end_date)
-        # draft.save()
+        desc = request.POST['description']
+        
+        #files = request.POST.FILES['files'] yet to figure out how to handle the files upload part.
 
+        end_date = request.POST['end_date']
+        
+        draft = Project.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date)
+        
         return HttpResponse('success')
-    #     title = request.POST['title']
-
-    #     try:
-    #         draft = Project.objects.create(title=title)
-    #         draft.save()
-    #     except:
-    #         pass
-    # else:
-    #     # Somehow to retrieve data from db here OR is it going into *load_draft* function with its own jQuery? adding adding data into fields
-    #     nothing = "nothing"
