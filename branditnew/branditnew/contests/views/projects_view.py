@@ -14,7 +14,6 @@ import requests, json, pprint
 def create_project(request):
     form = forms.Create_Project_Form()
     category_prices = Category.objects.values()
-    print(list(category_prices))
 
     if request.method == "POST":
         form = forms.Create_Project_Form(request.POST, request.FILES)
@@ -40,15 +39,16 @@ def create_project(request):
 @csrf_exempt
 def save_as_draft(request):
     if request.method == 'POST':
-        print(forms.Create_Project_Form(request.POST))
-        title = request.POST["title"]
-        category = request.POST['category']
-        desc = request.POST['description']
-        files = request.POST['files']
-        end_date = request.POST['end_date']
+        print(request.POST.keys())
+        print(request.FILES.keys())
+        # title = request.POST["title"]
+        # category = request.POST['category']
+        # desc = request.POST['description']
+        # files = request.POST.FILES['files']
+        # end_date = request.POST['end_date']
 
-        draft = Project.objects.create(title=title, category=category, description=desc, files=files, end_date=end_date)
-        draft.save()
+        # draft = Project.objects.create(title=title, category=category, description=desc, files=files, end_date=end_date)
+        # draft.save()
 
         return HttpResponse('success')
     #     title = request.POST['title']

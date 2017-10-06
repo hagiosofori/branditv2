@@ -13,7 +13,7 @@
     <h1 class="col-md-8">Create a Project</h1>
     <div class="col-md-4">
     
-<form class="create-project-form" method="POST" enctype="multipart/form-data">
+<form id="create-project-form" method="POST" enctype="multipart/form-data">
     <input type="button" class="btn btn-primary float-right" formaction="{% url 'projects:save_as_draft' %}" value="Save As Draft" onclick="saveDraft()"></input>
     </div>
         </div>

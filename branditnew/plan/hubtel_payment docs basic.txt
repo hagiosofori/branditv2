@@ -1,0 +1,147 @@
+1. make post request to the merchant account api to create an invoice.
+
+2. receive response with invoice token and checkout redirect url
+
+3. app redirects customer to hubtel checkout page using url with invoice token received.
+
+4. after payment, customer is redirected back to website.
+
+5. you can check to see if the payment has been honored.
+    : it'll either be pending, completed or cancelled.
+
+python - headers
+****************
+
+url = 'https://api.blah.com/some/endpoint
+headers = {
+    'user-agent': 'blah',
+}
+
+r = requests.get(url, headers=headers)
+
+r = requests.post("http:api.blah.com/some/endpoint", data=values)
+
+
+Instead of encoding the dict yourself, you can also pass it directly using the json parameter (added in version 2.4.2) and it will be encoded automatically:
+>>> url = 'https://api.github.com/some/endpoint'
+>>> payload = {'some': 'data'}
+
+>>> r = requests.post(url, json=payload)
+
+hubtel checkout get invoice eg
+******************************
+POST /v1/merchantaccount/onlinecheckout/invoice/create HTTP/1.1
+  Host: api.hubtel.com/merchantaccount
+  Authorization: Basic a2hzcw1fb3U6bWdhaHdpYW8=
+  Content-Type: application/json
+  Cache-Control: no-cache
+
+ {
+  "invoice": {
+    "items":{
+    "item_0": {
+      "name": "T Shirt",
+      "quantity": 2,
+      "unit_price": "35.0",
+      "total_price": "70.0",
+      "description": "Order of 2 Shirts"
+    },
+    "item_1": {
+      "name": "Polo Shirt",
+      "quantity": 1,
+      "unit_price": "25.0",  
+      "total_price": "0.0",
+      "description": "Order of 1 Polo Shirt"
+    },
+    "item_2": {
+      "name": "Old Navy Jeans",
+      "quantity": 1,
+      "unit_price": "25.0",
+      "total_price": "0.0",
+      "description": ""
+    }
+	},
+    "taxes": {
+      
+    },
+    "total_amount": 120,
+    "description": "Description of the invoice here"
+  },
+  "store": {
+    "name": "T Shirt Company",
+    "tagline": "Tagline of the online store",
+    "postal_address": "Box 10770 Accra - Ghana",
+    "phone": "233244124660",
+    "logo_url": "https://company-logo-final.png",
+    "website_url": "https://company.com"
+  },
+  "custom_data": {
+    
+  },
+  "actions": {
+    "cancel_url": "http://company.com",
+    "return_url": "http://company.com"
+  }
+}
+
+
+sample response
+***************
+{
+    "response_code": "00",
+    "response_text": "https://checkout.hubtel.com/checkout/invoice/f50ce0cedd8246b6",
+    "description": "Checkout Invoice Created",
+    "token": "f50ce0cedd8246b6"
+   }
+
+
+sample get status of checkout invoice
+*********************************************
+GET /v1/merchantaccount/onlinecheckout/invoice/status/f50ce0cedd8246b6 HTTP/1.1
+  Host: api.hubtel.com
+  Content-Type: application/json
+  Authorization: Basic a3hzcW9sb3uibWdhaHdpYW8=
+  Cache-Control: no-cache
+
+
+
+sample response
+**********************
+{
+            "response_code": "00",
+            "response_text": "Transaction Found",
+            "invoice": {
+              "items": {
+                "item_0": {
+                  "name": "Polo T Shirt",
+                  "quantity": 2,
+                  "unit_price": 35,
+                  "total_price": 70,
+                  "description": "Polo T Shirt"
+                },
+                "item_1": {
+                  "name": "Regular T Shirt",
+                  "quantity": 1,
+                  "unit_price": 25,
+                  "total_price": 0,
+                  "description": ""
+                },
+                "item_5": {
+                  "name": "Regular T Shirt",
+                  "quantity": 1,
+                  "unit_price": 25,
+                  "total_price": 0,
+                  "description": ""
+                }
+              },
+              "total_amount": 120,
+              "description": "Description of the invoice here"
+            },
+            "actions": {
+              "cancel_url": "http://tshirtcompany.com",
+              "return_url": "http://tshirtcompany.com"
+            },
+            "custom_data": {},
+            "mode": "live",
+            "status": "pending"
+          }
