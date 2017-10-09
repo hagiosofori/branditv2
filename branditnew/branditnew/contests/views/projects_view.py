@@ -65,4 +65,8 @@ def save_as_draft(request):
 
 def edit_project(request):
     if request.method == 'POST':
+        return
+    
+    return 
+
         
