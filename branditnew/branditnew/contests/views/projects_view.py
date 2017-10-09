@@ -61,3 +61,8 @@ def save_as_draft(request):
         draft = Project.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date)
         
         return HttpResponse('success')
+
+
+def edit_project(request):
+    if request.method == 'POST':
+        

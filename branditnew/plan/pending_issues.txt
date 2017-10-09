@@ -2,7 +2,9 @@ CURRENT.
 *********************************************************
 * projects.
 
-* saving as draft, and being able to complete it from the dashboard.
+* saving as draft, and being able to complete it from the dashboard. [DONE]
+
+* saving files as part of draft.
 
 * confirmation modal before going to payment.
 
