@@ -36,6 +36,9 @@ def create_project(request):
     }
     return render(request, "contests/create_project.html", context)
 
+
+
+
 @csrf_exempt
 def save_as_draft(request):
     if request.method == 'POST':
