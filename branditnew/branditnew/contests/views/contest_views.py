@@ -133,6 +133,33 @@ def create_contest(request):
 
 
 
+def save_contest_as_draft(request):
+    if request.method == 'POST':
+        client = request.user
+        if request.POST['title'] is not '':
+            title = request.POST["title"]
+        else:
+            title = 'draft'
+        
+        #fetching category instance using id from POST array. if no category has been set, use the 'draft' category, else django won't let you save.
+        category_id = request.POST['category']
+        if category_id is not '':
+            category = Category.objects.filter(pk=category_id)
+        else:
+            category = Category.objects.get(name="draft")
+
+        desc = request.POST['description']
+        
+        #files = request.POST.FILES['files'] yet to figure out how to handle the files upload part.
+
+        end_date = request.POST['end_date']
+        
+        draft = Project.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date)
+        
+        return HttpResponse('success')
+
+
+
 def submit_entry(request, contest_id):
     form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
 

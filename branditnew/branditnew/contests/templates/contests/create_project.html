@@ -27,7 +27,7 @@
         <br>
     <div class="row">
             <div class="col-md-6">
-                <input type="button" class="btn btn-primary btn-block" formaction="{% url 'projects:save_as_draft' %}" value="Save As Draft" onclick="saveDraft()"></input>
+                <a type="button" class="btn btn-secondary btn-block" href="{% url 'home' %}">Cancel</a>
             </div>
             <div class="col-md-6">
                 <button type="button" class="btn btn-warning btn-block"  onclick="populate_verify_modal()">Submit</button>
@@ -77,7 +77,7 @@
                 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Go Back and Edit</button>
               <input type="submit" class="btn btn-warning btn-block"></button>
             </div>
           </div>
