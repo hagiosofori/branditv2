@@ -6,26 +6,61 @@
     
     <div class=" card col-md-7 container shadow">
         <br>
-        <h1>Create a Contest</h1>
-        <hr>
+        <div class="row">
+            <div class="col-md-8">
+                    <h1>Create a Contest</h1>
+            </div>
+            <div class="col-md-4">
+                    <button class="btn-primary btn float-right">Save As Draft</button>
+            </div>
+        </div>
         <form method="POST" enctype="multipart/form-data">
             <br> {% csrf_token %} 
-            {% bootstrap_field form.title %} 
-            {% bootstrap_field form.end_date %} 
-            {% bootstrap_field form.prize %} 
-            {% bootstrap_field form.category %} 
-            {% bootstrap_field form.preferred_style %} 
-            {% bootstrap_field form.preferred_colors %} 
-            {% bootstrap_field form.target_audience %} 
-            {% bootstrap_field form.design_details %}
-            {% bootstrap_field form.would_like_to_print %} 
-            {% bootstrap_field form.logo %} 
-            {% bootstrap_field form.sketch %}
+            <center>
+                <ul class="nav nav-tabs ">
+                    <li class="active col-md-3"><a href="#home" data-toggle="tab">   1   </a></li>
+                    <li class="col-md-3"><a href="#menu1" data-toggle="tab" id="trigger2">  2   </a></li>
+                    <li class="col-md-3" ><a href="#menu2" data-toggle="tab" id="trigger3">   3   </a></li>
+                    <li class="col-md-3" ><a href="#menu3" data-toggle="tab" id="trigger4">   4   </a></li>
+                </ul>
+            </center>
+
+            <div class="tab-content">
+                <br><br>
+                    <div id="home" class="tab-pane fade in active">
+                            {% bootstrap_field form.title %} 
+                            {% bootstrap_field form.end_date %} 
+                            {% bootstrap_field form.prize %} 
+                            <a href="#" class="btn btn-warning btn-lg float-right" onclick="$('.nav-tabs li:eq(1) a').tab('show')">Continue -></a>
+                    </div>
+                    <div id="menu1" class="tab-pane fade">
+                            {% bootstrap_field form.category %}
+                            {% bootstrap_field form.preferred_style %} 
+                            <a href="#"class="btn btn-warning btn-lg float-right" onclick="$('.nav-tabs li:eq(2) a').tab('show')">Continue -></a>
+                            
+                    </div>
+                    <div id="menu2" class="tab-pane fade">
+                            {% bootstrap_field form.would_like_to_print %} 
+                            {% bootstrap_field form.logo %} 
+                            {% bootstrap_field form.sketch %}
+                            <a href="#" class="btn btn-warning btn-lg float-right" onclick="$('.nav-tabs li:eq(3) a').tab('show')">Continue -></a>
+                    </div>
+                    <div id="menu3" class="tab-pane fade">
+                            {% bootstrap_field form.preferred_colors %} 
+                            {% bootstrap_field form.target_audience %} 
+                            {% bootstrap_field form.design_details %}
+                            
+                    </div>        
+            </div>
+
+            
+            
+            
 
             <br><br><br>
     </div>
     <div class="col-md-1"></div>
-    <div class="col-md-4 ml-auto card container " style="height:45rem;">
+    <div class="col-md-4 ml-auto card container " style="height:50rem;">
         <br>
         <h4>Get the most from your contest!</h4>
         <hr><br>
@@ -66,12 +101,106 @@
             <h4>Total: GHS<span id="totalCost">0</span>.00</h4>
         </center>
         <hr>
-        <center>By clicking 'Post Contest' button you accept our <strong>Terms of Use</strong> and <strong>Privacy Policy</strong></center>
+        <center>By clicking the 'Submit' button you accept our <strong>Terms of Use</strong> and <strong>Privacy Policy</strong></center>
         <br>
-        <button type='submit' class="btn btn-success btn-block ">Post Contest</button> {% endbuttons %}
+        <button type='submit' class="btn btn-success btn-block " onclick="populate_verify_modal()">Submit</button>
+        {% endbuttons %}
+        
     </div>
+
+    
+<!--modal for confirming contest details -->
+    <div class="modal fade" id="verify-project"  role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"><br><br>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="exampleModalLongTitle"><center>Verify your contest details before payment</center></h3>
+              <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6"><h5>Title: </h5></div><br>
+                    <div class="col-md-6"><span id="title"></span></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><h5>Category: </h5></div>
+                    <div class="col-md-6"><span id="cat"></span></div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-6"><h5>Preferred Style: </h5></div>
+                        <div class="col-md-6"><span id="pref_style"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><h5>Files: </h5></div>
+                        <div class="col-md-6"><span id="file"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><h5>Total Cost: </h5></div>
+                        <div class="col-md-6"><span id="cost"></span></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><h5>Needed by: </h5></div>
+                        <div class="col-md-6"><span id="date"></span></div>
+                    </div>
+                    
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Go Back and Edit</button>
+              <input type="submit" class="btn btn-warning btn-block"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </form>
 </div>
+
+
+
+<script
+src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+<script>
+        function populate_verify_modal(){
+            
+            //fetching values from the form
+            var current_cost = $("#totalCost").text();
+            var current_title = $("#id_title").val();
+            var current_category = $("#id_category option:selected").text();
+            var current_pref_style = $("#id_preferred_style").val();
+            var is_top = $("#id_is_top").is(":checked") ? "True" : "False";
+            var is_hidden = $("#id_is_hidden").is(":checked") ? "True" : "False";
+            var is_nda = $("#id_is_nda").is(":checked") ? "True" : "False";
+            var is_sealed = $("#id_is_sealed").is(":checked") ? "True" : "False";
+            var would_like_to_print = $("#id_would_like_to_print").is(":checked") ? "True" : "False";
+            var pref_colors = $("#id_preferred_colors").val();
+            var target_audience = $("#id_target_audience").val();
+            var design_detailsi = $("#id_design_details").val();
+
+            var current_end_date = $("#id_end_date").val();
+
+            //populating modal with values
+            $("#title").text(current_title);
+            $("#cat").text(current_category);
+            $("#pref_style").text(current_pref_style);
+            //$("#file").text();
+            $("#cost").text(current_cost);
+            $("#date").text(current_end_date);
+
+            //display modal
+            $("#verify-project").modal('show');
+        }
+</script>
+
+
 
 <style>
     .help-block {

@@ -52,7 +52,6 @@ class CreateContestForm(forms.ModelForm):
             'target_audience',
             'design_details',
             'would_like_to_print',
-            # 'files',  #file submission still doesn't work. fix it.
             'logo',
             'sketch',
             'files',

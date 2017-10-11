@@ -99,6 +99,8 @@ def dashboard(request):
     return HttpResponse(template.render(context))
 
 
+
+
 @login_required(login_url="login")
 def create_contest(request):
     form = forms.CreateContestForm(initial={'would_like_to_print':True,})
@@ -133,6 +135,7 @@ def create_contest(request):
 
 
 
+
 def save_contest_as_draft(request):
     if request.method == 'POST':
         client = request.user
@@ -153,10 +156,25 @@ def save_contest_as_draft(request):
         #files = request.POST.FILES['files'] yet to figure out how to handle the files upload part.
 
         end_date = request.POST['end_date']
+        prize = request.POST['prize']
+        is_top = request.POST['is_top']
+        is_hidden = request.POST['is_hidden']
+        is_nda = request.POST['is_nda']
+        is_sealed = request.POST['is_sealed']
+        preferred_styles = request.POST['preferred_style']
+        preferred_colors = request.POST['preferred_colors']
+        target_audience = request.POST['target_audience']
+        design_details = request.POST['design_details']
+        would_like_to_print = request.POST['would_like_to_print']
         
-        draft = Project.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date)
-        
+        #logo = 
+        #sketch = 
+        #files =
+
+        draft = Contest.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date, prize=prize, is_top=is_top, is_hidden=is_hidden, is_nda=is_nda, is_sealed=is_sealed, preferred_styles=preferred_styles, preferred_colors=preferred_colors, target_audience=target_audience, design_details=design_details, would_like_to_print=would_like_to_print)
+
         return HttpResponse('success')
+
 
 
 
