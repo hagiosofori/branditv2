@@ -47,6 +47,13 @@ class Contest(models.Model):
     sketch = models.FileField(
         upload_to=user_directory_path, blank=True, null=True)
     is_closed = models.BooleanField(default=False)
+    is_touched = models.BooleanField(default=False)
+
+
 
     def __str__(self):
         return self.title
+
+
+    def touch(self):
+        self.is_touched = True

@@ -24,9 +24,14 @@ class Project(models.Model):
     cost = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=False)
+    is_touched = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
+
+    def touch(self):
+        self.is_touched = True
 
 
 
@@ -49,3 +54,4 @@ class Project_Submission_Comment(models.Model):
 
     def __str__(self):
         return self.content
+
