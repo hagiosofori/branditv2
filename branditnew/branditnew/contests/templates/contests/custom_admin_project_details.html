@@ -18,12 +18,14 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Client: </h2> {{ project.client }} <br>
-    <h2>Title</h2> {{ project.title }} <br>
-    <h2>End Date:</h2> {{ project.end_date }} <br>
-    <h2>Draft:</h2> {{ project.is_draft }} <br>
-    <h2>Description:</h2> {{ project.description }} <br>
-    <h2>Category:</h2> {{ project.category }} <br>
-    <h2>Files:</h2> {{ project.files }} <br>
-    <h2>Cost:</h2> {{ project.cost }} <br>
+<div class="container">
+    <h3>Client: </h3> {{ project.client }} <br>
+    <h3>Title</h3> {{ project.title }} <br>
+    <h3>End Date:</h3> {{ project.end_date }} <br>
+    <h3>Draft:</h3> {{ project.is_draft }} <br>
+    <h3>Description:</h3> {{ project.description }} <br>
+    <h3>Category:</h3> {{ project.category }} <br>
+    <h3>Files:</h3> {{ project.files }} <br>
+    <h3>Cost:</h3> {{ project.cost }} <br>
+</div>
 {% endblock %}

@@ -1,12 +1,31 @@
-from branditnew.contests.models import forms
-from branditnew.contests.models.projects import *
+import requests, json
+from datetime import datetime, timedelta
+
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from branditnew.contests.views.payment_views import process_invoice, verify_payment
 from django.http import HttpResponse, HttpResponseRedirect
-import requests, json, pprint
+from django.template import loader
+
+from branditnew.contests.models import forms
+from branditnew.contests.models.projects import *
+from branditnew.contests.views.payment_views import process_invoice, verify_payment
+
+
+
+
+
+def index(request):
+    template = loader.get_template('contests/myprojects.html')
+    projects = Project.objects.filter(client=request.user)
+
+    context = {
+        'projects': projects,
+    }
+    
+    return HttpResponse(template.render(context))
+
+
 
 
 
@@ -72,4 +91,7 @@ def edit_project(request):
     
     return 
 
-        
+
+
+
+ 
