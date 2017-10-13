@@ -8,6 +8,8 @@ def project_submissions_directory_path(instance, filename):
 
 
 
+
+
 def project_directory_path(instance, filename):
     return 'project_{0}/{1}'.format(instance.id, filename)
 
@@ -32,6 +34,13 @@ class Project(models.Model):
 
     def touch(self):
         self.is_touched = True
+        self.save()
+
+
+def get_num_new_projects():
+    return Project.objects.filter(is_touched=False).count()
+
+
 
 
 
@@ -47,10 +56,12 @@ class Project_Submission(models.Model):
 
 
 
+
 class Project_Submission_Comment(models.Model):
     project_submission = models.ForeignKey(Project_Submission, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+
 
     def __str__(self):
         return self.content

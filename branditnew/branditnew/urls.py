@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^projects/', include('branditnew.contests.project_urls')),
     #eg: brandit.express/admin
     url(r'^admin/', admin.site.urls),
-    url(r'^custom_admin/', views.custom_admin_views.index, name="custom_admin")
+    url(r'^custom_admin/', include('branditnew.contests.custom_admin_urls')),
 
 ]
 

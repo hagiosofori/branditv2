@@ -8,7 +8,7 @@ from branditnew.contests.models import categories, contest, entries, prices, pro
 
 
 def index(request):
-    template = loader.get_template('contests/custom_admin.html')
+    template = loader.get_template('contests/custom_admin_base.html')
     new_projects_list = projects.Project.objects.filter(is_touched=False)
     old_projects_list = projects.Project.objects.filter(is_touched=True)
     contest_list = contest.Contest.objects.all()
@@ -17,7 +17,7 @@ def index(request):
         'new_projects': new_projects_list,
         'contests': contest_list,
         'old_projects': old_projects_list,
-        
+        'num_new_projects': projects.get_num_new_projects,        
     }
     return HttpResponse(template.render(context))
 
@@ -25,14 +25,15 @@ def index(request):
 
 
 def project_details(request, project_id):
+    
     template = loader.get_template('contests/custom_admin_project_details.html')
     project_obj = projects.Project.objects.get(pk=project_id)
-
+    project_obj.touch()
     context = {
-        'project' = project_obj,
-        
+        'project' : project_obj,
+        'num_new_projects' : projects.get_num_new_projects(),
     }
-    return HttpResponse(template.render())
+    return HttpResponse(template.render(context))
 
 
 
