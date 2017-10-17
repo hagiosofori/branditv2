@@ -11,6 +11,10 @@ CURRENT.
 
 *********************************************************
 
+* dashboard: 
+    : [ have tabs; one for drafts, one for pending verification, one for live, one for completed.
+
+
 * change the projects and contests url to projects/* and contests/*,
     : contests/create.
     : projects/create.

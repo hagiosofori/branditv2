@@ -10,5 +10,7 @@ urlpatterns = [
 
     url(r'^projects/(?P<project_id>[0-9]+)/', views.custom_admin_views.project_details, name='project_details'),
 
+    url(r'^projects/(?p<project_id>[0-9]+)/', views.custom_admin_views.make_project_submission, name="make-project-submission"),
 
+    
 ]

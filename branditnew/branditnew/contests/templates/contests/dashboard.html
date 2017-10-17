@@ -7,43 +7,78 @@
 <div class="row">
     <div class="card col-8 shadow">
         <br>
-        <h2>News Feed</h2>
+        <h2>News Feed </h2>
         <hr>
-        <h4>Contests:</h4>
+
+
+        <div class="container">
+        <h3>Contests</h3><br>
         {% for contest in contests %}
-            {{ contest }}
-            <br>
-        {% endfor %}
-        <br><hr><br>
-        <h4>Projects </h4>
-        
-        {% for project in projects %}
-        <div class="card shadow">
-            <div class="card-block ">
-                    <div class="card-title" style="height:5rem">
-                        <a href="">
-                            <h4>{{ project }} 
-                                
-                    {% if project.is_draft is True %}
-                                <span>[ Draft ]</span>
-                                
-                            <button class="btn btn-primary float-right">Edit draft</button>
-                            {% endif %}
-                            </h4></a>
+        <div class="card col-md-6 shadow" style="height:17rem">
+            <div class="card-block">
+                    <div class="card-title" >
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>{{ contest }}</h4>
+                            </div>
+                            <div class="col-md-4 float-right">
+                                {% if contest.is_draft is True %}
+                                <a href="" style="color:orange">Edit</a> 
+                                <a href="" style="color:red">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
                         <hr>
                     </div>
-                    <br>
-                    <div class="card-block" style="height:5rem">
-                        {{ project.description }} ...
+                    <div>
+                        {{ contest.design_details | truncatechars:100 }}...
                     </div>
+                {% if contest.is_draft is False %}
                 <hr>
                 <div class="card-block" style="height:1rem">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <a href="#" class="card-link">View Details</a>
+                    <a href="#" class="card-link" style="color:orange">Edit</a>
+                    <a href="#" class="card-link" style="color:red">Delete</a>
                 </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
+    </div>
+    <br><hr><br>
+    <div class="container">
+        <h3>Projects </h3><br>
+        {% for project in projects %}
+        <div class="card col-md-6 shadow" style="height:17rem">
+            <div class="card-block">
+                    <div class="card-title" >
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>{{ project }}</h4>
+                            </div>
+                            <div class="col-md-4">
+                                {% if project.is_draft is True %}
+                                <a href="" class="float-right" style="color:orange">Edit draft</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div>
+                        {{ project.description | truncatechars:100 }}...
+                    </div>
+                {% if project.is_draft is False %}
+                <hr>
+                <div>
+                    <a href="#" class="card-link">View Details</a>
+                    <a href="#" class="card-link" style="color:orange">Edit</a>
+                    <a href="#" class="card-link" style="color:red">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
         <br>
     </div>
 
