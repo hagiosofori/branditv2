@@ -5,6 +5,14 @@ from django.template import loader
 from branditnew.contests.models import categories, contest, entries, prices, projects
 
 
+def check_if_user_is_admin():
+    #if user is not admin, redirect to login page, with a message in the alert saying that the user is not permitted to access that portion
+
+    #if the user logs in as admin after teh redirection, it should redirect to the view that it was going to in the first place.
+    
+    return 
+
+
 
 
 def index(request):
