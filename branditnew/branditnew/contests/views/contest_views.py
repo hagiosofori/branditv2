@@ -101,7 +101,7 @@ def dashboard(request):
 
 
 
-@login_required(login_url="login")
+@login_required(login_url="contests:login")
 def create_contest(request):
     form = forms.CreateContestForm(initial={'would_like_to_print':True,})
     category_prices = Category.objects.values()

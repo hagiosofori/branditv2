@@ -13,8 +13,7 @@ from branditnew.contests.views.payment_views import process_invoice, verify_paym
 
 
 
-
-
+@login_required
 def index(request):
     template = loader.get_template('contests/myprojects.html')
     projects = Project.objects.filter(client=request.user)
@@ -75,11 +74,8 @@ def save_as_draft(request):
             category = Category.objects.get(name="draft")
 
         desc = request.POST['description']
-        
         #files = request.POST.FILES['files'] yet to figure out how to handle the files upload part.
-
         end_date = request.POST['end_date']
-        
         draft = Project.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date)
         
         return HttpResponse('success')

@@ -7,9 +7,6 @@ def project_submissions_directory_path(instance, filename):
     return 'project_{0}/submissions/{1}'.format(instance.project.id, filename)
 
 
-
-
-
 def project_directory_path(instance, filename):
     return 'project_{0}/{1}'.format(instance.id, filename)
 
@@ -27,6 +24,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=False)
     is_touched = models.BooleanField(default=False)
+    num_submissions = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -35,6 +33,12 @@ class Project(models.Model):
     def touch(self):
         self.is_touched = True
         self.save()
+
+    def add_submission(self):
+        self.num_submissions = self.num_submissions + 1
+        self.save()
+
+
 
 
 def get_num_new_projects():

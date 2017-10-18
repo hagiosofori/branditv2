@@ -1,9 +1,15 @@
-{% extends "contests/custom_admin_base.html" %}
-
-{% block header %}
-    Make Project Submission
-{% endblock header %}
+{% extends "contests/custom_admin_base.html" %} 
+{% load bootstrap4 %} 
+{% block header %} Make Project Submission for {{ project }}
+{% endblock header %} 
 
 {% block content %}
-    //form for submitting something to the project.
+<form method="POST" enctype="multipart/form-data" class="form" action="{% url 'custom_admin:make_project_submission' project.id %}">
+        {% csrf_token %} 
+        {% bootstrap_form form %} 
+        <br><br>
+        {% buttons %}
+        <input type="submit" class="btn btn-primary"> 
+        {% endbuttons %}
+</form>    
 {% endblock content %}
