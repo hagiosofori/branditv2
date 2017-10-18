@@ -25,7 +25,6 @@ def index(request):
 
 
 def project_details(request, project_id):
-    
     template = loader.get_template('contests/custom_admin_project_details.html')
     project_obj = projects.Project.objects.get(pk=project_id)
     project_obj.touch()
@@ -40,4 +39,12 @@ def project_details(request, project_id):
 
 
 def make_project_submission(request, project_id):
-    
+    template = loader.get_template('contests/custom_admin_make_project_submission.html')
+    project = projects.Project.objects.get(pk=project_id)
+
+    context = {
+        'project': project,
+        'num_new_projects': projects.get_num_new_projects,
+    }
+
+    return HttpResponse(template.render(context))
