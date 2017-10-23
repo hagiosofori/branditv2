@@ -1,0 +1,87 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+    Project Details
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+<br>
+<h1>Project details</h1>
+
+
+<div class="card container">
+        <div class="row">
+        <div class="col-md-7">
+            <div class="row container">
+            <h3>{{ project }}</h3>
+            <br>
+        </div>
+        <span>
+        <div class="row">
+            <div class="col-md-3"><b>Category: <br> </b>{{ project.category }}</div>
+            <div class="col-md-3"><b>Ends on: </b> <br>  <span id="end_date">{{ project.end_date }}</span> </div>
+            
+        </div>
+        </span>
+            <hr><br>
+            <h3>Project Description</h3><br>
+            <p style="text-align: justify">
+                <img src="{{ project.files.url }}" style="height:24rem; width:39rem;" class="img-responsive"> 
+                <br><br>
+                {{ project.description }} 
+            </p>
+            <hr><br>                
+        </div>
+        <div class="col-md-1"></div>
+        <div class-"col-md-4 container float-right" style="width: 20rem;">
+           <center> <br>
+               <h4 class="card-title">Selected Design</h4> <hr>  
+            <!-- if there is a winner, display the winner, else display another image saying there's no winner yet. image should probably be in the static files. -->
+            {% if chosen_design %}
+            <img class="card-img-top" src="{{ chosen_design.submission.url }}" alt="WINNER IMAGE HERE">
+            <div class="card-body">
+            <a href="{% url 'projects:deselect_design' project.id chosen_design.id %}" class="float-right btn btn-warning">Deselect this design</a>
+            </div>
+    
+            {% else %}
+               <img class="card-img-top" src="{% static 'contests/images/img-placeholder.png' %}" alt="WINNER IMAGE HERE">
+                        <div class="card-body">
+                          <p class="card-title">No design chosen yet.</p>
+                </div>
+                
+            {% endif %}
+            </center>
+        </div>
+    </div>
+    
+        <h3>Submitted Designs:</h3><br>
+        {% if project_submissions %}
+        {% for entry in project_submissions %} 
+        <div class="col-md-4 ">
+            <div class="card">
+                <img class="card-img-top" src="{{ entry.submission.url }}" alt="{{ entry }}">{{ entry.files.url }}
+                <div class="card-body">
+                    {% ifequal request.user project.client %}
+                    {% if entry.is_approved is False %}
+                    <center>
+                    <a href="{% url 'projects:submission_details' project.id entry.id %}" class="btn btn-primary btn-sm">View Details</a>
+                    <a href="{% url 'projects:select_design' project.id entry.id %}" class="pull-right btn-sm btn btn-warning">Select this design</a>
+                </center>
+                    {% endif %}
+                    {% endifequal %}
+                    <br>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% else %}
+        <p>No submissions yet. They'll begin to come in shortly</p>
+        {% endif %}
+        <br>
+    
+        
+    </div><br><br>
+    
+{% endblock content %}

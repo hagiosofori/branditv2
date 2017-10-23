@@ -228,7 +228,6 @@ def make_winner(request, contest_id, entry_id):
     entry = Entry.objects.get(pk=entry_id, contest__id=contest_id)
     current_winners = Entry.objects.get(is_winner=True, contest__id=contest_id)
     current_winners.is_winner = False
-
     entry.is_winner = True
     contest.is_closed = True
     contest.save()

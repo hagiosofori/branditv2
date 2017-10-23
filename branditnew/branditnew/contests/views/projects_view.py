@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.contrib import messages
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.projects import *
@@ -89,5 +90,88 @@ def edit_project(request):
 
 
 
+def project_details(request, project_id):
+    project = Project.objects.get(pk=project_id)
+    project_submissions = Project_Submission.objects.filter(project=project)
+    try:
+        chosen_design = Project_Submission.objects.get(is_approved=True)
+    except Project_Submission.DoesNotExist:
+        chosen_design = None
 
- 
+    context = {
+        'project':project,
+        'project_submissions':project_submissions,
+        'chosen_design':chosen_design,
+    }
+    return render(request, "contests/project_details.html", context)
+
+
+
+
+
+def select_design(request, project_id, submission_id):
+    submission = Project_Submission.objects.get(pk=submission_id)
+    #make sure that before selecting this design no designs have been previously selected
+    project = Project.objects.get(pk=project_id)
+    current_selected = Project_Submission.objects.filter(is_approved=True, project=project)
+    current_selected.is_approved = True
+    
+    submission = Project_Submission.objects.get(pk=submission_id)
+    submission.is_approved = True
+    submission.save()
+    submissions_set = Project_Submission.objects.filter(project=project)
+    messages.add_message(request, messages.SUCCESS, "Successfully selected design as winner", extra_tags='alert alert-success')
+    context = {
+        'project':project,
+        'project_submissions':submissions_set,
+        'chosen_design':submission,
+    }
+    return redirect(reverse('projects:project_details', args=(project_id)))
+
+
+
+
+
+def deselect_design(request, project_id, submission_id):
+    submission = Project_Submission.objects.get(pk=submission_id)
+    
+    project = Project.objects.get(pk=project_id)
+    submission_set = Project_Submission.objects.filter(project=project)
+
+    submission.is_approved = False
+    submission.save()
+    messages.add_message(request, messages.SUCCESS, "Successfully deselected design", extra_tags='alert alert-success')
+
+    context = {
+        'project':project,
+        'project_submission':submission_set,
+    }
+    return redirect(reverse('projects:project_details', args=(project_id)))
+
+
+
+
+def submission_details(request, project_id, submission_id):
+    submission = Project_Submission.objects.get(pk=submission_id)
+    comments = Project_Submission_Comment.objects.filter(project_submission=submission)
+    form = forms.Project_Submission_Comment_Form()
+    context = {
+        'comments': comments,
+        'submission': submission,
+        'form': form,
+    }
+    return render(request, 'contests/project_submission_details.html', context)
+
+
+
+
+
+def make_comment(request, submission_id, project_id):
+    if request.method == "POST":
+        form = forms.Project_Submission_Comment_Form(request.POST)
+        if form.is_valid():
+            submission = Project_Submission.objects.get(pk=submission_id)
+
+            comment = form.save(commit=False)
+            comment.owner = request.user
+            comment.project_submission = submission

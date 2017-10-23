@@ -22,3 +22,20 @@ class Create_Project_Form(forms.ModelForm):
             'description': 'Tell us more about what you want',
             'end_date': 'When do you need it by?',
         }
+
+
+
+
+
+class Project_Submission_Comment_Form(forms.ModelForm):
+    class Meta:
+        model = Project_Submission_Comment
+
+        fields = [
+            'content',
+        ]
+
+        labels = {
+            'content': '',
+        }
+
