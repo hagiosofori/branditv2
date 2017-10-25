@@ -152,12 +152,14 @@ def deselect_design(request, project_id, submission_id):
 
 
 def submission_details(request, project_id, submission_id):
+    project = Project.objects.get(pk=project_id)
     submission = Project_Submission.objects.get(pk=submission_id)
     comments = Project_Submission_Comment.objects.filter(project_submission=submission)
     form = forms.Project_Submission_Comment_Form()
     context = {
         'comments': comments,
         'submission': submission,
+        'project': project,
         'form': form,
     }
     return render(request, 'contests/project_submission_details.html', context)
@@ -175,3 +177,11 @@ def make_comment(request, submission_id, project_id):
             comment = form.save(commit=False)
             comment.owner = request.user
             comment.project_submission = submission
+            comment.save()
+    
+    return redirect(reverse("projects:submission_details", project_id, submission_id))
+
+
+
+
+

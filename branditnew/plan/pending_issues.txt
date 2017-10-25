@@ -11,6 +11,9 @@ CURRENT.
 
 *********************************************************
 
+* saving multiple files for all file/image upload fields.
+
+
 * dashboard: 
     : [ have tabs; one for drafts, one for pending verification, one for live, one for completed.
 

@@ -24,7 +24,7 @@ Project Submission Details
             <br>
             <h3>Comments</h3><hr>
             <h5>Make a comment...</h5>
-            <form action="">
+            <form action="{% url 'projects:make_comment' project.id submission.id">
                     {% csrf_token %}
 
                     {% bootstrap_form form %}

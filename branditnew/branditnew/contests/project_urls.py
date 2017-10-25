@@ -22,6 +22,7 @@ urlpatterns = [
 
     url(r'^(?P<project_id>[0-9]+)/submissions/(?P<submission_id>[0-9]+)/details', views.projects_view.submission_details, name="submission_details"),
 
-
+    url(r'^(?P<project_id>[0-9]+)/submissions/(?P<submission_id>[0-9]+)/make_comment', views.projects_view.make_comment, name="make_comment"),
+    
 
 ]
