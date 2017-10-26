@@ -9,10 +9,10 @@ Project Submission Details
 <div class="row">
 <div class="col-md-7 card">
     <br>
-        <div class="row container">
-        <h3>{{ submission }}</h3>
-        <br><br><hr>
-    </div>
+            
+        <h3>{{ submission }}</h3><br>
+        <h4>Price: {{ submission.price }}</h4>
+        <br>
         <p style="text-align: justify">
             <img src="{{ submission.submission.url }}" style="height:24rem; width:39rem;" class="img-responsive"> 
             <br><br>
@@ -22,9 +22,9 @@ Project Submission Details
     <div class="col-md-5">
         <div class="card container">
             <br>
-            <h3>Comments</h3><hr>
+            <h3>Comments Section</h3><hr>
             <h5>Make a comment...</h5>
-            <form action="{% url 'projects:make_comment' project.id submission.id">
+            <form action="{% url 'projects:make_comment' project.id submission.id %}" method="post">
                     {% csrf_token %}
 
                     {% bootstrap_form form %}
@@ -33,13 +33,16 @@ Project Submission Details
                     <input type="submit" class="btn btn-warning">
                     {% endbuttons %}
                     <br>
-                </form>
+            </form>
+            <hr>
+            <br>
+            <h3>Previous Comments</h3><hr>
 
-            {% if comment %}
+            {% if comments %}
             {% for comment in comments %}
             <div class="panel panel-default card container">
                 <div class="panel-heading">
-                <strong>@{{ comment.owner }}</strong> <span class="text-muted">commented 5 days ago</span>
+                <strong>@{{ comment.owner }}</strong> <span class="text-muted">commented on {{ comment.created_at }}</span>
                 </div>
                 <hr>
                 <div class="panel-body">
@@ -50,7 +53,7 @@ Project Submission Details
             {% endfor %}
             {% else %}
             <h5>No comments yet..</h4>
-                
+                <br>
             {% endif %}
         </div>
     </div>

@@ -9,5 +9,6 @@ class Make_Project_Submission_Form(forms.ModelForm):
         fields = [
             'title',
             'submission',
+            'price',
         ]
         

@@ -49,9 +49,9 @@
 
 
         {% if winning_entry %}
-        <img class="card-img-top" src="{{ winning_entry.files.url }}" alt="WINNER IMAGE HERE">
+        <div class="card"> <img class="card-img-top" src="{{ winning_entry.files.url }}" alt="WINNER IMAGE HERE">
         <div class="card-body">
-          <p class="card-title">{{ winning_entry.title }}, designed by @{{ winning_entry.brandlancer }} </p></p>
+          <p class="card-title">{{ winning_entry.title }}, designed by @{{ winning_entry.brandlancer }} </p></p></div>
 </div>
 
         {% else %}

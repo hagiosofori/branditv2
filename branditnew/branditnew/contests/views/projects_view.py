@@ -152,9 +152,13 @@ def deselect_design(request, project_id, submission_id):
 
 
 def submission_details(request, project_id, submission_id):
+    if request.method == 'POST':
+        make_comment(request, submission_id, project_id)
+    
     project = Project.objects.get(pk=project_id)
     submission = Project_Submission.objects.get(pk=submission_id)
     comments = Project_Submission_Comment.objects.filter(project_submission=submission)
+    
     form = forms.Project_Submission_Comment_Form()
     context = {
         'comments': comments,
@@ -169,17 +173,21 @@ def submission_details(request, project_id, submission_id):
 
 
 def make_comment(request, submission_id, project_id):
-    if request.method == "POST":
-        form = forms.Project_Submission_Comment_Form(request.POST)
-        if form.is_valid():
-            submission = Project_Submission.objects.get(pk=submission_id)
+    print("successfully entered make_comment view")
+    form = forms.Project_Submission_Comment_Form(request.POST)
 
-            comment = form.save(commit=False)
-            comment.owner = request.user
-            comment.project_submission = submission
-            comment.save()
-    
-    return redirect(reverse("projects:submission_details", project_id, submission_id))
+    if form.is_valid():
+        submission = Project_Submission.objects.get(pk=submission_id)
+
+        comment = form.save(commit=False)
+        comment.owner = request.user
+        comment.project_submission = submission
+        comment.save()
+        messages.add_message(request, messages.SUCCESS, "Comment successfully added", extra_tags='alert alert-success')
+    else:
+        messages.add_message(request, messages.error, 'Unable to save comment. Please try again after a while', extra_tags="alert alert-danger")
+
+    return redirect(reverse("projects:submission_details", args=(project_id, submission_id)))
 
 
 

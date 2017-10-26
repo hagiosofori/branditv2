@@ -53,6 +53,8 @@ class Project_Submission(models.Model):
     title = models.CharField(max_length=50)
     submission = models.FileField(upload_to=project_submissions_directory_path)
     is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    price = models.PositiveSmallIntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -65,7 +67,7 @@ class Project_Submission_Comment(models.Model):
     project_submission = models.ForeignKey(Project_Submission, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content
