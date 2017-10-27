@@ -277,7 +277,7 @@ desired effect
                     <li class="header">HEADER</li>
                     <!-- Optionally, you can add icons to the links -->
                     <li class="active">
-                        <a href="#">
+                        <a href="{% url 'custom_admin:index' %}">
                             <i class="fa fa-folder"></i>
                             <span>Projects 
                                 {% if num_new_projects is not 0 %}
@@ -288,9 +288,23 @@ desired effect
                         </a>
                     </li>
                     <li>
+                        <a href="{% url 'custom_admin:contests' %}">
+                            <i class="fa fa-link"></i>
+                            <span>
+                                Contests
+                            </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="#">
                             <i class="fa fa-link"></i>
-                            <span>Another Link</span>
+                            <span>Contest Entries Comments
+                                {% if num_new_contest_entry_comments is not 0 %}
+                                <span class="badge">
+                                    {{ num_new_contest_entry_comments }}
+                                </span>
+                                {% endif %}
+                            </span>
                         </a>
                     </li>
                     <li class="treeview">
@@ -396,7 +410,7 @@ desired effect
         </table>
         
 
-        {% endblock %}
+        {% endblock content %}
             </section>
             <!-- /.content -->
             

@@ -23,7 +23,9 @@ class Project(models.Model):
     cost = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=False)
-    is_touched = models.BooleanField(default=False)
+    
+    # value indicating if admin has viewed this record
+    is_touched = models.BooleanField(default=False) 
     num_submissions = models.SmallIntegerField(default=0)
 
     def __str__(self):

@@ -11,9 +11,10 @@ from branditnew.contests.models.forms import Make_Project_Submission_Form
 
 
 def check_permissions(request):
-    if(request.user.is_superuser is False):
+    if request.user.is_superuser is False:
         messages.add_message(request, messages.ERROR, "You do not have permission to access that section",extra_tags="alert-danger")
         return False
+
     return True
 
 
@@ -28,13 +29,14 @@ def index(request):
     new_projects_list = projects.Project.objects.filter(is_touched=False)
     old_projects_list = projects.Project.objects.filter(is_touched=True)
     contest_list = contest.Contest.objects.all()
-    print(new_projects_list, contest_list)
 
     context = {
         'new_projects': new_projects_list,
         'contests': contest_list,
         'old_projects': old_projects_list,
-        'num_new_projects': projects.get_num_new_projects,        
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+
     }
 
     return HttpResponse(template.render(context))
@@ -92,3 +94,25 @@ def make_project_submission(request, project_id):
     }
 
     return render(request, "contests/custom_admin_make_project_submission.html", context)
+
+
+
+
+
+def contests(request):
+    if check_permissions(request) is not True:
+        return redirect(reverse("contests:login"))
+
+    template = loader.get_template('contests/custom_admin_contests.html')
+    new_projects_list = projects.Project.objects.filter(is_touched=False)
+    old_projects_list = projects.Project.objects.filter(is_touched=True)
+    contest_list = contest.Contest.objects.all()
+
+    context = {
+        'contests': contest_list,
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+
+    }
+
+    return HttpResponse(template.render(context))

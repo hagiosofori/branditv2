@@ -117,6 +117,7 @@ def create_contest(request):
             category_cost = Category.objects.get(name=form.cleaned_data.get('category')) 
             cost = category_cost.prize_lower_limit
             contest.cost = cost
+            contest.is_draft = False
             contest.save()
             data = process_invoice(request, contest)
             return redirect(data['response_text'])
@@ -207,7 +208,11 @@ def submit_entry(request, contest_id):
 
 def contest_details(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
-    winning_entry = Entry.objects.get(is_winner=True)
+    try:
+        winning_entry = Entry.objects.get(is_winner=True, contest=contest)
+    except Entry.DoesNotExist:
+        winning_entry = None
+    
     context = {
         'contest': contest,
         'winning_entry': winning_entry,
@@ -251,7 +256,7 @@ def make_winner(request, contest_id, entry_id):
 def entry_details(request, contest_id, entry_id):
     entry = Entry.objects.get(pk=entry_id)
     contest = Contest.objects.get(pk=contest_id)
-    comments = Entry_Comment.objects.filter(contest_entry=entry, )
+    comments = Entry_Comment.objects.filter(contest_entry=entry, is_verified=True)
     form = forms.Entry_Comment_Form();
     context = {
         'entry': entry,
@@ -271,9 +276,15 @@ def make_comment(request, contest_id, entry_id):
 
     if form.is_valid():
         entry = Entry.objects.get(pk=entry_id)
+        client = entry.contest.client
         comment = form.save(commit=False)
         comment.owner = request.user
         comment.contest_entry = entry
+
+        #the contest owner's comments are automatically verified. Brandlancers would have to be verified by the admin. is_verified field of entry_comments table defaults to False if no value is provided.
+        if comment.owner == client:
+            comment.is_verified = True
+        
         comment.save()
         messages.add_message(request, messages.SUCCESS, "Comment successfully saved", extra_tags='alert alert-success')
     else:

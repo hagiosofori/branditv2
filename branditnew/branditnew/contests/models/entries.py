@@ -36,7 +36,13 @@ class Entry_Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
+    is_touched = models.BooleanField(default=False)
 
     def __str__(self):
         return self.content
+
+
+def get_num_new_contest_entry_comments():
+    return Entry_Comment.objects.filter(is_touched=False).count()
+
 

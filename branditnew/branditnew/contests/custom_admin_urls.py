@@ -12,6 +12,6 @@ urlpatterns = [
 
     url(r'^projects/(?P<project_id>[0-9]+)/', views.custom_admin_views.project_details, name='project_details'),
 
-    
+    url(r'^contests/$', views.custom_admin_views.contests, name="contests"),    
 
 ]

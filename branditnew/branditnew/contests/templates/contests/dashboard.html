@@ -36,7 +36,7 @@
                 {% if contest.is_draft is False %}
                 <hr>
                 <div class="card-block" style="height:1rem">
-                    <a href="#" class="card-link">View Details</a>
+                    <a href="{% url 'contests:contest_details' contest.id %}" class="card-link">View Details</a>
                     <a href="#" class="card-link" style="color:orange">Edit</a>
                     <a href="#" class="card-link" style="color:red">Delete</a>
                 </div>
