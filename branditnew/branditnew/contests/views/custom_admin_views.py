@@ -6,6 +6,7 @@ from django.shortcuts import reverse, redirect, render
 from django.contrib import messages
 
 from branditnew.contests.models import categories, contest, entries, prices, projects
+from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.forms import Make_Project_Submission_Form
 
 
@@ -36,6 +37,7 @@ def index(request):
         'old_projects': old_projects_list,
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
 
     }
 
@@ -112,7 +114,63 @@ def contests(request):
         'contests': contest_list,
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
-
+        'num_new_contests': contest.get_num_new_contests,
     }
 
     return HttpResponse(template.render(context))
+
+
+
+
+
+def verify_contest(request, contest_id):
+    contest_obj = Contest.objects.get(pk=contest_id)
+    contest_obj.is_verified = True
+    contest_obj.is_touched = True
+    contest_obj.save()
+    messages.add_message(request, messages.SUCCESS, "Successfully verified contest", extra_tags='alert alert-success')
+
+    new_projects_list = projects.Project.objects.filter(is_touched=False)
+    old_projects_list = projects.Project.objects.filter(is_touched=True)
+    contest_list = contest.Contest.objects.all()
+
+    context = {
+        'contests': contest_list,
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
+    }
+
+    return redirect(reverse( "custom_admin:contests"))
+
+
+
+
+
+def contest_entries_comments(request):
+    comments = entries.Entry_Comment.objects.all()
+
+    context = {
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
+
+        'comments': comments
+    }
+    
+    return render(request, "contests/custom_admin_contest_entries_comments.html", context)
+
+
+
+
+
+def verify_entry_comment(request, comment_id):
+    comment = entries.Entry_Comment.objects.get(pk=comment_id)
+    comment.is_touched = True
+    comment.is_verified = True
+    comment.save()
+    messages.add_message(request, messages.SUCCESS, "Successfully verified comment", extra_tags='alert alert-success')
+
+    return redirect(reverse('custom_admin:contest_entries_comments'))
+
+    

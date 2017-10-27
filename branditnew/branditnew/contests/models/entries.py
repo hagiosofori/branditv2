@@ -41,6 +41,10 @@ class Entry_Comment(models.Model):
     def __str__(self):
         return self.content
 
+    def touch(self):
+        self.is_touched = True
+
+
 
 def get_num_new_contest_entry_comments():
     return Entry_Comment.objects.filter(is_touched=False).count()

@@ -13,9 +13,15 @@ Contests
         
 {% for contest in contests %}
     <tr>
-        <td>{{ contest }}</td>
         <td>
-            <a href="" class=" btn-sm btn btn-success">Make Submission</a>
+            {% if contest.is_touched == False %}
+            <span class="label label-warning">new</span>
+            {% endif %}    
+            {{ contest }} 
+            
+        </td>
+        <td>
+            <a href="{% url 'custom_admin:verify_contest' contest.id %}" class=" btn-sm btn btn-success">Verify</a>
             <a href="" class="btn btn-primary btn-sm">View Details</a>                        
             <a href="" class="btn btn-sm btn-warning">Edit</a>
             <a href="" class="btn btn-danger btn-sm">Delete</a>

@@ -47,7 +47,7 @@ class Contest(models.Model):
     sketch = models.FileField(
         upload_to=user_directory_path, blank=True, null=True)
     is_closed = models.BooleanField(default=False)
-    is_touched = models.BooleanField(default=False)
+    is_touched = models.BooleanField(default=False) #indicates if admin has 'touched' this record or not
 
 
 
@@ -57,3 +57,7 @@ class Contest(models.Model):
 
     def touch(self):
         self.is_touched = True
+
+
+def get_num_new_contests():
+    return Contest.objects.filter(is_touched=False).count()

@@ -284,6 +284,7 @@ def make_comment(request, contest_id, entry_id):
         #the contest owner's comments are automatically verified. Brandlancers would have to be verified by the admin. is_verified field of entry_comments table defaults to False if no value is provided.
         if comment.owner == client:
             comment.is_verified = True
+            comment.is_touched = True
         
         comment.save()
         messages.add_message(request, messages.SUCCESS, "Comment successfully saved", extra_tags='alert alert-success')
