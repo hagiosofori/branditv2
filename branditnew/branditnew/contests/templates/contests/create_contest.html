@@ -11,7 +11,9 @@
                     <h1>Create a Contest</h1>
             </div>
             <div class="col-md-4">
-                    <button class="btn-primary btn float-right">Save As Draft</button>
+                <a href="{% url 'contests:index' %}" class="btn btn-secondary float-right">Cancel</a>    
+                <button class="btn-primary btn ">Save As Draft</button>
+                    
             </div>
         </div>
         <form method="POST" enctype="multipart/form-data">

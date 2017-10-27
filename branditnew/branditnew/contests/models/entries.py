@@ -31,10 +31,11 @@ class Entry(models.Model):
 
 
 class Entry_Comment(models.Model):
-    contest_entry = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    contest_entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.content

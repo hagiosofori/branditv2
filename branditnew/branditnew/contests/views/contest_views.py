@@ -212,6 +212,7 @@ def contest_details(request, contest_id):
         'contest': contest,
         'winning_entry': winning_entry,
     }
+    print("accidentally coming here")
     return render(request, 'contests/contest_details.html', context)
 
 
@@ -250,12 +251,15 @@ def make_winner(request, contest_id, entry_id):
 def entry_details(request, contest_id, entry_id):
     entry = Entry.objects.get(pk=entry_id)
     contest = Contest.objects.get(pk=contest_id)
-    comments = Entry_Comment.objects.filter(contest_entry=entry)
+    comments = Entry_Comment.objects.filter(contest_entry=entry, )
+    form = forms.Entry_Comment_Form();
     context = {
         'entry': entry,
         'contest': contest,
         'comments':comments,
+        'form':form,
     }
+    print("inside contest entry details view")
     return render(request, 'contests/contest_entry_details.html', context)
 
 

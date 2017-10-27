@@ -121,7 +121,7 @@ class SignInForm(forms.Form):
 
 
 
-class Entry_Comment_Form(forms.Form):
+class Entry_Comment_Form(forms.ModelForm):
     class Meta:
         model = Entry_Comment
 
