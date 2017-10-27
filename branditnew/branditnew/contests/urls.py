@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^(?P<contest_id>[0-9]+)/submit_entry/', views.submit_entry, name='submit_entry'),
     url(r'^(?P<contest_id>[0-9]+)/', views.contest_details, name='contest_details'),
     url(r'^contest_list/', views.contest_list, name="contest_list"),
+    url(r'^(?P<contest_id>[0-9]+)/entries/(?P<entry_id>[0-9]+)/details/$',views.contest_views.entry_details, name="entry_details"),
+    url(r'^(?P<contest_id>[0-9]+)/entries/(?P<entry_id>[0-9]+)/make_comment/$', views.contest_views.make_comment, name="make_comment"),
 
     url(r'^login/$', auth_views.login, {'template_name':'contests/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'contests/index.html'}, name='logout'),

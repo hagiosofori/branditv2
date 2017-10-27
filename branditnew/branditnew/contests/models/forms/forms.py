@@ -5,7 +5,7 @@ from django.contrib.admin import widgets
 from django import forms
 from ..contest import Contest
 from .. import skills
-from ..entries import Entry
+from ..entries import Entry, Entry_Comment
 
 
 class SignUpForm(UserCreationForm):
@@ -116,3 +116,19 @@ class ContestEntryForm(forms.ModelForm):
 class SignInForm(forms.Form):
     username = forms.CharField(label='Username')
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
+
+
+
+
+
+class Entry_Comment_Form(forms.Form):
+    class Meta:
+        model = Entry_Comment
+
+        fields = [
+            'content',
+        ]
+
+        labels = {
+            'content': '',
+        }

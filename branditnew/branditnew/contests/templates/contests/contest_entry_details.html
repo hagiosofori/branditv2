@@ -1,7 +1,7 @@
 {% extends "contests/includes/base.html" %}
 
 {% block title %}
-Project Submission Details
+Contest Entry Details
 {% endblock title %}
 
 {% block content %}
@@ -10,11 +10,10 @@ Project Submission Details
 <div class="col-md-7 card">
     <br>
             
-        <h3>{{ submission }}</h3><br>
-        <h4>Price: {{ submission.price }}</h4>
+        <h3>{{ entry }}</h3><br>
         <br>
         <p style="text-align: justify">
-            <img src="{{ submission.submission.url }}" style="height:24rem; width:39rem;" class="img-responsive"> 
+            <img src="{{ entry.entry.url }}" style="height:24rem; width:39rem;" class="img-responsive">
             <br>
         </p>
     </div>
@@ -23,7 +22,7 @@ Project Submission Details
             <br>
             <h3>Comments Section</h3><hr>
             <h5>Make a comment...</h5>
-            <form action="{% url 'projects:make_comment' project.id submission.id %}" method="post">
+            <form action="{% url 'contests:make_comment' contest.id entry.id %}" method="post">
                     {% csrf_token %}
 
                     {% bootstrap_form form %}

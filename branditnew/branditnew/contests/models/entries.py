@@ -25,3 +25,17 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+
+class Entry_Comment(models.Model):
+    contest_entry = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
+

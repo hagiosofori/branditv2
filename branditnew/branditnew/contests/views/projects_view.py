@@ -173,7 +173,6 @@ def submission_details(request, project_id, submission_id):
 
 
 def make_comment(request, submission_id, project_id):
-    print("successfully entered make_comment view")
     form = forms.Project_Submission_Comment_Form(request.POST)
 
     if form.is_valid():

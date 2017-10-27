@@ -72,10 +72,13 @@
             <div class="card">
             <img class="card-img-top" src="{{ entry.files.url }}" alt="{{ entry }}">
             <div class="card-body">
-              <p class="card-text">{{ entry }}, designed by @{{ entry.brandlancer }} </p>
+            <center>
+                <p class="card-text">{{ entry }}, designed by @{{ entry.brandlancer }} </p>
               {% ifequal request.user contest.client %}
-              <a href="{% url 'contests:make_winner' contest_id=contest.id entry_id=entry.id %}" class="btn btn-primary">Make winner</a>
               
+                <a href="{% url 'contests:entry_details' contest.id entry.id %}" class="btn btn-primary btn-sm">View Details</a>
+                <a href="{% url 'contests:make_winner' contest_id=contest.id entry_id=entry.id %}" class="btn btn-sm btn-warning">Make winner</a>
+            </center>
               {% endifequal %}
               
     </div>

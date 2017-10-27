@@ -208,6 +208,7 @@ crossorigin="anonymous"></script>
 </style>
 
 <script>
+    //logic to calculate current total cost
     var category_price = 0;
     var top_price = 0;
     var hidden_price = 0;
@@ -216,10 +217,18 @@ crossorigin="anonymous"></script>
 
     var category_costs = "{{ category_prices }}";
     category_costs = JSON.parse(category_costs.replace(/&quot;/g,'"'));
+    
+    var prices = "{{ prices }}";
+    prices = JSON.parse(prices.replace(/&quot;/g,'"'));
+    console.log(prices);
+    
 
+    //refreshes the value displayed as the total cost above the submit button
     function updateCost(){
         totalCost = category_price + top_price + hidden_price + nda_price + sealed_price;
+        $("#totalCost").text(" ");
         $("#totalCost").text(totalCost);
+        console.log("new total cost "+totalCost);
     }
 
     function findCategoryPrice(category_id){
@@ -232,56 +241,91 @@ crossorigin="anonymous"></script>
         return price;
     }
 
+
+    //linking the total cost displayed on top of the submit button to the categories field, so the total cost is updated depending on the value of the 
     $("#id_category").change(
         function(){
             newCategory = $("select option:selected").val();
             newCategoryPrize = findCategoryPrice(newCategory);
             console.log('new category prize is '+newCategoryPrize);
-            category_price = newCategoryPrize;
+            category_price = parseInt(newCategoryPrize);
             updateCost();
         }
     );
 
-    
+    //callback functions for finding the relevant prices within the prices array
+    function findNdaPrice(price){
+        return price.price_type = 'nda_contest';
+    }
+    function findTopPrice(price){
+        return price.price_type = 'top_contest';
+    }
+    function findSealedPrice(price){
+        return price.price_type = 'sealed_contest';
+    }
+    function findHiddenPrice(price){
+        return price.price_type = 'private_contest';
+    }
 
+    
+    //linking the checkboxes to the buttons beside them, so clicking on the button checks/unchecks the checkbox
     function triggerCheckbox(checkbox) {
         var button = $(checkbox);
+
         if (button.prop("checked") == true) {
             button.prop("checked", false);
+
             if(checkbox=="#id_is_nda"){
-                console.log("nda");
-            }else if(checkbox=="#id_is_top"){
-                console.log("top");
+                nda_price = 0;
+
+            }else if(checkbox=="#id_is_top"){               
+                top_price = 0;
+                
             }else if(checkbox=="#id_is_sealed"){
-                console.log("sealed");
+                sealed_price = 0; 
+
             }else if(checkbox=="#id_is_hidden"){
-                console.log("hidden");
+                hidden_price = 0;
             }
 
         } else {
             button.prop("checked", true);
+
             if(checkbox=="#id_is_nda"){
-                console.log("nda");
+                nda_price = prices.find(findNdaPrice).cost;
+                console.log("nda price "+ nda_price);
+                
             }else if(checkbox=="#id_is_top"){
-                console.log("top");
+                top_price = prices.find(findTopPrice).cost;
+                console.log("top price "+ top_price);
+
             }else if(checkbox=="#id_is_sealed"){
-                console.log("sealed");
+                sealed_price = prices.find(findSealedPrice).cost;
+                console.log("sealed price "+sealed_price);
+                
             }else if(checkbox=="#id_is_hidden"){
-                console.log("hidden");
+                hidden_price = prices.find(findHiddenPrice).cost;
+                console.log("hidden price "+hidden_price);
+                
             }
+
         }
+        updateCost();
     }
 
     $('input:checkbox').change(
         function () {
+            var currentTotal = parseInt($('#totalCost').val());
             if ($(this).is(':checked')) {
-                var newTotal = parseInt($('#totalCost').val());
-                newTotal = newTotal + parseInt('30');
+                //newTotal = currentTotal + parseInt('30');
                 $("#totalCost").text(newTotal);
+            }else{
+                
             }
-        });
+        }
+    );
 
-
+    //ensures that the end_date field of the create contest form has a default of 3 days from today
     $(document).ready(function () {
         var now = new Date();
         var numberOfDaysToAdd = 3;
@@ -291,7 +335,7 @@ crossorigin="anonymous"></script>
         var today = now.getFullYear() + "-" + (month) + "-" + (day);
         $("#id_end_date").val(today);
 
-        //$("#id_prize").val(500)
+        
     });
 
 </script>

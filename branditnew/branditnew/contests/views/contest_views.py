@@ -1,3 +1,6 @@
+import requests, json
+from datetime import datetime, timedelta
+
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate
@@ -5,17 +8,17 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.template import loader
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
+from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib import messages
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.contest import Contest
-from branditnew.contests.models.entries import Entry
+from branditnew.contests.models.entries import Entry, Entry_Comment
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
 from branditnew.contests.models.projects import *
 from branditnew.contests.views.payment_views import process_invoice
-from django.core.serializers.json import DjangoJSONEncoder
-import requests, json
+
 
 # Create your views here.
 
@@ -121,10 +124,6 @@ def create_contest(request):
             
     prices = Price.objects.values()
     
-    print(category_prices)
-    print(list(category_prices))
-    print(prices)
-
     context = {
         'form': form,
         'prices': json.dumps(list(prices), cls=DjangoJSONEncoder),
@@ -178,6 +177,7 @@ def save_contest_as_draft(request):
 
 
 
+
 def submit_entry(request, contest_id):
     form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
 
@@ -203,6 +203,8 @@ def submit_entry(request, contest_id):
 
 
 
+
+
 def contest_details(request, contest_id):
     contest = get_object_or_404(Contest, pk=contest_id)
     winning_entry = Entry.objects.get(is_winner=True)
@@ -213,6 +215,9 @@ def contest_details(request, contest_id):
     return render(request, 'contests/contest_details.html', context)
 
 
+
+
+
 def contest_list(request):
     contests_list = Contest.objects.all()
     template = loader.get_template('contests/contest_list.html')
@@ -220,6 +225,8 @@ def contest_list(request):
         'contests_list': contests_list,
     }
     return HttpResponse(template.render(context))
+
+
 
 
 
@@ -235,3 +242,37 @@ def make_winner(request, contest_id, entry_id):
     current_winners.save()
     return redirect(reverse('contests:contest_details', args=(contest_id)))
 
+
+
+
+
+#entry details
+def entry_details(request, contest_id, entry_id):
+    entry = Entry.objects.get(pk=entry_id)
+    contest = Contest.objects.get(pk=contest_id)
+    comments = Entry_Comment.objects.filter(contest_entry=entry)
+    context = {
+        'entry': entry,
+        'contest': contest,
+        'comments':comments,
+    }
+    return render(request, 'contests/contest_entry_details.html', context)
+
+
+
+
+
+def make_comment(request, contest_id, entry_id):
+    form = forms.Entry_Comment_Form(request.POST)
+
+    if form.is_valid():
+        entry = Entry.objects.get(pk=entry_id)
+        comment = form.save(commit=False)
+        comment.owner = request.user
+        comment.contest_entry = entry
+        comment.save()
+        messages.add_message(request, messages.SUCCESS, "Comment successfully saved", extra_tags='alert alert-success')
+    else:
+        messages.add_message(request, messages.error, 'Unable to save comment. Please try again after a while', extra_tags="alert alert-danger")
+
+    return redirect(reverse("contests:entry_details", args=(contest_id, entry_id)))
