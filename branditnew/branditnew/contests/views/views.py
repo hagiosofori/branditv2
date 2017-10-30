@@ -88,8 +88,10 @@ def signin(request):
 def dashboard(request):
     template = loader.get_template('contests/dashboard.html')
     contests = Contest.objects.filter(client=request.user)
+    winning_entries = Entry.objects.filter(brandlancer=request.user)
     context = {
         'contests': contests,
+        'winning_entries': winning_entries,
     }
     return render(request, 'contests/dashboard.html', context)
 

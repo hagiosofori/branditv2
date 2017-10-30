@@ -130,17 +130,6 @@ def verify_contest(request, contest_id):
     contest_obj.save()
     messages.add_message(request, messages.SUCCESS, "Successfully verified contest", extra_tags='alert alert-success')
 
-    new_projects_list = projects.Project.objects.filter(is_touched=False)
-    old_projects_list = projects.Project.objects.filter(is_touched=True)
-    contest_list = contest.Contest.objects.all()
-
-    context = {
-        'contests': contest_list,
-        'num_new_projects': projects.get_num_new_projects,
-        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
-        'num_new_contests': contest.get_num_new_contests,
-    }
-
     return redirect(reverse( "custom_admin:contests"))
 
 
@@ -148,6 +137,9 @@ def verify_contest(request, contest_id):
 
 
 def contest_entries_comments(request):
+    if check_permissions(request) is not True:
+        return redirect(reverse("contests:login"))
+    
     comments = entries.Entry_Comment.objects.all()
 
     context = {
