@@ -1,0 +1,29 @@
+{% extends "contests/includes/base.html" %} {% block title %} Template Details {% endblock title %} 
+
+{% block content %}
+<div class="card container">
+    <br>
+    <h3>{{ template }} details</h3>
+    <br>
+
+    <span>
+        <div class="row">
+            <div class="col-md-3">
+                <b>Category: </b>{{ template.category }}
+            </div>
+
+        </div>
+    </span>
+    <hr>
+    <br>
+    <h3>Template Description</h3>
+    <br>
+    <p style="text-align: justify">
+        <img src="{{ template.image.url }}" style="height:24rem; width:39rem;" class="img-responsive">
+        <br>
+        <br> {{ template.description }}
+    </p>
+    <hr>
+    <br>
+</div>
+{% endblock content %}

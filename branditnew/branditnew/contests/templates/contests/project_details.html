@@ -41,7 +41,6 @@
             {% if chosen_design %}
             <img class="card-img-top" src="{{ chosen_design.submission.url }}" alt="WINNER IMAGE HERE">
             <div class="card-body">
-            <a href="{% url 'projects:deselect_design' project.id chosen_design.id %}" class="float-right btn btn-warning">Deselect this design</a>
             </div>
     
             {% else %}

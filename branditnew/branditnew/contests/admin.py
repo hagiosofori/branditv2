@@ -9,6 +9,7 @@ from .models import entries
 from .models import prices
 from .models import projects
 from .models import templates
+from .models import transactions
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
@@ -41,3 +42,6 @@ admin.site.register(entries.Entry_Comment)
 admin.site.register(templates.Template)
 admin.site.register(templates.Template_Order)
 admin.site.register(templates.Template_Category)
+admin.site.register(transactions.Transaction)
+admin.site.register(transactions.Transaction_Type)
+admin.site.register(transactions.Transaction_Status)

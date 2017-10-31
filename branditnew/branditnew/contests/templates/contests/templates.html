@@ -7,7 +7,7 @@ Templates
 {% block content %}
 <h3>Templates</h3><hr>
 <center>
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs justify-content-center">
     <li class="active"><a data-toggle="tab" href="#home">First Category</a></li>
     <li><a data-toggle="tab" href="#menu1">Second Category</a></li>
     <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
@@ -24,10 +24,14 @@ Templates
         <img src="{{ template.image.url }}" alt="" class="img-responsive card-img-top" style="height:13rem; width:100%;">
     
         <div class="card-body">
-            <h5>{{ template.name }}</h5> <br>
+            <h5>{{ template.name }} 
+                <a class="btn btn-warning float-right" href="">Select</a>    
+            </h5> <br>
             {{ template.description }}
+            
             <div class="card-link">
-                <a href="" class="pull-right">View Details</a>
+                    <hr>
+                <a href="{% url 'templates:template_details' template.id %}" class="pull-right">View Details</a>
             </div>
         </div>
     </div>
