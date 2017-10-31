@@ -8,6 +8,7 @@ from .models import user_type
 from .models import entries
 from .models import prices
 from .models import projects
+from .models import templates
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
@@ -37,3 +38,6 @@ admin.site.register(projects.Project)
 admin.site.register(projects.Project_Submission)
 admin.site.register(projects.Project_Submission_Comment)
 admin.site.register(entries.Entry_Comment)
+admin.site.register(templates.Template)
+admin.site.register(templates.Template_Order)
+admin.site.register(templates.Template_Category)

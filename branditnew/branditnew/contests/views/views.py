@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+import requests
+
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, authenticate
@@ -5,7 +8,6 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.template import loader
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, timedelta
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.contest import Contest
@@ -13,7 +15,6 @@ from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
 from branditnew.contests.views.payment_views import process_invoice
-import requests
 
 # Create your views here.
 

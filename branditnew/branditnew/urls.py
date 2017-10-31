@@ -30,6 +30,7 @@ urlpatterns = [
     #eg: brandit.express/admin
     url(r'^admin/', admin.site.urls),
     url(r'^custom_admin/', include('branditnew.contests.custom_admin_urls')),
+    url(r'^templates/', include('branditnew.contests.template_urls')),
 
 ]
 

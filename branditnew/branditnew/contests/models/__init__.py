@@ -6,3 +6,4 @@ from . import entries
 from . import forms
 from . import prices
 from . import projects
+from . import templates
