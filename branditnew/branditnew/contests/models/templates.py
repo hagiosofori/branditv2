@@ -27,7 +27,6 @@ class Template(models.Model):
 
 
 
-
 class Template_Order(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
     template = models.ForeignKey(Template, on_delete=models.CASCADE)

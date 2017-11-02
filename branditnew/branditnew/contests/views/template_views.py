@@ -34,8 +34,12 @@ def details(request, template_id):
             
             template_order.template = Template.objects.get(pk=template_id)
             template_order.client = request.user
-            template_order.total_cost = template_order.template.cost
+            template_order.cost = template_order.template.cost
+            template_order.quantity = form.cleaned_data.get('quantity')
+            template_order.changes = form.cleaned_data.get('changes')
             template_order.save()
+            print(template_order.template, template_order.cost, template_order.quantity, template_order.changes)
+            
             request.session['template_order'] = template_order.id
 
             return redirect(reverse("templates:verify_order", args=(template_id)))
@@ -59,7 +63,7 @@ def verify_order(request, template_id):
         messages.add_message(request, messages.SUCCESS, "Successfully placed order for template", extra_tags='alert alert-success')
 
         data = process_invoice(request, template_order)
-
+        
         return redirect(data['response_text'], data['token'])
 
     context = {

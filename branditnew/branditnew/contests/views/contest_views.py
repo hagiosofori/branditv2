@@ -60,9 +60,7 @@ def signup(request):
             user.save()
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            template = loader.get_template('contests/dashboard.html')
-            context = {}
-            return render(request, 'contests/dashboard.html', context)
+            return render(request, 'contests/dashboard.html')
         
     return render(request, "contests/signup.html", {'form': form})
 
@@ -94,12 +92,14 @@ def dashboard(request):
     template = loader.get_template('contests/dashboard.html')
     contests = Contest.objects.filter(client=request.user)
     projects = Project.objects.filter(client=request.user)
-
+    accomplishments = Entry.objects.filter(brandlancer=request.user, is_winner=True)
     context = {
         'contests': contests,
         'projects': projects,
+        'accomplishments': accomplishments,
     }
     return HttpResponse(template.render(context))
+
 
 
 

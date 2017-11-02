@@ -5,13 +5,11 @@ Templates
 {% endblock title %}
 
 {% block content %}
-<h3>Templates</h3><hr>
+<h3>Templates</h3>
 <center>
 <ul class="nav nav-tabs justify-content-center">
-    <li class="active"><a data-toggle="tab" href="#home">First Category</a></li>
-    <li><a data-toggle="tab" href="#menu1">Second Category</a></li>
-    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    <li class="active"><a data-toggle="tab" href="#home">Business Cards</a></li>
+    <li><a data-toggle="tab" href="#menu1">Fliers</a></li>
 </ul>
 </center>
 
@@ -25,14 +23,9 @@ Templates
     
         <div class="card-body">
             <h5>{{ template.name }} 
-                <a class="btn btn-warning float-right" href="">Select</a>    
+                <a class="btn btn-warning float-right" href="{% url 'templates:template_details' template.id %}">Select</a>    
             </h5> <br>
             {{ template.description }}
-            
-            <div class="card-link">
-                    <hr>
-                <a href="{% url 'templates:template_details' template.id %}" class="pull-right">View Details</a>
-            </div>
         </div>
     </div>
         
