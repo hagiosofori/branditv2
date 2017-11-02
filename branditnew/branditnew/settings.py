@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # 'widget-tweaks',
     # 'crispy_forms',
     'bootstrap4',
+    'social_django',
 
     #django installed
     'django.contrib.admin',
@@ -57,7 +58,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.linkedin.LinkedinOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 ROOT_URLCONF = 'branditnew.urls'
 
@@ -72,6 +86,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -140,6 +157,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 LOGIN_REDIRECT_URL = '/contests/dashboard/'
 
 LOGIN_URL = '/contests/login'
+LOGOUT_URL = 'contests/logout'
 
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

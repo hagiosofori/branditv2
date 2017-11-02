@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^custom_admin/', include('branditnew.contests.custom_admin_urls')),
     url(r'^templates/', include('branditnew.contests.template_urls')),
+    url(r'oauth/', include('social_django.urls', namespace="social")),
 
 ]
 
