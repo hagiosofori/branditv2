@@ -103,19 +103,21 @@ def dashboard(request):
 
 
 
-
+# by default render the form for creating a contest.
+# if the method is a post, store the values, save the contest object in the db, store the key of the obj, and redirect to the verify contest page.
+    # if it's a post method, and there's already a key in the session, use that key. else, create a new contest object.
 @login_required(login_url="contests:login")
 def create_contest(request, contest_id=None):
     contest = None
     if contest_id:
         contest = get_object_or_404(Contest, pk=contest_id)
     
-    form = forms.CreateContestForm(instance=contest)
-    
+    form = forms.CreateContestForm(instance=contest)   
     category_prices = Category.objects.values()
     
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST, request.FILES)
+
         if form.is_valid():
             contest = form.save(commit=False)
             contest.client = request.user
@@ -123,11 +125,17 @@ def create_contest(request, contest_id=None):
             cost = category_cost.prize_lower_limit
             contest.cost = cost
             contest.is_draft = False
+
+            contest.title = form.cleaned_data.get('title')
+            contest.about = form.cleaned_data.get('about')
+            contest.prize = form.cleaned_data.get('prize')
+            contest.end_date = form.cleaned_data.get('end_date')
             contest.save()
-            data = process_invoice(request, contest)
-            return redirect(data['response_text'])
-            #check if the payment has been made, and update db accordingly before saving.
             
+            request.session['contest'] = contest.id
+            
+            return redirect(reverse(request, 'contests:verify_contest', args=(contest_id)))
+
     prices = Price.objects.values()
     
     context = {
@@ -141,6 +149,34 @@ def create_contest(request, contest_id=None):
 
 
 
+
+
+def verify_contest(request, contest_id):
+    contest = Contest.objects.get(pk=request.session['contest'])
+    
+    if request.method == "POST":
+        contest.save()
+        messages.add_message(request, messages.SUCCESS, "Successfully created contest", extra_tags='alert alert-success')
+
+        data = process_invoice(request, contest)
+        
+        del request.session['contest']
+
+        return redirect(data['response_text'], data['token'])
+
+    context = {
+        'contest': contest,
+    }
+    return render(request, 'contests/verify_contest.html', context)
+
+
+
+
+
+
+
+
+@login_required
 def save_contest_as_draft(request):
     if request.method == 'POST':
         client = request.user

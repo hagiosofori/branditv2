@@ -1,0 +1,45 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+Verify Contest
+{% endblock title %}
+
+{% block contest %}
+<h3>Please verify the contest details below before checkout</h3>
+<br>
+<div class="col-md-6">
+    <div class="card">
+            <div class="card-img-top">
+                <center>
+                    <img src="{{ template_order.template.image.url }}" alt="" style="width:100%;">
+                </center>
+            </div>
+        </div>            
+</div>
+<div class="col-md-6">
+    <table class="table table-bordered" style="font-size:200em; height:100%">
+        <tr>
+            <td><b>Quantity: </b></td>
+            <td>{{ template_order.quantity }}</td>
+        </tr>
+        <tr>
+            <td><b>Changes: </b></td>
+            <td>{{ template_order.changes }}</td>
+        </tr>
+        <tr>
+            <td><b>Total Cost: </b></td>
+            <td>{{ template_order.total_cost }}</td>
+        </tr>
+    </table>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <input type="button" class="btn btn-default btn-block" value="Go back and edit" onClick="window.history.back();return false;">
+        </div>
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-success btn-block" value="Proceed to checkout">
+        </div> 
+    </form>
+</div>
+{% endblock contest %}

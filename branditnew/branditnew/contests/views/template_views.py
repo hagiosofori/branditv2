@@ -18,7 +18,8 @@ def templates_list(request):
 
 
 
-
+#takes the form values, stores them in the db, stores the primary key of the db value in the session, and then redirects to verification.
+# if user goes back to change the values of the template order, then value in the db is updated.
 def details(request, template_id):
     template = Template.objects.get(pk=template_id)
     form = Template_Order_Form()
@@ -63,6 +64,7 @@ def verify_order(request, template_id):
         messages.add_message(request, messages.SUCCESS, "Successfully placed order for template", extra_tags='alert alert-success')
 
         data = process_invoice(request, template_order)
+        del request.session['template_order']
         
         return redirect(data['response_text'], data['token'])
 
