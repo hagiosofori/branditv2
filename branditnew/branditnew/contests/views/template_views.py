@@ -25,21 +25,15 @@ def details(request, template_id):
     form = Template_Order_Form()
 
     if request.method == "POST": 
-        form = Template_Order_Form(request.POST)
+        form = Template_Order_Form(request.POST, instance=template)
         
         if form.is_valid():
-            if 'template_order' not in request.session:
-                template_order = form.save(commit=False)
-            else:
-                template_order = Template_Order.objects.get(pk=request.session['template_order'])
-            
             template_order.template = Template.objects.get(pk=template_id)
             template_order.client = request.user
             template_order.cost = template_order.template.cost
             template_order.quantity = form.cleaned_data.get('quantity')
             template_order.changes = form.cleaned_data.get('changes')
             template_order.save()
-            print(template_order.template, template_order.cost, template_order.quantity, template_order.changes)
             
             request.session['template_order'] = template_order.id
 

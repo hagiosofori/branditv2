@@ -106,35 +106,32 @@ def dashboard(request):
 # by default render the form for creating a contest.
 # if the method is a post, store the values, save the contest object in the db, store the key of the obj, and redirect to the verify contest page.
     # if it's a post method, and there's already a key in the session, use that key. else, create a new contest object.
+
+# also the edit function. in that case, the contest_id will be set, and the form will be populated with the details of the specified contest.
 @login_required(login_url="contests:login")
 def create_contest(request, contest_id=None):
     contest = None
+    print(contest_id)
     if contest_id:
         contest = get_object_or_404(Contest, pk=contest_id)
     
-    form = forms.CreateContestForm(instance=contest)   
+    form = forms.CreateContestForm(instance=contest)
     category_prices = Category.objects.values()
     
     if request.method == 'POST':
-        form = forms.CreateContestForm(request.POST, request.FILES)
-
+        form = forms.CreateContestForm(request.POST, request.FILES, instance=contest)
+        print(form)
         if form.is_valid():
             contest = form.save(commit=False)
             contest.client = request.user
             category_cost = Category.objects.get(name=form.cleaned_data.get('category')) 
             cost = category_cost.prize_lower_limit
-            contest.cost = cost
+            contest.cost = form.cleaned_data.get('prize')
             contest.is_draft = False
 
-            contest.title = form.cleaned_data.get('title')
-            contest.about = form.cleaned_data.get('about')
-            contest.prize = form.cleaned_data.get('prize')
-            contest.end_date = form.cleaned_data.get('end_date')
             contest.save()
-            
-            request.session['contest'] = contest.id
-            
-            return redirect(reverse(request, 'contests:verify_contest', args=(contest_id)))
+
+            return redirect(reverse('contests:verify_contest', args=[contest_id]))
 
     prices = Price.objects.values()
     
@@ -152,15 +149,13 @@ def create_contest(request, contest_id=None):
 
 
 def verify_contest(request, contest_id):
-    contest = Contest.objects.get(pk=request.session['contest'])
-    
+    contest = Contest.objects.get(pk=contest_id)
+    print(contest.cost)
     if request.method == "POST":
-        contest.save()
         messages.add_message(request, messages.SUCCESS, "Successfully created contest", extra_tags='alert alert-success')
 
         data = process_invoice(request, contest)
-        
-        del request.session['contest']
+        print(data)
 
         return redirect(data['response_text'], data['token'])
 

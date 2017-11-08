@@ -4,42 +4,101 @@
 Verify Contest
 {% endblock title %}
 
-{% block contest %}
+{% block content %}
+{% load static %}
+
 <h3>Please verify the contest details below before checkout</h3>
 <br>
+
 <div class="col-md-6">
+    
     <div class="card">
-            <div class="card-img-top">
-                <center>
-                    <img src="{{ template_order.template.image.url }}" alt="" style="width:100%;">
-                </center>
-            </div>
-        </div>            
+        <div class="card-img-top">
+            <center>
+                {% if contest.files %}
+                <img src="<span></span>{{ contest.files.url }}" alt="" style="width:100%;">
+                {% else %}
+                <img src="{% static 'contests/images/img-placeholder.png' %}" style="height:100%; width:100%;">
+                <div class="card-body">
+                    No image files set
+                </div>
+                {% endif %}
+            </center>
+        </div>
+    </div>
+    
+
+    {% if contest.logo %}
+    <div class="card">
+        <img src="{{ contest.logo.url" alt="">
+    </div>
+    {% endif %}
 </div>
 <div class="col-md-6">
     <table class="table table-bordered" style="font-size:200em; height:100%">
         <tr>
-            <td><b>Quantity: </b></td>
-            <td>{{ template_order.quantity }}</td>
+            <td><b>Title: </b></td>
+            <td><span>{{ contest.title }}</span></td>
         </tr>
         <tr>
-            <td><b>Changes: </b></td>
-            <td>{{ template_order.changes }}</td>
+            <td><b>About: </b></td>
+            <td><span>{{ contest.about }}</span></td>
         </tr>
         <tr>
-            <td><b>Total Cost: </b></td>
-            <td>{{ template_order.total_cost }}</td>
+            <td><b>Prize: </b></td>
+            <td><span>{{ contest.prize }}</span></td>
+        </tr>
+        <tr>
+            <td><b>End Date: </b></td>
+            <td><span>{{ contest.end_date }}</span></td>
+        </tr>
+        <tr>
+            <td><b>Category:</b></td>
+            <td><span>{{ contest.category }}</span></td>
+        </tr>
+        <tr>
+            <td><b>Preferred Styles: </b></td>
+            <td><span>{{ contest.preferred_style }}</span></td>
+        </tr>
+        <tr>
+            <td><b>Preferred Colors: </b></td>
+            <td><span>{{ contest.preferred_colors }}</span></td>
+        </tr>
+        <tr>
+            <td><b>Target Audience: </b></td>
+            <td><span>{{ contest.target_audience }}</span></td>
+        </tr>
+        <tr>
+            <td><b>Design Details: </b></td>
+            <td><span>{{ contest.design_details }}</span></td>
+        </tr>
+        <tr>
+            <td><b>Extras</b></td>
+            <td>
+                {% if contest.is_top == True %}
+                <span>Top contest, </span>
+                {% endif %}
+                {% if contest.is_hidden == True %}
+                <span>Hidden contest, </span>
+                {% endif %}
+                {% if contest.is_nda == True %}
+                <span>NDA included, </span>
+                {% endif %}
+                {% if contest.is_sealed == True %}
+                <span>Only visible to brandlancers</span>
+                {% endif %}
+            </td>
         </tr>
     </table>
     
     <form action="" method="POST">
         {% csrf_token %}
         <div class="col-md-6">
-            <input type="button" class="btn btn-default btn-block" value="Go back and edit" onClick="window.history.back();return false;">
+            <a href="{% url 'contests:edit_contest' contest.id %}" class="btn btn-dark btn-block">Go back and edit</a>
         </div>
         <div class="col-md-6">
             <input type="submit" class="btn btn-success btn-block" value="Proceed to checkout">
         </div> 
     </form>
 </div>
-{% endblock contest %}
+{% endblock content %}

@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^(?P<contest_id>[0-9]+)/entries/(?P<entry_id>[0-9]+)/details/$',views.contest_views.entry_details, name="entry_details"),
     url(r'^(?P<contest_id>[0-9]+)/entries/(?P<entry_id>[0-9]+)/make_comment/$', views.contest_views.make_comment, name="make_comment"),
     url(r'^(?P<contest_id>[0-9]+)/edit/$', views.contest_views.create_contest, name="edit_contest"),
+    url(r'^(?P<contest_id>[0-9]+)/verify/$', views.contest_views.verify_contest, name="verify_contest"),
 
     url(r'^login/$', auth_views.login, {'template_name':'contests/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'contests/index.html'}, name='logout'),

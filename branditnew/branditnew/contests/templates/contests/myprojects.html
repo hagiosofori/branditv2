@@ -9,8 +9,8 @@
 <div class="col-md-4">
     <div class="card shadow">
         <div class="card-block ">
-            <div class="card-title" style="height:5rem">
-                    <h4>{{ project }}
+            <div class="card-title">
+                    <h4 class="">{{ project }}
                         {% if project.is_draft is True %}
                         <span>[ Draft ]</span>
                         
@@ -18,15 +18,15 @@
                     
                     {% else %}
                         <div class="float-right">
-                            <a href="{% url 'projects:project_details' project.id %}" class="card-link">View Details</a>
-                            <a href="" class="card-link" style="color:orange">Edit</a>
-                            <a href="" class="card-link" style="color:red">Delete</a>
+                            <a href="{% url 'projects:project_details' project.id %}" class="card-link ">View Details</a>
+                            <a href="" class="card-link " style="color:orange">Edit</a>
+                            <a href="" class="card-link " style="color:red">Delete</a>
                         </div>
                 {% endif %}
                     </h4>
                 <hr>
             </div>
-            <div style="height:5rem">
+            <div class="card-body" style="height:100%">
                 {{ project.description | truncatechars:100 }}...
             </div>
         </div>
