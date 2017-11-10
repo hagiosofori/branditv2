@@ -1,0 +1,35 @@
+{% extends "contests/custom_admin_base.html" %}
+
+{% block header %}
+Print Orders
+{% endblock header %}
+
+{% block content %}
+<h3>New Print Orders</h3> 
+<table class="table table-bordered">
+    {% for print in new_print_orders %}
+    <tr >
+        <td><h5>{{ print }}</h5></td>
+        <td>
+            <a href="" class="btn btn-primary">Details</a>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Others </h3>
+<table class="table table-bordered">
+    {% for print in old_print_orders %}
+    <tr>
+        <td>{{ print }}</td>
+        <td>
+            <a href="" class="btn btn-primary">Details</a>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

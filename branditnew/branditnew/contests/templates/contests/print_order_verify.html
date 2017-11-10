@@ -1,0 +1,59 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+Create Print Order
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+<h4>Please verify print order before checkout</h4>
+<br>
+
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-img-top">
+            <img src="{{ print_order.uploaded_design.url }}" alt="" style="height:100%; width:100%;">
+        </div>
+        <div class="card-body">Your uploaded design</div>
+    </div>
+    <div class="card">
+        <div class="card-img-top">
+            {% if print_order.item %}
+            <img src="{{ print_order.item.image.url }}" alt="" style="height:100%; width:100%;">
+            <div class="card-body">Material to be printed</div>
+            {% else %}
+            <img src="{% static 'contests/images/img-placeholder.png' %}" alt="" style="height:100%; width:100%;">
+            {% endif %}
+        </div>
+    </div>        
+</div>
+
+<div class="col-md-6">
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        <table class="table table-bordered">
+            <tr>
+                <td><b>Printed item: </b></td>
+                <td><span>{{ print_order.item }}</span></td>
+            </tr>
+            <tr>
+                <td><b>Quantity: </b></td>
+                <td><span>{{ print_order.quantity }} pieces</span></td>
+            </tr>
+            <tr>
+                <td><b>Total Cost:</b></td>
+                <td><span>GHS{{ print_order.cost }}</span></td>
+            </tr>
+        </table>
+
+        <div class="col-md-6">
+            <a href="{% url 'print_orders:print_order_edit' print_order.id %}" class="btn btn-secondary btn-block">Go back and edit</a>
+        </div>
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-block btn-success" value="Proceed to checkout">
+        </div>        
+    </form>
+            
+</div>
+{% endblock content %}

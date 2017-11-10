@@ -12,7 +12,7 @@ def process_invoice(request, item):
     hubtel_invoice = {
         "invoice":{
             "total_amount": item.cost,
-            "description": item.title,
+            "description": "something random for now",
 
         },
         "store":{

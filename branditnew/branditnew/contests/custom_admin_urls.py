@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^contests/entries/comments/$', views.custom_admin_views.contest_entries_comments, name="contest_entries_comments"),
 
     url(r'^contests/entries/comments/(?P<comment_id>[0-9]+)/verify$', views.custom_admin_views.verify_entry_comment, name="verify_entry_comment"),
+
+    url(r'^print_orders$', views.custom_admin_views.print_orders_list, name="print_orders"),
     
 ]

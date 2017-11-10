@@ -12,7 +12,7 @@ def user_directory_path(instance, filename):
 
 
 def item_image_path(instance, filename):
-    return 'item{0}_{1}'.format(instance.id, filename)
+    return 'item{0}_{1}'.format(instance.name, filename)
 
 
 
@@ -21,6 +21,8 @@ class Item(models.Model):
     image = models.FileField(upload_to=item_image_path, blank=True, null=True)
     price = models.PositiveSmallIntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
 
 
 
@@ -30,5 +32,13 @@ class Print_Order(models.Model):
     client = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, blank=True, null=True)
     uploaded_design = models.FileField(upload_to=user_directory_path, blank=True, null=True)
+    quantity = models.PositiveSmallIntegerField(blank=True, null=True)
+    cost = models.PositiveSmallIntegerField(blank=True, null=True)
+
     is_paid = models.BooleanField(default=False)
     is_touched = models.BooleanField(default=False)
+    #created_at
+
+    def __str__(self):
+        return "{0}'s print order for {2} {1}s".format(self.client, self.item, self.quantity)
+

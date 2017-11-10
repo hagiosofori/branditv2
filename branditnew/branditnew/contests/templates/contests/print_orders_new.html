@@ -1,0 +1,36 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+New Print Order
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+<h3>Which item would you like to print on?</h3>
+<br>
+{% for item in items %}
+<div class="col-md-4">
+    <div class="card shadow">
+        <div class="card-img">
+            {% if item.image %}
+            <img src="{{ item.image.url }}" alt="" style="width:100%; height:100%">
+            {% else %}
+            <img src="{% static 'images/img-placeholder.png' %}" alt="">
+            {% endif %}
+        </div>
+        
+        <div class="card-body">
+            <div class="col-md-8">
+                <h4><b>{{ item }} GHS{{ item.price }}</b></h4>
+            </div>
+            <div class="col-md-4 float-right">
+                
+                <a href="{% url 'print_orders:create' item.id %}" class="btn btn-warning btn-sm">Select</a>
+            </div>
+            <br>
+        </div>      
+    
+    </div>            
+</div>
+{% endfor %}
+{% endblock content %}

@@ -1,5 +1,7 @@
-from branditnew.contests.models.projects import *
 from django import forms
+
+from branditnew.contests.models.projects import *
+
 
 class Create_Project_Form(forms.ModelForm):
     class Meta:

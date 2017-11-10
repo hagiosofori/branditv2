@@ -272,67 +272,7 @@ desired effect
                 </form>
                 <!-- /.search form -->
 
-                <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">HEADER</li>
-                    <!-- Optionally, you can add icons to the links -->
-                    <li class="active">
-                        <a href="{% url 'custom_admin:index' %}">
-                            <i class="fa fa-folder"></i>
-                            <span>Projects 
-                                {% if num_new_projects is not 0 %}
-                                <span class="badge">{{ num_new_projects }}
-                                </span>
-                                {% endif %}
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'custom_admin:contests' %}">
-                            <i class="fa fa-link"></i>
-                            <span>
-                                Contests
-                                {% if num_new_contests is not 0 %}
-                                <span class="badge">{{ num_new_contests }}
-
-                                </span>
-                                {% endif %}
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'custom_admin:contest_entries_comments' %}">
-                            <i class="fa fa-link"></i>
-                            <span>Contest Entries Comments
-                                {% if num_new_contest_entry_comments is not 0 %}
-                                <span class="badge">
-                                    {{ num_new_contest_entry_comments }}
-                                </span>
-                                {% endif %}
-                            </span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-link"></i>
-                            <span>Multilevel</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li>
-                                <a href="#">Link in level 2</a>
-                            </li>
-                            <li>
-                                <a href="#">Link in level 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
+               {% include "contests/includes/custom_admin_side_bar.html" %}
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
@@ -392,7 +332,6 @@ desired effect
         </table>
 
 
-        <h2>Already Existing Projects</h2>
         <table class="table table-bordered">
             <tr>
                 <th>Project Name</th>

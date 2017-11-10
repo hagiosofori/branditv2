@@ -1,0 +1,23 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+Edit Print Order
+{% endblock title %}
+
+{% block content %}
+{% load bootstrap4 %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% bootstrap_form form %}
+
+    {% buttons %}
+    <div class="col-md-6">
+        <a href="{% url 'print_orders:print_order_verify' print_order.id %}" class="btn btn-block btn-secondary">Cancel</a>            
+    </div>
+    <div class="col-md-6">
+        <input type="submit" class="btn btn-warning btn-block">
+    </div>
+    {% endbuttons %}
+</form>
+{% endblock content %}

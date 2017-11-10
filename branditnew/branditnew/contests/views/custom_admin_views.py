@@ -8,7 +8,7 @@ from django.contrib import messages
 from branditnew.contests.models import categories, contest, entries, prices, projects
 from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.forms import Make_Project_Submission_Form
-
+from branditnew.contests.models.print_orders import Item, Print_Order
 
 
 def check_permissions(request):
@@ -44,6 +44,9 @@ def index(request):
     return HttpResponse(template.render(context))
 
 
+
+
+#PROJECTS FUNCTIONS
 
 
 def project_details(request, project_id):
@@ -98,7 +101,7 @@ def make_project_submission(request, project_id):
     return render(request, "contests/custom_admin_make_project_submission.html", context)
 
 
-
+## CONTEST FUNCTIONS
 
 
 def contests(request):
@@ -166,3 +169,23 @@ def verify_entry_comment(request, comment_id):
     return redirect(reverse('custom_admin:contest_entries_comments'))
 
     
+#PRINT ORDERS FUNCTIONALITY
+
+
+def print_orders_list(request):
+    new_print_orders = Print_Order.objects.filter(is_touched=False)
+    old_print_orders = Print_Order.objects.filter(is_touched=True)
+
+    context = {
+        'new_print_orders': new_print_orders,
+        'old_print_orders': old_print_orders,
+
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
+    }
+    return render(request, "contests/custom_admin_print_orders.html", context)
+
+
+
+

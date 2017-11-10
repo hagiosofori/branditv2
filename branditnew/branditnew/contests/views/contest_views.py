@@ -300,8 +300,8 @@ def entry_details(request, contest_id, entry_id):
         'comments':comments,
         'form':form,
     }
-    print("inside contest entry details view")
     return render(request, 'contests/contest_entry_details.html', context)
+
 
 
 
