@@ -6,15 +6,17 @@ from . import views
 app_name = 'projects'
 
 urlpatterns = [
-    url(r'^$', views.projects_view.index, name="myprojects"),
+    url(r'^my$', views.projects_view.index, name="myprojects"),
 
     url(r'^save_as_draft', views.projects_view.save_as_draft, name="save_as_draft"),
 
-    url(r'^create', views.projects_view.create_project, name="create_project"),
+    url(r'^new', views.projects_view.create_project, name="create_project"),
 
-    url(r'^(?P<project_id>[0-9]+)/edit', views.projects_view.edit_project, name="project_edit"),
+    url(r'^(?P<project_id>[0-9]+)/edit', views.projects_view.create_project, name="project_edit"),
 
     url(r'^(?P<project_id>[0-9]+)/details$', views.projects_view.project_details, name="project_details"),
+
+    url(r'^(?P<project_id>[0-9]+)/verify$', views.projects_view.verify_project, name="verify_project"),
 
     url(r'^(?P<project_id>[0-9]+)/submissions/(?P<submission_id>[0-9]+)/select', views.projects_view.select_design, name="select_design"),
 

@@ -22,6 +22,7 @@ class Project(models.Model):
     files = models.FileField(upload_to=project_directory_path, blank=True, null=True)
     cost = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_paid = models.BooleanField(default=False)
     # updated_at = models.DateTimeField(auto_now=False)
     
     # value indicating if admin has viewed this record

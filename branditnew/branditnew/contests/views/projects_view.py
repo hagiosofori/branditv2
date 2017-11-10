@@ -30,12 +30,15 @@ def index(request):
 
 
 @login_required(login_url="login")
-def create_project(request):
-    form = forms.Create_Project_Form()
+def create_project(request, project_id=None):
+    project = None
+    if project_id:
+        project = get_object_or_404(Project, pk=project_id)
+    form = forms.Create_Project_Form(instance=project)
     category_prices = Category.objects.values()
 
     if request.method == "POST":
-        form = forms.Create_Project_Form(request.POST, request.FILES)
+        form = forms.Create_Project_Form(request.POST, request.FILES, instance=project)
         if form.is_valid():
             project = form.save(commit=False)
             project.client = request.user
@@ -45,15 +48,30 @@ def create_project(request):
             project.is_draft = False
             project.save()
 
-            #hubtel payment goes here.
-            data = process_invoice(request, project)
-            return redirect(data['response_text'], data['token'])
+            return redirect(reverse('projects:verify_project', args=[project.id]))
 
     context = {
         'form':form,
         'category_prices': json.dumps(list(category_prices))
     }
     return render(request, "contests/create_project.html", context)
+
+
+
+
+#allow user to go through details of created project before proceeding to payment if they accept the details.
+def verify_project(request, project_id):
+    project = Project.objects.get(pk=project_id)
+
+    if request.method == "POST":
+        data = process_invoice(request, project)
+        return redirect(data['response_text'], data['token'])
+
+    context = {
+        'project': project,
+    }
+    return render(request, 'contests/verify_project.html', context)
+
 
 
 
@@ -80,13 +98,6 @@ def save_as_draft(request):
         draft = Project.objects.create(client=client, title=title, category=category, description=desc, end_date=end_date)
         
         return HttpResponse('success')
-
-
-def edit_project(request):
-    if request.method == 'POST':
-        return
-    
-    return 
 
 
 

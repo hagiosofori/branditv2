@@ -10,6 +10,7 @@ from .models import prices
 from .models import projects
 from .models import templates
 from .models import transactions
+from .models import print_orders
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
@@ -45,3 +46,5 @@ admin.site.register(templates.Template_Category)
 admin.site.register(transactions.Transaction)
 admin.site.register(transactions.Transaction_Type)
 admin.site.register(transactions.Transaction_Status)
+admin.site.register(print_orders.Item)
+admin.site.register(print_orders.Print_Order)

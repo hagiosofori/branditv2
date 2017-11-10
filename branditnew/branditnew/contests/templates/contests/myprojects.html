@@ -14,13 +14,14 @@
                         {% if project.is_draft is True %}
                         <span>[ Draft ]</span>
                         
-                        <a href="" class="card-link float-right" style="color:orange">Edit draft</a>
+                        <a href="{% url 'projects:project_edit' project.id %}" class="card-link float-right" style="color:orange">Edit draft</a>
                     
                     {% else %}
                         <div class="float-right">
                             <a href="{% url 'projects:project_details' project.id %}" class="card-link ">View Details</a>
-                            <a href="" class="card-link " style="color:orange">Edit</a>
+                            <!-- <a href="{% url 'projects:project_edit' project.id %}" class="card-link " style="color:orange">Edit</a> -->
                             <a href="" class="card-link " style="color:red">Delete</a>
+                            
                         </div>
                 {% endif %}
                     </h4>
@@ -29,6 +30,7 @@
             <div class="card-body" style="height:100%">
                 {{ project.description | truncatechars:100 }}...
             </div>
+            
         </div>
     </div>
 

@@ -131,7 +131,7 @@ def create_contest(request, contest_id=None):
 
             contest.save()
 
-            return redirect(reverse('contests:verify_contest', args=[contest_id]))
+            return redirect(reverse('contests:verify_contest', args=[contest.id]))
 
     prices = Price.objects.values()
     

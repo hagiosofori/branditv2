@@ -1,0 +1,62 @@
+{% extends "contests/includes/base.html" %}
+\
+{% block title %}
+Verify Project
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<h3>Please verify the project details below before checkout</h3>
+<br>
+
+<div class="col-md-6">
+    
+    <div class="card">
+        <div class="card-img-top">
+            <center>
+                {% if project.files %}
+                <img src="{{ project.files.url }}" alt="" style="width:100%; height:100%">
+                {% else %}
+                <img src="{% static 'contests/images/img-placeholder.png' %}" style="height:100%; width:100%;">
+                <div class="card-body">
+                    No image files set
+                </div>
+                {% endif %}
+            </center>
+        </div>
+    </div>
+    
+</div>
+<div class="col-md-6">
+    <table class="table table-bordered" style="font-size:200em; height:100%">
+      <tr>
+          <td><b>Title:</b></td>
+          <td><span>{{ project.title }}</span></td>
+      </tr>
+        <tr>
+          <td><b>Description:</b></td>
+          <td><span>{{ project.description }}</span></td>
+      </tr>
+      <tr>
+          <td><b>Category: </b></td>
+          <td><span>{{ project.category }}</span></td>
+      </tr>
+      <tr>
+          <td><b>Price: </b></td>
+          <td><span>{{ project.cost }}</span></td>
+      </tr>
+    </table>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <!-- make this button redirect to the edit project page -->
+            <a href="" class="btn btn-dark btn-block">Go back and edit</a>
+        </div>
+        <div class="col-md-6">
+            <input type="submit" class="btn btn-success btn-block" value="Proceed to checkout">
+        </div> 
+    </form>
+</div>
+{% endblock content %}
