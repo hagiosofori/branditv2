@@ -7,7 +7,7 @@
 
 {% block content %}
     {% load bootstrap4 %}
-    <div class=" card col-md-6 col-md-offset-3 container shadow">
+    <div class=" card container shadow">
     <br>    
     <div class="row">
     <h1 class="col-md-8">Create a Project</h1>
@@ -18,7 +18,17 @@
     </div>
         </div>
         <br>{% csrf_token %}
-    {% bootstrap_form form %}
+        <div class="col-md-6">
+            {% bootstrap_field form.title %}
+            {% bootstrap_field form.category %}
+            {% bootstrap_field form.description %}
+        </div>
+        <div class="col-md-6">
+            
+            {% bootstrap_field form.files %}
+            {% bootstrap_field form.end_date %}
+        </div>
+    
     {% buttons %}
     <br>
     <center>
@@ -35,55 +45,6 @@
     </div>
     <br>
     {% endbuttons %}
-
-
-
-      <!-- Modal -->
-      <div class="modal fade" id="verify-project"  role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"><br><br>
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="exampleModalLongTitle"><center>Verify your project details before payment</center></h3>
-              <button type="button" class="close " data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6"><h5>Title: </h5></div>
-                    <div class="col-md-6"><span id="title"></span></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6"><h5>Category: </h5></div>
-                    <div class="col-md-6"><span id="cat"></span></div>
-                </div>
-                    <div class="row">
-                        <div class="col-md-6"><h5>Description: </h5></div>
-                        <div class="col-md-6"><span id="desc"></span></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6"><h5>Files: </h5></div>
-                        <div class="col-md-6"><span id="file"></span></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6"><h5>Total Cost: </h5></div>
-                        <div class="col-md-6"><span id="cost"></span></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6"><h5>Needed by: </h5></div>
-                        <div class="col-md-6"><span id="date"></span></div>
-                    </div>
-                    
-                
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Go Back and Edit</button>
-              <input type="submit" class="btn btn-warning btn-block">
-            </div>
-          </div>
-        </div>
-      </div>
-
     </form>
 
     <script
@@ -97,27 +58,6 @@
         //replacing "&quot;" with "", to make valid json
         category_costs = JSON.parse(category_costs.replace(/&quot;/g, '"'));
 
-
-        function populate_verify_modal(){
-            
-            //fetching values from the form
-            var current_cost = $("#totalCost").text();
-            var current_title = $("#id_title").val();
-            var current_category = $("#id_category option:selected").text();
-            var current_desc = $("#id_description").val();
-            var current_end_date = $("#id_end_date").val();
-
-            //populating modal with values
-            $("#title").text(current_title);
-            $("#cat").text(current_category);
-            $("#desc").text(current_desc);
-            //$("#file").text();
-            $("#cost").text(current_cost);
-            $("#date").text(current_end_date);
-
-            //display modal
-            $("#verify-project").modal('show');
-        }
 
 
         function findCategoryPrice(category_id){

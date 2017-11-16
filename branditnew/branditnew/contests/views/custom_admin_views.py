@@ -9,6 +9,7 @@ from branditnew.contests.models import categories, contest, entries, prices, pro
 from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.forms import Make_Project_Submission_Form
 from branditnew.contests.models.print_orders import Item, Print_Order
+from branditnew.contests.models import print_orders
 
 
 def check_permissions(request):
@@ -35,9 +36,11 @@ def index(request):
         'new_projects': new_projects_list,
         'contests': contest_list,
         'old_projects': old_projects_list,
+
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
         'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
 
     }
 
@@ -59,7 +62,11 @@ def project_details(request, project_id):
 
     context = {
         'project' : project_obj,
-        'num_new_projects' : projects.get_num_new_projects(),
+
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
     }
 
     return HttpResponse(template.render(context))
@@ -94,8 +101,12 @@ def make_project_submission(request, project_id):
 
     context = {
         'project': project,
-        'num_new_projects': projects.get_num_new_projects,
         'form': form,
+
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
     }
 
     return render(request, "contests/custom_admin_make_project_submission.html", context)
@@ -115,9 +126,11 @@ def contests(request):
 
     context = {
         'contests': contest_list,
+
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
         'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
     }
 
     return HttpResponse(template.render(context))
@@ -149,6 +162,7 @@ def contest_entries_comments(request):
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
         'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
 
         'comments': comments
     }
@@ -183,6 +197,7 @@ def print_orders_list(request):
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
         'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
     }
     return render(request, "contests/custom_admin_print_orders.html", context)
 

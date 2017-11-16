@@ -27,6 +27,12 @@
             </a>
         </li>
         <li>
+            <a href="{% url 'custom_admin:print_orders' %}">
+                <i class="fa fa-print"></i>
+                <span>Print Orders {% if num_new_print_orders is not 0 %} <span class="badge">{{ num_new_print_orders }}</span>{% endif %}</span>
+            </a>
+        </li>
+        <li>
             <a href="{% url 'custom_admin:contest_entries_comments' %}">
                 <i class="fa fa-link"></i>
                 <span>Contest Entries Comments

@@ -18,6 +18,9 @@ def new(request):
     return render(request, "contests/print_orders_new.html", context)
 
 
+
+
+
 @login_required
 def create(request, item_id):
     form = Create_Print_Order_Form()
@@ -28,14 +31,16 @@ def create(request, item_id):
 
     if request.method == "POST":
         form = Create_Print_Order_Form(request.POST, request.FILES)
-        print_order = form.save(commit=False)
-        item = Item.objects.get(pk=item_id)
-        print_order.item = item
-        print_order.client = request.user
-        print_order.total_cost = item.price * print_order.quantity
-        print_order.save()
 
-        return redirect(reverse("print_orders:print_order_verify", args=[print_order.id]))
+        if form.is_valid():
+            print_order = form.save(commit=False)
+            item = Item.objects.get(pk=item_id)
+            print_order.item = item
+            print_order.client = request.user
+            print_order.cost = item.price * print_order.quantity
+            print_order.save()
+
+            return redirect(reverse("print_orders:print_order_verify", args=[print_order.id]))
 
     context = {
         'form': form,
@@ -62,18 +67,26 @@ def verify(request, print_order_id):
 
 
 
+
 def edit(request, print_order_id):
     print_order = Print_Order.objects.get(pk=print_order_id)
     form = Create_Print_Order_Form(instance=print_order)
 
     if request.method == "POST":
-        form.save()
+        form = Create_Print_Order_Form(request.POST, request.FILES)
+        
+        if form.is_valid():
+            cost = form.cleaned_data.get('')
+            form.save(commit=False)
+            print_order.cost = print_order.item.price * print_order.quantity
+            print_order.save()
 
-        return redirect(reverse("print_orders:print_order_verify", args=[print_order.id]))
+            return redirect(reverse("print_orders:print_order_verify", args=[print_order.id]))
 
 
     context = {
         'form': form,
+        'print_order':print_order,
     }
     return render(request, "contests/print_order_edit.html", context)
 
