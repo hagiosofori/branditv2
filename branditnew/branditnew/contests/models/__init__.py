@@ -8,7 +8,6 @@ from . import prices
 from . import projects
 from . import templates
 from . import print_orders
+from . import bid_points
 
 
-def touch(obj):
-    obj.is_touched = True

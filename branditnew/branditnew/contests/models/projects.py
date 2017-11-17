@@ -10,7 +10,7 @@ def project_submissions_directory_path(instance, filename):
 def project_directory_path(instance, filename):
     return 'project_{0}/{1}'.format(instance.id, filename)
 
-
+    
 
 class Project(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,0 +1,28 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+Purchase Points
+{% endblock title %}
+
+{% block content %}
+    <h3>Purchase points</h3>
+    <hr>
+    {% for points in bid_points %}
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-block">
+                <div class="card-title">
+                    <center><h4>{{ points.name }}</h4></center>
+                </div>
+                
+                <center>
+                    <span><b>GHS{{ points.price }}</b></span>
+                    <br>
+                    <a href="" class="btn btn-success">Purchase</a>
+                </center>
+            </div>
+            
+        </div>            
+    </div>
+    {% endfor %}
+{% endblock content %}

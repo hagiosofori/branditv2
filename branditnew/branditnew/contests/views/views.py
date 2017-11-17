@@ -15,7 +15,7 @@ from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
 from branditnew.contests.views.payment_views import process_invoice
-
+from branditnew.contests.models.bid_points import Bid_Point
 # Create your views here.
 
 def test(request):
@@ -101,8 +101,12 @@ def dashboard(request):
 
 
 
-# def purchase_points(request):
-    
+def purchase_points(request):
+    bid_points = Bid_Point.objects.all()
+    context = {
+        'bid_points': bid_points,
+    }
+    return render(request, 'contests/points_purchase.html',context)
 
 
 

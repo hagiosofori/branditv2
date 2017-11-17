@@ -11,6 +11,7 @@ from .models import projects
 from .models import templates
 from .models import transactions
 from .models import print_orders
+from .models import bid_points
 
 # Register your models here.
 class ProfilesAdmin(admin.ModelAdmin):
@@ -48,3 +49,4 @@ admin.site.register(transactions.Transaction_Type)
 admin.site.register(transactions.Transaction_Status)
 admin.site.register(print_orders.Item)
 admin.site.register(print_orders.Print_Order)
+admin.site.register(bid_points.Bid_Point)

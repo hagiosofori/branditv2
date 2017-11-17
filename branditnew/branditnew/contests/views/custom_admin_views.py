@@ -10,7 +10,6 @@ from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.forms import Make_Project_Submission_Form
 from branditnew.contests.models.print_orders import Item, Print_Order
 from branditnew.contests.models import print_orders
-from branditnew.contests.models import touch
 from branditnew.contests.models.transactions import Transaction
 
 def check_permissions(request):

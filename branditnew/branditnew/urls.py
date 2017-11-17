@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^contests/', include('branditnew.contests.urls')),
     url(r'^projects/', include('branditnew.contests.project_urls')),
 
+    url(r'^purchase_points/', views.purchase_points, name="purchase_points"),
+
     url(r'^print_orders/', include("branditnew.contests.print_order_urls")),
 
     #eg: brandit.express/admin
