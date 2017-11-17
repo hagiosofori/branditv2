@@ -1,0 +1,25 @@
+<div class="container ">
+    <br>
+    <h2> Welcome {{ request.user }}
+        <a class="btn btn-primary float-right" href="">Edit Profile</a>
+    </h2>
+    <hr>
+    <h4>Profile</h4>
+    <span>
+        <b>Phone Number: </b>
+        <span class="float-right">{{ request.user.profile.phone_number }}</span>
+    </span>
+    <br>
+    <hr>
+    <h4>Skills</h4>
+    <span>{{ request.user.profile.skills }}</span>
+    <br>
+    <hr>
+    <h4>Funds</h4>
+
+    <br>
+    <hr>
+    <h4>Statistics</h4>
+    <br>
+    <hr>
+</div>

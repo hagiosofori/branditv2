@@ -37,6 +37,7 @@ class Print_Order(models.Model):
 
     is_paid = models.BooleanField(default=False)
     is_touched = models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
     #created_at
 
     def __str__(self):

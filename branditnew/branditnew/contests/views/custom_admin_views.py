@@ -10,7 +10,8 @@ from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.forms import Make_Project_Submission_Form
 from branditnew.contests.models.print_orders import Item, Print_Order
 from branditnew.contests.models import print_orders
-
+from branditnew.contests.models import touch
+from branditnew.contests.models.transactions import Transaction
 
 def check_permissions(request):
     if request.user.is_superuser is False:
@@ -203,4 +204,29 @@ def print_orders_list(request):
 
 
 
+
+def print_order_details(request, print_order_id):
+    print_order = Print_Order.objects.get(pk=print_order_id)
+    touch(print_order)
+
+    context = {
+        'print_order': print_order,
+
+        'num_new_projects': projects.get_num_new_projects,
+        'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
+        'num_new_contests': contest.get_num_new_contests,
+        'num_new_print_orders': print_orders.get_num_new_print_orders,
+    }
+
+    return render(request, 'contests/custom_admin_print_order_details.html', context)
+
+
+    #TRANSACTIONS
+def transactions_list(request):
+    transactions = Transaction.objects.all()
+    context = {
+        'transactions': transactions,
+    }
+
+    return render(request, 'contests/custom_admin_transactions.html', context)
 

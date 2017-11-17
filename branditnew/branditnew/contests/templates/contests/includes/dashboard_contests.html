@@ -1,0 +1,36 @@
+<div class="container">
+    <br>
+    <h3>Contests</h3>
+    <br> {% for contest in contests %}
+    <div class="col-md-6">
+        <div class="card " style="height:17rem">
+            <div class="card-block">
+                <div class="card-title">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4>{{ contest }}</h4>
+                        </div>
+                        <div class="col-md-4 float-right">
+                            {% if contest.is_draft is True %}
+                            <a href="{%url 'contests:edit_contest' contest.id %}" style="color:orange">Edit draft</a>
+                            <a href="" style="color:red">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div>
+                    {{ contest.design_details | truncatechars:100 }}...
+                </div>
+                {% if contest.is_draft is False %}
+                <hr>
+                    <a href="{% url 'contests:contest_details' contest.id %}" class="card-link">View Details</a>
+                    <a href="{%url 'contests:edit_contest' contest.id %}" class="card-link" style="color:orange">Edit</a>
+                    <a href="#" class="card-link" style="color:red">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>

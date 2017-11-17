@@ -9,9 +9,12 @@ Print Orders
 <table class="table table-bordered">
     {% for print in new_print_orders %}
     <tr >
-        <td><h5>{{ print }}</h5></td>
+        <td><h5>
+            {{ print }} <span class="label label-warning">new</span>  {% if print.is_paid == False %}<span class="label label-danger">not paid for</span>{% else %} <span class="label label-success">paid</span> {% endif %}
+            </h5>
+        </td>
         <td>
-            <a href="" class="btn btn-primary">Details</a>
+            <a href="{% url 'custom_admin:print_order_details' print.id %}" class="btn btn-primary">Details</a>
             <a href="" class="btn btn-warning">Edit</a>
             <a href="" class="btn btn-danger">Delete</a>
         </td>
@@ -23,7 +26,7 @@ Print Orders
 <table class="table table-bordered">
     {% for print in old_print_orders %}
     <tr>
-        <td>{{ print }}</td>
+        <td>{{ print }} {% if print.is_paid == False %}<span class="label label-danger">not paid for</span>{% endif %}</td>
         <td>
             <a href="" class="btn btn-primary">Details</a>
             <a href="" class="btn btn-warning">Edit</a>
@@ -32,4 +35,5 @@ Print Orders
     </tr>
     {% endfor %}
 </table>
+
 {% endblock content %}

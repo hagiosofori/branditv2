@@ -1,0 +1,26 @@
+{% extends "contests/custom_admin_base.html" %}
+
+{% block header %}
+Transactions History
+{% endblock header %}
+
+{% block content %}
+<table class="table-bordered">
+    <tr>
+        <th>Date:</th>
+        <th>Client:</th>
+        <th>Type:</th>
+        <th>Amount:</th>
+        <th>Status:</th>
+    </tr>
+    {% for trans in transactions %}
+    <tr>
+        <td><span>{{ trans.created_at }}</span></td>
+        <td><span>{{ trans.client }}</span></td>
+        <td><span>{{ trans.type }}</span></td>
+        <td><span>{{ trans.amount }}</span></td>
+        <td><span>{{ trans.status }}</span></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

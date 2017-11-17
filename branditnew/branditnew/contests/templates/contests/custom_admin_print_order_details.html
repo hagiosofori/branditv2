@@ -1,0 +1,54 @@
+{% extends "contests/custom_admin_base.html" %}
+
+{% block header %}
+Print Order Details
+{% endblock header %}
+
+{% block content %}
+{% load static %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-img-top">
+                {% if print_order.uploaded_design %}
+                <img src="{{ print_order.uploaded_design.url }}" alt="">
+                {% else %}
+                <img src="{% static 'contests/images/img-placeholder.png' %}" alt="No image uploaded" style="height:100%; width:100%;">
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <h3>Uploaded design</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <tr>
+                <td>{% if print_order.is_paid == False %} <span class="label label-default">not yet paid</span>{% endif %}</td>
+                <td>
+                    <a href="" class="btn btn-success">Mark as Completed</a>
+                    <a href="" class="btn btn-warning">Edit</a>
+                    <a href="" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Client:</b></td>
+                <td><span>{{ print_order.client }}</span></td>
+            </tr>
+            <tr>
+                <td><b>Item:</b></td>
+                <td><span>{{ print_order.item }}</span></td>
+            </tr>
+            <tr>
+                <td><b>Quantity:</b></td>
+                <td><span>{{ print_order.quantity }}</span></td>
+            </tr>
+            <tr>
+                <td><b>Cost:</b></td> 
+                <td><span>{{ print_order.cost }}</span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

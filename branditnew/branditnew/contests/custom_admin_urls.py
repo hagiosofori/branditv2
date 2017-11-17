@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from . import views
+from .views import custom_admin_views
 
 app_name = 'custom_admin'
 
@@ -22,6 +23,5 @@ urlpatterns = [
 
     url(r'^print_orders$', views.custom_admin_views.print_orders_list, name="print_orders"),
 
-    url(r'^)
-    
+    url(r'^print_orders/(?P<print_order_id>[0-9]+)/details', custom_admin_views.print_order_details, name="print_order_details")    
 ]

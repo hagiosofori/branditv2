@@ -8,3 +8,7 @@ from . import prices
 from . import projects
 from . import templates
 from . import print_orders
+
+
+def touch(obj):
+    obj.is_touched = True

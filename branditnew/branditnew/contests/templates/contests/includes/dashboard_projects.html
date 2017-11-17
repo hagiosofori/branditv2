@@ -1,0 +1,37 @@
+<div class="container">
+    <br>
+    <h3>Projects </h3>
+    <br> {% for project in projects %}
+    <div class="col-md-6">
+        <div class="card" style="height:17rem">
+            <div class="card-block">
+                <div class="card-title">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4>{{ project }}</h4>
+                        </div>
+                        <div class="col-md-4">
+                            {% if project.is_draft is True %}
+                            <a href="" class="float-right" style="color:orange">Edit draft</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div>
+                    {{ project.description | truncatechars:100 }}...
+                </div>
+                {% if project.is_draft is False %}
+                <hr>
+                <div>
+                    <a href="#" class="card-link">View Details</a>
+                    <a href="#" class="card-link" style="color:orange">Edit</a>
+                    <a href="#" class="card-link" style="color:red">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
