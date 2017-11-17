@@ -43,6 +43,11 @@ class Print_Order(models.Model):
     def __str__(self):
         return "{0}'s print order for {2} {1}s".format(self.client, self.item, self.quantity)
 
+    
+    def touch(self):
+        is_touched = True
+    
+
 
 def get_num_new_print_orders():
     return Print_Order.objects.filter(is_touched=False).count()

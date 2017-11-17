@@ -97,6 +97,18 @@ def dashboard(request):
     return render(request, 'contests/dashboard.html', context)
 
 
+
+
+
+
+# def purchase_points(request):
+    
+
+
+
+
+
+
 @login_required(login_url="login")
 def create_contest(request):
     form = forms.CreateContestForm(initial={'would_like_to_print':True,})
@@ -124,6 +136,7 @@ def create_contest(request):
     }
 
     return render(request, "contests/create_contest.html", context)
+
 
 
 

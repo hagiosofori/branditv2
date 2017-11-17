@@ -1,13 +1,19 @@
 <div class="container">
     <br>
-    <h3>Achievements</h3>
+    <center><h3>Achievements</h3></center>
     {% for entry in accomplishments %}
     <div class="col-md-6 ">
         <div class="card shadow">
             <img src="{{ entry.files.url }}" class="img-responsive class-img-top" style="height:15rem; width:100%;">
-            <div class="card-body">
+            <div class="card-body" style="text-align:center;">
                 <b>{{ entry.title }}</b> won the
                 <b>{{ entry.contest }}</b> contest
+
+                {% comment %} 
+                get all transactions where this item is involved. if the payment hasn't been made, then this button can be displayed 
+                {% endcomment %}
+                
+                <center><a href="" class="pull-right btn btn-success">Request payment</a></center>
             </div>
         </div>
 

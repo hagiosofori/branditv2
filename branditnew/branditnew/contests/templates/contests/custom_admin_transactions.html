@@ -5,7 +5,8 @@ Transactions History
 {% endblock header %}
 
 {% block content %}
-<table class="table-bordered">
+{% load static %}
+<table class="table table-bordered" id="table">
     <tr>
         <th>Date:</th>
         <th>Client:</th>
@@ -18,9 +19,19 @@ Transactions History
         <td><span>{{ trans.created_at }}</span></td>
         <td><span>{{ trans.client }}</span></td>
         <td><span>{{ trans.type }}</span></td>
-        <td><span>{{ trans.amount }}</span></td>
+        <td><span>GHS{{ trans.amount }}</span></td>
         <td><span>{{ trans.status }}</span></td>
     </tr>
     {% endfor %}
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static 'contests/js/jspkg-archive/jquery.dynatable.js' %}">
+$(document).ready(
+    function(){
+        $("#table").dynatable(); 
+        console.log("dynatable is workingi");   
+    }
+);
+</script>
 {% endblock content %}

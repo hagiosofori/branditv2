@@ -1,9 +1,9 @@
 <div class="container">
     <br>
-    <h3>Contests</h3>
+    <center><h3>Contests</h3></center>
     <br> {% for contest in contests %}
     <div class="col-md-6">
-        <div class="card " style="height:17rem">
+        <div class="card shadow" style="height:17rem">
             <div class="card-block">
                 <div class="card-title">
                     <div class="row">
@@ -28,6 +28,9 @@
                     <a href="{%url 'contests:edit_contest' contest.id %}" class="card-link" style="color:orange">Edit</a>
                     <a href="#" class="card-link" style="color:red">Delete</a>
                 {% endif %}
+
+                <hr>
+                
             </div>
         </div>
     </div>
