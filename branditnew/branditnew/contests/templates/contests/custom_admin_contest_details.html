@@ -1,0 +1,115 @@
+{% extends "contests/custom_admin_base.html" %}
+
+{% block header %}
+{{ contest }} Contest Details
+{% endblock header %}
+
+{% block content %}
+<div class="col-md-4">
+    <div class="card ">
+        <div class="card-img-top">
+            {% if contest.logo %}
+            <img src="{{ contest.logo.url }}" alt="No image files uploaded" style="height:100%; width:100%;">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-bordered">
+    <tr>
+        <td>
+            {% if contest.is_paid_for %}
+            <span class="label label-success">paid for</span>
+            {% else %}
+            <span class="label label-danger">not paid for</span>
+            {% endif %}
+
+            {% if contest.is_draft %}
+            <span class="label label-warning">draft</span>
+            {% endif %}
+
+            {% if contest.is_verified %}
+            <span class="label label-info">is verified</span>
+            {% else %}
+            <span class="label label-danger">not verified</span>
+            {% endif %}
+        </td>
+        <td>
+            <a href="" class="btn btn-success">Verify Contest</a>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    <tr>
+        <td><b>Client</b></td>
+        <td><span>{{ contest.client }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Title</b></td>
+        <td><span>{{ contest.title }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Category</b></td>
+        <td><span>{{ contest.category }}</span></td>
+    </tr>
+    <tr>
+        <td><b>About</b></td>
+        <td><span>{{ contest.about }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Brandlancer Prize</b></td>
+        <td><span>{{ contest.prize }}</span></td>
+    </tr>
+    <tr>
+        <td><b>End Date</b></td>
+        <td><span>{{ contest.end_date }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Cost</b></td>
+        <td><span>{{ contest.cost }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Target Audience</b></td>
+        <td><span>{{ contest.target_audience }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Preferred Style</b></td>
+        <td><span>{{ contest.preferred_style }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Preferred Colors</b></td>
+        <td><span>{{ contest.preferred_colors }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Design Details</b></td>
+        <td><span>{{ contest.design_details }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Is closed</b></td>
+        <td><span>{{ contest.is_closed }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Is Sealed</b></td>
+        <td><span>{{ contest.is_sealed }}</span></td>
+    </tr>
+    <tr>
+        <td><b>NDA included</b></td>
+        <td><span>{{ contest.is_nda }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Is hidden </b></td>
+        <td><span>{{ contest.is_hidden }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Is top contest</b></td>
+        <td><span>{{ contest.is_top }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Is verified</b></td>
+        <td><span>{{ contest.is_verified }}</span></td>
+    </tr>
+
+</table>
+
+{% endblock content %}

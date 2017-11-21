@@ -10,7 +10,8 @@ from django.contrib import messages
 
 from branditnew.contests.models import forms
 from branditnew.contests.models.projects import *
-from branditnew.contests.views.payment_views import process_invoice, verify_payment
+from branditnew.contests.views.payment_views import process_invoice, verify_payment, checkout
+from branditnew.contests.models.transactions import Transaction, Transaction_Type
 
 
 
@@ -64,7 +65,12 @@ def verify_project(request, project_id):
     project = Project.objects.get(pk=project_id)
 
     if request.method == "POST":
-        data = process_invoice(request, project)
+        transaction_type = Transaction_Type.objects.get(name="project")
+        data = checkout(request, transaction_type.name, project.title, project.cost)
+        # data = process_invoice(request, project)
+        project.payment_token = data['token']
+        project.save()
+        
         return redirect(data['response_text'], data['token'])
 
     context = {

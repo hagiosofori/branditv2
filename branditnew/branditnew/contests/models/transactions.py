@@ -10,6 +10,8 @@ class Transaction_Type(models.Model):
     : contest entry submission
     : project
     : print order
+    : brandlancer points purchase
+    
     """
     name = models.CharField(max_length=100)
 

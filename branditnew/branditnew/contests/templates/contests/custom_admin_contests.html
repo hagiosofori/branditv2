@@ -1,9 +1,49 @@
 {% extends "contests/custom_admin_base.html" %}
 
 {% block header %}
-contests
+Contests [ view details to verify if payment has been made since last checked ]
 {% endblock header %}
 
 {% block content   %}
-Contests here.
+{% if new_contests %}
+<h3>New Contests</h3>
+<table class="table table-bordered">
+    {% for contest in new_contests %}
+    <tr>
+        <td>
+            {{ contest }} 
+            <span class="label label-warning pull-right">new</span>
+            
+            <span class="label pull-right {% if contest.is_paid_for %} label-success ">paid for {% else %} label-danger">not paid for {% endif %}</span>
+        </td>
+        <td>
+            <a href="" class="btn btn-info">Verify</a>
+            <a href="{% url 'custom_admin:contest_details' contest.id %}" class="btn btn-primary">Details</a>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% if old_contests %}
+<br><br>
+<table class="table table-bordered">
+    {% for contest in old_contests %}
+    <tr>
+        <td>{{ contest }}
+            <span class="label pull-right {% if contest.is_paid_for %} label-success ">paid for {% else %} label-danger">not paid for {% endif %}</span>
+        </td>
+        <td>
+            <a href="" class="btn btn-info">Verify</a>
+            <a href="" class="btn btn-primary">Details</a>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
 {% endblock content %}
