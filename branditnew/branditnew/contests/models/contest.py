@@ -23,6 +23,7 @@ class Contest(models.Model):
     is_verified = models.BooleanField(default=False)
     # whether the client has paid for the contest
     is_paid_for = models.BooleanField(default=False)
+    payment_token = models.CharField(max_length=100, blank=True, null=True)
     # category to which the contest belongs
     category = models.ForeignKey(
         'Category', on_delete=models.SET_NULL, null=True)

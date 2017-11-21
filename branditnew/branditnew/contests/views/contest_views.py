@@ -17,7 +17,8 @@ from branditnew.contests.models.entries import Entry, Entry_Comment
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
 from branditnew.contests.models.projects import *
-from branditnew.contests.views.payment_views import process_invoice
+from branditnew.contests.views.payment_views import process_invoice, checkout, verify_payment
+from branditnew.contests.models.transactions import Transaction, Transaction_Type
 
 
 # Create your views here.
@@ -154,8 +155,13 @@ def verify_contest(request, contest_id):
     if request.method == "POST":
         messages.add_message(request, messages.SUCCESS, "Successfully created contest", extra_tags='alert alert-success')
 
-        data = process_invoice(request, contest)
-        print(data)
+        # data = process_invoice(request, contest)
+        # print(data)
+
+        transaction_type = Transaction_Type.objects.get(name="contest")
+        data = checkout(request, transaction_type.name, contest.title, contest.cost)
+        contest.payment_token = data['token']
+        contest.save()
 
         return redirect(data['response_text'], data['token'])
 
@@ -163,10 +169,6 @@ def verify_contest(request, contest_id):
         'contest': contest,
     }
     return render(request, 'contests/verify_contest.html', context)
-
-
-
-
 
 
 

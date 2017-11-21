@@ -34,7 +34,7 @@ class Print_Order(models.Model):
     uploaded_design = models.FileField(upload_to=user_directory_path, blank=True, null=True)
     quantity = models.PositiveSmallIntegerField(blank=True, null=True)
     cost = models.PositiveSmallIntegerField(blank=True, null=True)
-
+    payment_token = models.CharField(max_length=100, blank=True, null=True)
     is_paid = models.BooleanField(default=False)
     is_touched = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)

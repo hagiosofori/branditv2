@@ -11,6 +11,8 @@ from branditnew.contests.models.forms import Make_Project_Submission_Form
 from branditnew.contests.models.print_orders import Item, Print_Order
 from branditnew.contests.models import print_orders
 from branditnew.contests.models.transactions import Transaction
+from branditnew.contests.views import verify_payment
+
 
 def check_permissions(request):
     if request.user.is_superuser is False:
@@ -147,6 +149,24 @@ def verify_contest(request, contest_id):
     messages.add_message(request, messages.SUCCESS, "Successfully verified contest", extra_tags='alert alert-success')
 
     return redirect(reverse( "custom_admin:contests"))
+
+
+
+
+def verify_contest_payment(request, contest_id):
+    contest = Contest.objects.get(pk-contest_id)
+    contest_token = contest.payment_token
+    transaction = Transaction.objects.get(token=contest_token)
+    is_paid = verify_payment(request, transaction)
+
+    if is_paid:
+        contest.is_paid_for = True
+        contest.save()
+        messages.add_message(request, message.SUCCESS, "Contest is paid for", extra_tags="alert alert-success")
+    else:
+        messages.add_message(request, message.ERROR, 'Contest is not paid for', extra_tags="alert alert-danger")
+    
+    return redirect(reverse("custom_admin:contests"))
 
 
 

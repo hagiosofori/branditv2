@@ -16,6 +16,7 @@ class Entry(models.Model):
     boost = models.BooleanField(default=False)
     hide = models.BooleanField(default=False)
     cost = models.DecimalField(max_digits=10000000, decimal_places=2, null=True, default=0)
+    payment_token = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     number_of_likes = models.DecimalField(max_digits=10000000, decimal_places=0, default=0)

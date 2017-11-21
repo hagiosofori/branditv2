@@ -108,40 +108,40 @@ GET /v1/merchantaccount/onlinecheckout/invoice/status/f50ce0cedd8246b6 HTTP/1.1
 sample response
 **********************
 {
-            "response_code": "00",
-            "response_text": "Transaction Found",
-            "invoice": {
-              "items": {
-                "item_0": {
-                  "name": "Polo T Shirt",
-                  "quantity": 2,
-                  "unit_price": 35,
-                  "total_price": 70,
-                  "description": "Polo T Shirt"
-                },
-                "item_1": {
-                  "name": "Regular T Shirt",
-                  "quantity": 1,
-                  "unit_price": 25,
-                  "total_price": 0,
-                  "description": ""
-                },
-                "item_5": {
-                  "name": "Regular T Shirt",
-                  "quantity": 1,
-                  "unit_price": 25,
-                  "total_price": 0,
-                  "description": ""
-                }
-              },
-              "total_amount": 120,
-              "description": "Description of the invoice here"
-            },
-            "actions": {
-              "cancel_url": "http://tshirtcompany.com",
-              "return_url": "http://tshirtcompany.com"
-            },
-            "custom_data": {},
-            "mode": "live",
-            "status": "pending"
-          }
+  "response_code": "00",
+  "response_text": "Transaction Found",
+  "invoice": {
+    "items": {
+      "item_0": {
+        "name": "Polo T Shirt",
+        "quantity": 2,
+        "unit_price": 35,
+        "total_price": 70,
+        "description": "Polo T Shirt"
+      },
+      "item_1": {
+        "name": "Regular T Shirt",
+        "quantity": 1,
+        "unit_price": 25,
+        "total_price": 0,
+        "description": ""
+      },
+      "item_5": {
+        "name": "Regular T Shirt",
+        "quantity": 1,
+        "unit_price": 25,
+        "total_price": 0,
+        "description": ""
+      }
+    },
+    "total_amount": 120,
+    "description": "Description of the invoice here"
+  },
+  "actions": {
+    "cancel_url": "http://tshirtcompany.com",
+    "return_url": "http://tshirtcompany.com"
+  },
+  "custom_data": {},
+  "mode": "live",
+  "status": "pending"
+}
