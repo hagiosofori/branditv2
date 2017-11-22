@@ -9,40 +9,40 @@ from branditnew.contests.models.transactions import Transaction, Transaction_Typ
 
 
 #method should take the ff params: item_name, item type, item cost, item description, 
-def process_invoice(request, item):
-    client_id = "cowuvotv"
-    client_secret = "qpjnqjcb"
-    hubtel_payment_url = "https://api.hubtel.com/v1/merchantaccount/onlinecheckout/invoice/create"
-    hubtel_invoice = {
-        "invoice":{
-            "total_amount": item.cost,
-            "description": "something random for now",
-        },
-        "store":{
-            "name": "Brandit",
-            "tagline": "Africa’s largest online graphic design marketplace ",
-            "phone": "+233 549 2424 05",
-            "logo_url": "https://brandit.express/images/logo.png",
-            "website_url": "https://brandit.express/dashboard.php",
-        },
-        "actions":{ #if paid, go to a view that will indicate so in the db. else that view should indicate that it's not so. then display appropriate alert in the template.
-            "cancel_url": "http://brandit.express/create_contest",
-            "return_url": "http://brandit.express/dashboard"
-        }
-    }
-    print(hubtel_invoice)
-    response = requests.post(hubtel_payment_url, json=hubtel_invoice, auth=(client_id, client_secret))
-    print('done posting the invoice')
+# def process_invoice(request, item):
+#     client_id = "cowuvotv"
+#     client_secret = "qpjnqjcb"
+#     hubtel_payment_url = "https://api.hubtel.com/v1/merchantaccount/onlinecheckout/invoice/create"
+#     hubtel_invoice = {
+#         "invoice":{
+#             "total_amount": item.cost,
+#             "description": "something random for now",
+#         },
+#         "store":{
+#             "name": "Brandit",
+#             "tagline": "Africa’s largest online graphic design marketplace ",
+#             "phone": "+233 549 2424 05",
+#             "logo_url": "https://brandit.express/images/logo.png",
+#             "website_url": "https://brandit.express/dashboard.php",
+#         },
+#         "actions":{ #if paid, go to a view that will indicate so in the db. else that view should indicate that it's not so. then display appropriate alert in the template.
+#             "cancel_url": "http://brandit.express/create_contest",
+#             "return_url": "http://brandit.express/dashboard"
+#         }
+#     }
+#     print(hubtel_invoice)
+#     response = requests.post(hubtel_payment_url, json=hubtel_invoice, auth=(client_id, client_secret))
+#     print('done posting the invoice')
     
-    data = response.json()
-    transaction = Transaction.create(request.user, 'enter type here', 'enter amount here')
-    return data
-    # verify_payment(request, response, item)
+#     data = response.json()
+#     transaction = Transaction.create(request.user, 'enter type here', 'enter amount here')
+#     return data
+#     # verify_payment(request, response, item)
 
 
 
 
-def checkout(request, transaction_type, item_name, price):
+def checkout(request, transaction_type, item_name, price, quantity=1, unit_price=None):
     #create the invoice. set return url to verify_payment
     client_id = "cowuvotv"
     client_secret = "qpjnqjcb"
@@ -52,7 +52,9 @@ def checkout(request, transaction_type, item_name, price):
             "items":{
                 "item_0":{
                    "name": item_name,
-                   "unit_price": price,
+                   "quantity": quantity,
+                   "unit_price": unit_price,
+                   "total_price": price,
                    "description": transaction_type,
                 }
             },
@@ -101,7 +103,7 @@ def verify_payment(request, trans=None):
     verify_url = "https://api.hubtel.com/v1/merchantaccount/onlinecheckout/invoice/status/"+transaction.token
     response = requests.get(verify_url, auth=(client_id, client_secret))
     data = response.json()
-    
+
     #check if payment was completed from hubtel, and update status of transaction accordingly.
     if data['status'] == "completed":
         transaction.status = Transaction_Status.objects.get(name="completed")

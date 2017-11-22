@@ -12,7 +12,7 @@ from branditnew.contests.models.print_orders import Item, Print_Order
 from branditnew.contests.models import print_orders
 from branditnew.contests.models.transactions import Transaction
 from branditnew.contests.views import verify_payment
-from branditnew.contests.custom_admin_views.custom_admin_general_views import check_permissions
+from branditnew.contests.views.custom_admin_views.custom_admin_general_views import check_permissions
 
 
 
@@ -30,7 +30,6 @@ def make_project_submission(request, project_id):
             submission = form.save(commit=False)
             submission.project = projects.Project.objects.get(pk=project_id)
             submission.save()
-            print(submission)
 
             submission.project.add_submission()
             submission.project.touch() 

@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from branditnew.contests.models.print_orders import Item, Print_Order
 from branditnew.contests.models.forms.print_order_forms import Create_Print_Order_Form
-from branditnew.contests.views.payment_views import process_invoice
-
+from branditnew.contests.views.payment_views import process_invoice, checkout
+from branditnew.contests.models.transactions import Transaction, Transaction_Type
 
 
 
@@ -55,7 +55,9 @@ def verify(request, print_order_id):
     print_order = Print_Order.objects.get(pk=print_order_id)
 
     if request.method == "POST":
-        data = process_invoice(request, print_order)
+        transaction_type = Transaction_Type.objects.get(name="project")
+        data = checkout(request, transaction_type.name, print_order.item.name, print_order.cost, print_order.quantity)
+        # data = process_invoice(request, print_order)
         return redirect(data['response_text'], data['token'])
 
     context = {

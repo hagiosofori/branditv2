@@ -1,31 +1,83 @@
 {% extends "contests/custom_admin_base.html" %}
 
 {% block header %}
-    <div class="row">
-        <div class="col-md-6">
-                {{ project }}
-        </div>        
-        <div class="col-md-4">
-                <div class=" pull-right">
-                        <a href="{% url 'custom_admin:make_project_submission' project.id %}" class="btn btn-success">Make Submission</a>
-                        <a class="btn btn-warning">Edit</a>
-                        <a class="btn btn-danger">Delete</a>
-                </div>
-        </div>
-    </div>    
-
-    
+    {{ project }} project details
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h3>Client: </h3> {{ project.client }} <br>
-    <h3>Title</h3> {{ project.title }} <br>
-    <h3>End Date:</h3> {{ project.end_date }} <br>
-    <h3>Draft:</h3> {{ project.is_draft }} <br>
-    <h3>Description:</h3> {{ project.description }} <br>
-    <h3>Category:</h3> {{ project.category }} <br>
-    <h3>Files:</h3> {{ project.files }} <br>
-    <h3>Cost:</h3> {{ project.cost }} <br>
+<table class="table table-bordered">
+    <tr>
+        <td>
+            {% if project.is_paid %}
+            <span class="label label-success">paid for</span>
+            {% else %}
+            <span class="label label-danger">not paid for</span>
+            {% endif %}
+
+            {% if project.is_draft %}
+            <span class="label label-warning">draft</span>
+            {% endif %}
+        </td>
+        <td>
+            <div class="pull-right">
+                <a href="{% url 'custom_admin:make_project_submission' project.id %}" class="btn btn-success">Make Submission</a>
+                <a  href="" class="btn btn-warning">Edit</a>
+                <a href="" class="btn btn-danger">Delete</a>
+            </div>
+            
+        </td>
+    </tr>
+    <tr>
+        <td><b>Title:</b></td>
+        <td><span>{{ project.title }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Client:</b></td>
+        <td><span>{{ project.client }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Category:</b></td>
+        <td><span>{{ project.category }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Description:</b></td>
+        <td><span>{{ project.description }}</span></td>
+    </tr>
+    <tr>
+        <td><b>Cost:</b></td>
+        <td><span>{{ project.cost }}</span></td>
+    </tr>
+    <tr>
+        <td><b>End date:</b></td>
+        <td><span>{{ project.end_date }}</span></td>
+    </tr>
+</table>
+
+<h3>Project Submissions</h3>
+<br>
+
+{% if not submissions %}
+<h5>No submissions made yet..</h5>
+
+{% else %}
+{% for sub in submissions %}
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-img-top">
+            {% if sub.submission %}
+            <img src="{{ sub.submission.url }}" alt="" style="height:100%; width:100%;">
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% if sub.is_approved %}
+            <span class="label label-success">chosen by client</span>
+            {% endif %}
+            <center>{{ sub.title }}, GHS{{ sub.price }}</center>  
+            
+        </div>
+    </div>
 </div>
+{% endfor %}
+{% endif %}
+
 {% endblock %}

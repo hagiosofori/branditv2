@@ -12,9 +12,10 @@ from branditnew.contests.models.print_orders import Item, Print_Order
 from branditnew.contests.models import print_orders
 from branditnew.contests.models.transactions import Transaction
 from branditnew.contests.views import verify_payment
+from branditnew.contests.views.custom_admin_views.custom_admin_general_views import check_permissions
 
 
-def projects(request):
+def projects_list(request):
     if check_permissions(request) is not True:
         return redirect(reverse("contests:login"))
 
@@ -64,13 +65,15 @@ def project_details(request, project_id):
     project_obj = projects.Project.objects.get(pk=project_id)
     project_obj.touch()
 
-    if project.payment_token:
+    if project_obj.payment_token:
         verify_project_payment(request, project_id)
     
     project_obj.refresh_from_db()
-
+    submissions = projects.Project_Submission.objects.filter(project=project_obj)
+    print(submissions)
     context = {
         'project' : project_obj,
+        'submissions': submissions,
 
         'num_new_projects': projects.get_num_new_projects,
         'num_new_contest_entry_comments': entries.get_num_new_contest_entry_comments,
