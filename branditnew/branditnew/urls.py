@@ -28,7 +28,12 @@ urlpatterns = [
     url(r'^contests/', include('branditnew.contests.urls')),
     url(r'^projects/', include('branditnew.contests.project_urls')),
 
-    url(r'^payments/purchase_points/', views.purchase_points, name="purchase_points"),
+    url(r'^payments/purchase_points/$', views.view_points, name="view_points"),
+    
+    url(r'^payments/purchase_points/(?P<points_id>[0-9]+)', views.purchase_points, name="purchase_points"),
+
+    url(r'^payments/purchase_points/verify_payment', views.verify_points_purchase_payment, name="purchase_points_verify_payment"),
+
     url(r'^payments/verify', views.verify_payment, name="payment_verify"),
     url(r'^print_orders/', include("branditnew.contests.print_order_urls")),
 

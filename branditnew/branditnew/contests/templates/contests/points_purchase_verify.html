@@ -1,0 +1,28 @@
+{% extends "contests/includes/base.html" %}
+
+{% block title %}
+Verify Points Purchase
+{% endblock title %}
+
+{% block content %}
+<h3>Please verify your points purchase before checkout</h3>
+<br>
+<div class="col-md-6 col-md-offset-3">
+        <table class="table table-bordered" style="height:15rem">
+            <tr>
+                <td><b>{{ points.name }}</b></td>
+                <td><span>GHS{{ points.price }}</span></td>
+            </tr>  
+        </table>
+    <div class="col-md-6">
+        <a href="{% url 'view_points' %}" class="btn btn-secondary btn-block">Go back</a>
+    </div>
+    <div class="col-md-6">
+        <form action="" method='POST'>
+            {% csrf_token %}
+            <input type="submit" value="Proceed to checkout" class="btn btn-success btn-block">
+        </form>
+        
+    </div>
+</div>
+{% endblock content %}

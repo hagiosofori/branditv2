@@ -66,11 +66,11 @@ def verify_project(request, project_id):
 
     if request.method == "POST":
         transaction_type = Transaction_Type.objects.get(name="project")
-        data = checkout(request, transaction_type.name, project.title, project.cost)
+        data = checkout(request, transaction_type.name, project.title, project.cost, project.cost)
         # data = process_invoice(request, project)
         project.payment_token = data['token']
         project.save()
-        
+
         return redirect(data['response_text'], data['token'])
 
     context = {

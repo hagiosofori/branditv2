@@ -94,12 +94,15 @@ def dashboard(request):
     contests = Contest.objects.filter(client=request.user)
     projects = Project.objects.filter(client=request.user)
     accomplishments = Entry.objects.filter(brandlancer=request.user, is_winner=True)
+    transactions = Transaction.objects.filter(client=request.user)
     context = {
         'contests': contests,
         'projects': projects,
         'accomplishments': accomplishments,
+        'transactions': transactions,
     }
     return HttpResponse(template.render(context))
+
 
 
 
@@ -121,7 +124,7 @@ def create_contest(request, contest_id=None):
     
     if request.method == 'POST':
         form = forms.CreateContestForm(request.POST, request.FILES, instance=contest)
-        print(form)
+
         if form.is_valid():
             contest = form.save(commit=False)
             contest.client = request.user
@@ -159,7 +162,7 @@ def verify_contest(request, contest_id):
         # print(data)
 
         transaction_type = Transaction_Type.objects.get(name="contest")
-        data = checkout(request, transaction_type.name, contest.title, contest.cost)
+        data = checkout(request, transaction_type.name, contest.title, contest.cost, contest.cost)
         contest.payment_token = data['token']
         contest.save()
 

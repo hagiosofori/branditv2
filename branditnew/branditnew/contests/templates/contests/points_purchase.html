@@ -12,12 +12,13 @@ Purchase Points
         <div class="card shadow">
             <div class="card-block">
                 <div class="card-title">
+                   <b><center>{{ points.name }}</center></b> 
                 </div>
                 
                 <center>
                     <span><b>GHS{{ points.price }}</b></span>
                     <br>
-                    <a href="" class="btn btn-success">Purchase</a>
+                    <a href="{% url 'purchase_points' points.id %}" class="btn btn-success">Purchase</a>
                 </center>
             </div>
             

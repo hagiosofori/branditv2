@@ -11,20 +11,24 @@ Print Order Details
         <div class="card">
             <div class="card-img-top">
                 {% if print_order.uploaded_design %}
-                <img src="{{ print_order.uploaded_design.url }}" alt="">
+                <img src="{{ print_order.uploaded_design.url }}" alt="" style="height:100%; width:100%;">
                 {% else %}
                 <img src="{% static 'contests/images/img-placeholder.png' %}" alt="No image uploaded" style="height:100%; width:100%;">
                 {% endif %}
             </div>
             <div class="card-body">
-                <h3>Uploaded design</h3>
+                <center><h3>Uploaded design</h3></center>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <table class="table table-bordered">
             <tr>
-                <td>{% if print_order.is_paid == False %} <span class="label label-default">not yet paid</span>{% endif %}</td>
+                <td>
+                    {% if not print_order.is_paid %} 
+                    <span class="label label-danger">not yet paid</span>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="" class="btn btn-success">Mark as Completed</a>
                     <a href="" class="btn btn-warning">Edit</a>

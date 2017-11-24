@@ -1,3 +1,15 @@
 <br>
 <center><h3>Transactions</h3></center>
 <br>
+{% for trans in transactions|dictsortreversed:"created_at" %}
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-body">
+            <b>Created on: </b> {{ trans.created_at }} <br><br>
+            <b>Type:</b> {{ trans.type }} <br><br>
+            <b>Amount: </b> GHS{{ trans.amount }} <br><br>
+            <b>Status: </b> {{ trans.status }}
+        </div>
+    </div>        
+</div>
+{% endfor %}

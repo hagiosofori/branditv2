@@ -9,13 +9,17 @@ from django.views.generic.list import ListView
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 
-from branditnew.contests.models import forms
+from branditnew.contests.models import forms, profiles
 from branditnew.contests.models.contest import Contest
 from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
-from branditnew.contests.views.payment_views import process_invoice
-from branditnew.contests.models.bid_points import Bid_Point
+from branditnew.contests.views.payment_views import process_invoice, checkout, verify_payment
+from branditnew.contests.models.bid_points import Bid_Point, Points_Purchase
+from branditnew.contests.models.transactions import Transaction, Transaction_Type
+
+
+
 # Create your views here.
 
 def test(request):
@@ -101,7 +105,7 @@ def dashboard(request):
 
 
 
-def purchase_points(request):
+def view_points(request):
     bid_points = Bid_Point.objects.all()
     context = {
         'bid_points': bid_points,
@@ -109,6 +113,45 @@ def purchase_points(request):
     return render(request, 'contests/points_purchase.html',context)
 
 
+
+
+def purchase_points(request, points_id):
+    points = Bid_Point.objects.get(pk=points_id)
+
+    if request.method == "POST":
+        trans_type = Transaction_Type.objects.get(name="points purchase")
+        data = checkout(request, trans_type.name, points.name, points.price, unit_price=points.price)
+        points_purchase = Points_Purchase(points=points, client=request.user, token=data['token'])
+        points_purchase.save()
+        request.session['transaction'] = data['token']
+        return redirect(data['response_text'], data['token'])
+
+
+    context = {
+        'points': points,
+    }
+    return render(request, 'contests/points_purchase_verify.html', context)
+
+
+
+
+def verify_points_purchase_payment(request):
+    is_paid = verify_payment(request)
+    
+    if is_paid:
+        points_purchase.is_paid = True
+        points_purchase.save()
+        messages.add_message(request, message.SUCCESS, "Successfully purchased points", extra_tags="alert alert-success")
+        #increase points of the user.
+        user_profile = profiles.Profile.objects.get(user=request.user)
+        current_points = user_profile.points
+        current_points += points_purchase.points.price
+        user_profile.points = current_points
+        user_profile.save()
+    else:
+        messages.add_message(request, message.ERROR, "Failed to purchase points. Transaction incomplete", extra_tags="alert alert-danger")
+
+    return redirect(reverse('dashboard'))
 
 
 

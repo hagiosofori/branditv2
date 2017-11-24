@@ -82,9 +82,9 @@ def verify_contest_payment(request, contest_id):
     if is_paid:
         contest.is_paid_for = True
         contest.save()
-        messages.add_message(request, message.SUCCESS, "Contest is paid for", extra_tags="alert alert-success")
+        messages.add_message(request, messages.SUCCESS, "Contest is paid for", extra_tags="alert alert-success")
     else:
-        messages.add_message(request, message.ERROR, 'Contest is not paid for', extra_tags="alert alert-danger")
+        messages.add_message(request, messages.ERROR, 'Contest is not paid for', extra_tags="alert alert-danger")
     
     return redirect(reverse("custom_admin:contests"))
 

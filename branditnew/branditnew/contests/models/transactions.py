@@ -11,7 +11,7 @@ class Transaction_Type(models.Model):
     : project
     : print order
     : brandlancer points purchase
-    
+
     """
     name = models.CharField(max_length=100)
 
@@ -58,6 +58,7 @@ class Transaction(models.Model):
 
         return transaction
     
+
 
     def update_status(self, new_status):
         #this should only work if the new status exists.

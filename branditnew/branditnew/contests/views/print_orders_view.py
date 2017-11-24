@@ -56,8 +56,10 @@ def verify(request, print_order_id):
 
     if request.method == "POST":
         transaction_type = Transaction_Type.objects.get(name="project")
-        data = checkout(request, transaction_type.name, print_order.item.name, print_order.cost, print_order.quantity)
+        data = checkout(request, transaction_type.name, print_order.item.name, print_order.cost, print_order.quantity, print_order.item.price)
         # data = process_invoice(request, print_order)
+        print_order.payment_token = data['token']
+        print_order.save()
         return redirect(data['response_text'], data['token'])
 
     context = {
@@ -75,11 +77,10 @@ def edit(request, print_order_id):
     form = Create_Print_Order_Form(instance=print_order)
 
     if request.method == "POST":
-        form = Create_Print_Order_Form(request.POST, request.FILES)
+        form = Create_Print_Order_Form(request.POST, request.FILES, instance=print_order)
         
         if form.is_valid():
-            cost = form.cleaned_data.get('')
-            form.save(commit=False)
+            print_order = form.save(commit=False)
             print_order.cost = print_order.item.price * print_order.quantity
             print_order.save()
 

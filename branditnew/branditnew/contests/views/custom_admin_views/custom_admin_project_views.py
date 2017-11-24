@@ -50,9 +50,9 @@ def verify_project_payment(request, project_id):
     if is_paid:
         project.is_paid = True
         project.save()
-        messages.add_mesesage(request, message.SUCCESS, 'Contest is paid for', extra_tags="alert alert-success")
+        messages.add_mesesage(request, messages.SUCCESS, 'Contest is paid for', extra_tags="alert alert-success")
     else:
-        messages.add_message(request, message.ERROR, "Contest is not paid for", extra_tags="alert alert-danger")
+        messages.add_message(request, messages.ERROR, "Contest is not paid for", extra_tags="alert alert-danger")
     
 
 
