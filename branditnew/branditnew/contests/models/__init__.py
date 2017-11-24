@@ -10,6 +10,6 @@ from . import templates
 from . import print_orders
 from . import bid_points
 from . import transactions
-
+from . import achievements
 
 

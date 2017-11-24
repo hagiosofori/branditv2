@@ -19,89 +19,89 @@ from branditnew.contests.models.categories import Category
 from branditnew.contests.models.projects import *
 from branditnew.contests.views.payment_views import process_invoice, checkout, verify_payment
 from branditnew.contests.models.transactions import Transaction, Transaction_Type
-
+from branditnew.contests.models.achievements import Achievement
 
 # Create your views here.
 
-def test(request):
-    template = loader.get_template('contests/home.html')
-    return(HttpResponse(template.render()))
+# def test(request):
+#     template = loader.get_template('contests/home.html')
+#     return(HttpResponse(template.render()))
 
 
 
-def home(request):
-    return redirect(reverse('contests:index'))
+# def home(request):
+#     return redirect(reverse('contests:index'))
 
 
 
-def index(request):
-    top_contests = Contest.objects.filter(is_top="True", is_sealed="False", is_verified="True")
-    completed_contests = Contest.objects.filter(is_closed=True)[:3]
-    template = loader.get_template('contests/home.html')
-    context = {
-        'top_contests': top_contests,
-        'closed_contests': completed_contests,
-    }
-    return HttpResponse(template.render(context))
+# def index(request):
+#     top_contests = Contest.objects.filter(is_top="True", is_sealed="False", is_verified="True")
+#     completed_contests = Contest.objects.filter(is_closed=True)[:3]
+#     template = loader.get_template('contests/home.html')
+#     context = {
+#         'top_contests': top_contests,
+#         'closed_contests': completed_contests,
+#     }
+#     return HttpResponse(template.render(context))
 
 
 
-def signup(request):
-    form = forms.SignUpForm() 
-    if request.method == 'POST':
-        form = forms.SignUpForm(request.POST)
+# def signup(request):
+#     form = forms.SignUpForm() 
+#     if request.method == 'POST':
+#         form = forms.SignUpForm(request.POST)
 
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()  # load the profile instance created by the signal
-            user.profile.birth_date = form.cleaned_data.get('birth_date')
-            user.profile.phone_number = form.cleaned_data.get('phone_number')
-            user.profile.user_name = user.username
-            raw_password = form.cleaned_data.get('password1')
-            user.save()
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return render(request, 'contests/dashboard.html')
+#         if form.is_valid():
+#             user = form.save()
+#             user.refresh_from_db()  # load the profile instance created by the signal
+#             user.profile.birth_date = form.cleaned_data.get('birth_date')
+#             user.profile.phone_number = form.cleaned_data.get('phone_number')
+#             user.profile.user_name = user.username
+#             raw_password = form.cleaned_data.get('password1')
+#             user.save()
+#             user = authenticate(username=user.username, password=raw_password)
+#             login(request, user)
+#             return render(request, 'contests/dashboard.html')
         
-    return render(request, "contests/signup.html", {'form': form})
+#     return render(request, "contests/signup.html", {'form': form})
 
 
 
-def signin(request): 
-    form = forms.SignInForm()
+# def signin(request): 
+#     form = forms.SignInForm()
 
-    if request.method == "POST":
-        form = forms.SignInForm(request.POST)
+#     if request.method == "POST":
+#         form = forms.SignInForm(request.POST)
 
-        if form.is_valid():
-            user_name = form.cleaned_data.get('username')
-            pword = form.cleaned_data.get('password')
-            user = authenticate(username=user_name, password=pword)
-            if user is not None:
-                login(request, user)
-                return redirect(reverse('contests:dashboard'))
+#         if form.is_valid():
+#             user_name = form.cleaned_data.get('username')
+#             pword = form.cleaned_data.get('password')
+#             user = authenticate(username=user_name, password=pword)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect(reverse('contests:dashboard'))
 
-    context = {
-        'form': form
-    }
-    return render(request, 'contests/login.html', context)
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'contests/login.html', context)
 
 
 
-@login_required(login_url="contests:login")
-def dashboard(request):
-    template = loader.get_template('contests/dashboard.html')
-    contests = Contest.objects.filter(client=request.user)
-    projects = Project.objects.filter(client=request.user)
-    accomplishments = Entry.objects.filter(brandlancer=request.user, is_winner=True)
-    transactions = Transaction.objects.filter(client=request.user)
-    context = {
-        'contests': contests,
-        'projects': projects,
-        'accomplishments': accomplishments,
-        'transactions': transactions,
-    }
-    return HttpResponse(template.render(context))
+# @login_required(login_url="contests:login")
+# def dashboard(request):
+#     template = loader.get_template('contests/dashboard.html')
+#     contests = Contest.objects.filter(client=request.user)
+#     projects = Project.objects.filter(client=request.user)
+#     accomplishments = Entry.objects.filter(brandlancer=request.user, is_winner=True)
+#     transactions = Transaction.objects.filter(client=request.user)
+#     context = {
+#         'contests': contests,
+#         'projects': projects,
+#         'accomplishments': accomplishments,
+#         'transactions': transactions,
+#     }
+#     return HttpResponse(template.render(context))
 
 
 
@@ -258,7 +258,6 @@ def contest_details(request, contest_id):
         'contest': contest,
         'winning_entry': winning_entry,
     }
-    print("accidentally coming here")
     return render(request, 'contests/contest_details.html', context)
 
 
@@ -280,14 +279,18 @@ def contest_list(request):
 def make_winner(request, contest_id, entry_id):
     contest = Contest.objects.get(id=contest_id)
     entry = Entry.objects.get(pk=entry_id, contest__id=contest_id)
-    current_winners = Entry.objects.get(is_winner=True, contest__id=contest_id)
-    current_winners.is_winner = False
+    # current_winners = Entry.objects.get(is_winner=True, contest__id=contest_id)
+    # current_winners.is_winner = False
     entry.is_winner = True
     contest.is_closed = True
     contest.save()
     entry.save()
-    current_winners.save()
-    return redirect(reverse('contests:contest_details', args=(contest_id)))
+    # current_winners.save()
+
+    achievement = Achievement(brandlancer=entry.brandlancer, winning_entry=entry, prize_amount=contest.prize)
+    achievement.save()
+
+    return redirect(reverse('contests:contest_details', args={contest_id}))
 
 
 

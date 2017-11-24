@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.template import loader
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from branditnew.contests.models import forms, profiles
 from branditnew.contests.models.contest import Contest
@@ -15,8 +16,10 @@ from branditnew.contests.models.entries import Entry
 from branditnew.contests.models.prices import Price
 from branditnew.contests.models.categories import Category
 from branditnew.contests.views.payment_views import process_invoice, checkout, verify_payment
+from branditnew.contests.models.projects import Project
 from branditnew.contests.models.bid_points import Bid_Point, Points_Purchase
 from branditnew.contests.models.transactions import Transaction, Transaction_Type
+from branditnew.contests.models.achievements import Achievement
 
 
 
@@ -93,12 +96,16 @@ def signin(request):
 def dashboard(request):
     template = loader.get_template('contests/dashboard.html')
     contests = Contest.objects.filter(client=request.user)
-    winning_entries = Entry.objects.filter(brandlancer=request.user)
+    projects = Project.objects.filter(client=request.user)
+    accomplishments = Achievement.objects.filter(brandlancer=request.user)
+    transactions = Transaction.objects.filter(client=request.user)
     context = {
         'contests': contests,
-        'winning_entries': winning_entries,
+        'projects': projects,
+        'accomplishments': accomplishments,
+        'transactions': transactions,
     }
-    return render(request, 'contests/dashboard.html', context)
+    return HttpResponse(template.render(context))
 
 
 
@@ -156,93 +163,118 @@ def verify_points_purchase_payment(request):
 
 
 
-@login_required(login_url="login")
-def create_contest(request):
-    form = forms.CreateContestForm(initial={'would_like_to_print':True,})
-    
-    if request.method == 'POST':
-        form = forms.CreateContestForm(request.POST, request.FILES)
+def request_winning_entry_payment(request, achievement_id):
+    achievement = Achievement.objects.get(pk=achievement_id)
+    form = forms.Request_Payment_Form(instance=achievement)
+
+    if request.method=="POST":
+        form = forms.Request_Payment_Form(request.POST, instance=achievement)
         
         if form.is_valid():
-            contest = form.save(commit=False)
-            contest.client = request.user
-            contest.cost = 300 #create a way to get this from the form
-            contest.save()
-            make_payment(request, contest)
+            achievement = form.save(commit=False)
+            achievement.requested = True
+            messages.add_message(request, messages.SUCCESS, "Successfully placed the request. Payment will be made soon", extra_tags="alert alert-success")
+            achievement.save()
             
-            #check if the payment has been made, and update db accordingly before saving.
-            
-    prices = Price.objects.values()
-    category_prices = Category.objects.values()
-    print(category_prices)
-    print(prices)
-
-    context = {
-        'form': form,
-        'prices': prices,
-    }
-
-    return render(request, "contests/create_contest.html", context)
-
-
-
-
-def submit_entry(request, contest_id):
-    form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
-
-    if request.method == "POST":
-        form = forms.ContestEntryForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            entry = form.save(commit=False)
-            current_contest = Contest.objects.get(pk=contest_id)
-            entry.contest = current_contest
-            entry.brandlancer = request.user
-            entry.save()
-            return redirect(reverse("contests:dashboard"))
-
-    prices = Price.objects.values()
-    print(prices)
+            return redirect(reverse('dashboard'))
     
     context = {
         'form': form,
-        'prices': prices,
-        'category_prices': category_prices,
+        'achievement': achievement,
     }
-    return render(request, "contests/submit_contest_entry.html", context)
+    return render(request, 'contests/payments_request.html', context)
 
 
 
-def contest_details(request, contest_id):
-    contest = get_object_or_404(Contest, pk=contest_id)
-    winning_entry = Entry.objects.get(is_winner=True)
-    context = {
-        'contest': contest,
-        'winning_entry': winning_entry,
-    }
-    return render(request, 'contests/contest_details.html', context)
 
 
-def contest_list(request):
-    contests_list = Contest.objects.all()
-    template = loader.get_template('contests/contest_list.html')
-    context = {
-        'contests_list': contests_list,
-    }
-    return HttpResponse(template.render(context))
+# @login_required(login_url="login")
+# def create_contest(request):
+#     form = forms.CreateContestForm(initial={'would_like_to_print':True,})
+    
+#     if request.method == 'POST':
+#         form = forms.CreateContestForm(request.POST, request.FILES)
+        
+#         if form.is_valid():
+#             contest = form.save(commit=False)
+#             contest.client = request.user
+#             contest.cost = 300 #create a way to get this from the form
+#             contest.save()
+#             make_payment(request, contest)
+            
+#             #check if the payment has been made, and update db accordingly before saving.
+            
+#     prices = Price.objects.values()
+#     category_prices = Category.objects.values()
+#     print(category_prices)
+#     print(prices)
+
+#     context = {
+#         'form': form,
+#         'prices': prices,
+#     }
+
+#     return render(request, "contests/create_contest.html", context)
 
 
 
-def make_winner(request, contest_id, entry_id):
-    contest = Contest.objects.get(id=contest_id)
-    entry = Entry.objects.get(pk=entry_id, contest__id=contest_id)
-    current_winners = Entry.objects.get(is_winner=True, contest__id=contest_id)
-    current_winners.is_winner = False
 
-    entry.is_winner = True
-    contest.is_closed = True
-    contest.save()
-    entry.save()
-    current_winners.save()
-    return redirect(reverse('contests:contest_details', args=(contest_id)))
+# def submit_entry(request, contest_id):
+#     form = forms.ContestEntryForm(initial={'contest': contest_id, 'brandlancer': request.user.id})
+
+#     if request.method == "POST":
+#         form = forms.ContestEntryForm(request.POST, request.FILES)
+
+#         if form.is_valid():
+#             entry = form.save(commit=False)
+#             current_contest = Contest.objects.get(pk=contest_id)
+#             entry.contest = current_contest
+#             entry.brandlancer = request.user
+#             entry.save()
+#             return redirect(reverse("contests:dashboard"))
+
+#     prices = Price.objects.values()
+#     print(prices)
+    
+#     context = {
+#         'form': form,
+#         'prices': prices,
+#         'category_prices': category_prices,
+#     }
+#     return render(request, "contests/submit_contest_entry.html", context)
+
+
+
+# def contest_details(request, contest_id):
+#     contest = get_object_or_404(Contest, pk=contest_id)
+#     winning_entry = Entry.objects.get(is_winner=True)
+#     context = {
+#         'contest': contest,
+#         'winning_entry': winning_entry,
+#     }
+#     return render(request, 'contests/contest_details.html', context)
+
+
+# def contest_list(request):
+#     contests_list = Contest.objects.all()
+#     template = loader.get_template('contests/contest_list.html')
+#     context = {
+#         'contests_list': contests_list,
+#     }
+#     return HttpResponse(template.render(context))
+
+
+
+# def make_winner(request, contest_id, entry_id):
+#     contest = Contest.objects.get(id=contest_id)
+#     entry = Entry.objects.get(pk=entry_id, contest__id=contest_id)
+#     current_winners = Entry.objects.get(is_winner=True, contest__id=contest_id)
+#     current_winners.is_winner = False
+
+#     entry.is_winner = True
+#     contest.is_closed = True
+#     contest.save()
+#     entry.save()
+#     current_winners.save()
+#     return redirect(reverse('contests:contest_details', args=(contest_id)))
 

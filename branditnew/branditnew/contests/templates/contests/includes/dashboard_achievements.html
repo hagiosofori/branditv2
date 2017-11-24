@@ -4,16 +4,32 @@
     {% for entry in accomplishments %}
     <div class="col-md-6 ">
         <div class="card shadow">
-            <img src="{{ entry.files.url }}" class="img-responsive class-img-top" style="height:15rem; width:100%;">
+            <img src="{{ entry.winning_entry.files.url }}" class="img-responsive class-img-top" style="height:15rem; width:100%;">
             <div class="card-body" style="text-align:center;">
-                <b>{{ entry.title }}</b> won the
-                <b>{{ entry.contest }}</b> contest
+                {% if not entry.is_paid %}
+                <span class="label label-warning">
+                    not yet paid
+                </span>
+                {% else %}
+                <span class="label label-success">
+                    paid
+                </span>
+                {% endif %}
 
-                {% comment %} 
-                get all transactions where this item is involved. if the payment hasn't been made, then this button can be displayed 
-                {% endcomment %}
+                <b>{{ entry.winning_entry.title }}</b> won the
+                <b>{{ entry.winning_entry.contest }}</b> contest
                 
-                <center><a href="" class="pull-right btn btn-success">Request payment</a></center>
+                <center>                        
+                {% if not entry.requested %}
+                    <b>GHS{{ entry.prize_amount }}</b> <br>
+                    <a href="{% url 'payments:request_payment' entry.id %}" class="pull-right btn btn-success">Request payment
+                    </a>
+
+                {% else %}
+                <br>
+                <span>Payment has already been requested</span>
+                </center>
+                {% endif %}
             </div>
         </div>
 

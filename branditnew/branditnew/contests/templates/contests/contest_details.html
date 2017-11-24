@@ -4,18 +4,23 @@
 {% block content %}
 {% load static %}
 <div class="card container">
+    <br>
     <div class="row">
     <div class="col-md-7">
         <div class="row container">
-        <h1><span>{{ contest }} </span></h1>
-        <br>
+        <h3>{{ contest }}</h3>
+        <br><br>
     </div>
     <span>
     <div class="row">
         <div class="col-md-3"><b>Contest Holder: <br> </b>{{ contest.client }}</div>
         <div class="col-md-3"><b>Category: <br> </b>{{ contest.category }}</div>
         <div class="col-md-3"><b>Ends on: </b> <br>  <span id="end_date">{{ contest.end_date }}</span> </div>
-        <div class="col-md-3"><a href="{% url 'contests:submit_entry' contest.id %}" class="btn btn-warning float-right">Submit an Entry</a>
+        <div class="col-md-3">
+            {% if not winning_entry %}
+            <a href="{% url 'contests:submit_entry' contest.id %}" class="btn btn-warning float-right">Submit an Entry
+            </a>
+            {% endif %}
         </div>
         
     </div>
@@ -77,7 +82,10 @@
               {% ifequal request.user contest.client %}
               
                 <a href="{% url 'contests:entry_details' contest.id entry.id %}" class="btn btn-primary btn-sm">View Details</a>
-                <a href="{% url 'contests:make_winner' contest_id=contest.id entry_id=entry.id %}" class="btn btn-sm btn-warning">Make winner</a>
+              {% if not winning_entry %}
+                <a href="{% url 'contests:make_winner' contest_id=contest.id entry_id=entry.id %}" class="btn btn-sm btn-warning">Make winner
+                </a>
+                {% endif %}
             </center>
               {% endifequal %}
               
@@ -88,7 +96,9 @@
     
     {% else %}
     <p>No entries yet. Be the first to submit an entry!</p>
+
     {% endif %}
+    
     <br>
 
     
