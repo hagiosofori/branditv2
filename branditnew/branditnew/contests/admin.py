@@ -13,6 +13,7 @@ from .models import transactions
 from .models import print_orders
 from .models import bid_points
 from .models import achievements
+from .models import payment_requests
 
 # Register your models here.
 admin.site.register(profiles.Profile)
@@ -38,3 +39,4 @@ admin.site.register(bid_points.Bid_Point)
 admin.site.register(bid_points.Points_Purchase)
 admin.site.register(achievements.Achievement)
 admin.site.register(achievements.Modes_of_Payment)
+admin.site.register(payment_requests.Payment_Request)

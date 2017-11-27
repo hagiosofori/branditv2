@@ -164,25 +164,29 @@ def verify_points_purchase_payment(request):
 
 
 def request_payment(request):
-    # achievement = Achievement.objects.get(pk=achievement_id)
-    # form = forms.Request_Payment_Form(instance=achievement)
+    form = forms.Request_Payment_Form()
 
-    # if request.method=="POST":
-        # form/ = forms.Request_Payment_Form(request.POST, instance=achievement)
+    if request.method=="POST":
+        form = forms.Request_Payment_Form(request.POST)
         
-    #     if form.is_valid():
-    #         achievement = form.save(commit=False)
-    #         achievement.requested = True
-    #         messages.add_message(request, messages.SUCCESS, "Successfully placed the request. Payment will be made soon", extra_tags="alert alert-success")
-    #         achievement.save()
+        if form.is_valid():
+            amount = form.cleaned_data['amount']
+            wallet = request.user.profile.wallet
+            if amount > wallet:
+                messages.add_message(request, messages.ERROR, "Please enter a value not exceeding the amount in your wallet", extra_tags="alert alert-danger")
+            else:
+                payment_request = form.save(commit=False)
+                messages.add_message(request, messages.SUCCESS, "Successfully placed the request. Payment will be made soon", extra_tags="alert alert-success")
+                payment_request.brandlancer = request.user
+                payment_request.save()
             
-    #         return redirect(reverse('dashboard'))
+                return reverse('dashboard')
     
-    # context = {
-    #     # 'form': form,
-    #     # 'achievement': achievement,
-    # }
-    return render(request, 'contests/payments_request.html')
+    context = {
+        'form': form,
+        'max_amount': request.user.profile.wallet,
+    }
+    return render(request, 'contests/payments_request.html', context)
 
 
 

@@ -10,7 +10,8 @@ Request payment
         <div class="card container shadow">
             <br>
             <div class="card-title">
-                
+                <h3>Request Payment</h3>
+                [ amount can't be more than GHS{{ max_amount }} ]
             </div>
             <form action="" method="POST">
                 {% csrf_token %}

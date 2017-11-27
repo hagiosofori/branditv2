@@ -6,7 +6,7 @@ from django import forms
 from ..contest import Contest
 from .. import skills
 from ..entries import Entry, Entry_Comment
-from ..achievements import Achievement
+from ..payment_requests import Payment_Request
 
 
 class SignUpForm(UserCreationForm):
@@ -139,11 +139,12 @@ class Entry_Comment_Form(forms.ModelForm):
 
 class Request_Payment_Form(forms.ModelForm):
     class Meta:
-        model = Achievement
+        model = Payment_Request
 
         fields = [
+            'amount',
             'mode_of_payment',
-            'payment_details',
+            'payment_details',            
         ]
 
         labels = {
