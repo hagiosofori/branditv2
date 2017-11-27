@@ -15,23 +15,7 @@ from .models import bid_points
 from .models import achievements
 
 # Register your models here.
-class ProfilesAdmin(admin.ModelAdmin):
-    fields = [
-        'user_name', 
-        'user_type', 
-        'phone_number', 
-        'activation_key', 
-        'is_activated', 
-        'points', 
-        'skills', 
-        'profile_image', 
-        'address', 
-        'bio', 
-        'date_of_birth', 
-        'how_found_us',
-    ]
-
-admin.site.register(profiles.Profile, ProfilesAdmin)
+admin.site.register(profiles.Profile)
 admin.site.register(skills.Skill)
 admin.site.register(user_type.User_type)
 admin.site.register(contest.Contest)

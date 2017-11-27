@@ -14,7 +14,7 @@ Transactions History
         <th>Amount:</th>
         <th>Status:</th>
     </tr>
-    {% for trans in transactions %}
+    {% for trans in transactions|dictsortreversed:"created_at" %}
     <tr>
         <td><span>{{ trans.created_at }}</span></td>
         <td><span>{{ trans.client }}</span></td>

@@ -163,26 +163,26 @@ def verify_points_purchase_payment(request):
 
 
 
-def request_winning_entry_payment(request, achievement_id):
-    achievement = Achievement.objects.get(pk=achievement_id)
-    form = forms.Request_Payment_Form(instance=achievement)
+def request_payment(request):
+    # achievement = Achievement.objects.get(pk=achievement_id)
+    # form = forms.Request_Payment_Form(instance=achievement)
 
-    if request.method=="POST":
-        form = forms.Request_Payment_Form(request.POST, instance=achievement)
+    # if request.method=="POST":
+        # form/ = forms.Request_Payment_Form(request.POST, instance=achievement)
         
-        if form.is_valid():
-            achievement = form.save(commit=False)
-            achievement.requested = True
-            messages.add_message(request, messages.SUCCESS, "Successfully placed the request. Payment will be made soon", extra_tags="alert alert-success")
-            achievement.save()
+    #     if form.is_valid():
+    #         achievement = form.save(commit=False)
+    #         achievement.requested = True
+    #         messages.add_message(request, messages.SUCCESS, "Successfully placed the request. Payment will be made soon", extra_tags="alert alert-success")
+    #         achievement.save()
             
-            return redirect(reverse('dashboard'))
+    #         return redirect(reverse('dashboard'))
     
-    context = {
-        'form': form,
-        'achievement': achievement,
-    }
-    return render(request, 'contests/payments_request.html', context)
+    # context = {
+    #     # 'form': form,
+    #     # 'achievement': achievement,
+    # }
+    return render(request, 'contests/payments_request.html')
 
 
 

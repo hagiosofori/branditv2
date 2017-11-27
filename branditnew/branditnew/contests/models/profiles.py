@@ -48,6 +48,7 @@ class Profile(models.Model):
     activation_key = models.CharField(max_length=50, null=True, blank=True)
     is_activated = models.NullBooleanField(default=False, null=True, blank=True) #value representing whether the account is activated or not
     points = models.DecimalField(max_digits=10000, decimal_places=0, null=True, blank=True)
+    wallet = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     skills = models.ForeignKey(Skills, on_delete=models.DO_NOTHING, null=True, blank=True)
     profile_image = models.FileField(upload_to='uploads/profile_images/%Y/%m/%d', null=True, blank=True)
     address = models.CharField(max_length=50, null=True, blank=True)

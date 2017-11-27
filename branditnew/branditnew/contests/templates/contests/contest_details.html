@@ -75,7 +75,7 @@
     {% for entry in contest.entry_set.all %} 
     <div class="col-md-4 ">
             <div class="card">
-            <img class="card-img-top" src="{{ entry.files.url }}" alt="{{ entry }}">
+            <img class="card-img-top" src="{{ entry.files.url }}" alt="{{ entry }}" style="height:100%; width:100%;">
             <div class="card-body">
             <center>
                 <p class="card-text">{{ entry }}, designed by @{{ entry.brandlancer }} </p>

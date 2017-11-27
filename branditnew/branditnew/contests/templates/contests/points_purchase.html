@@ -18,7 +18,7 @@ Purchase Points
                 <center>
                     <span><b>GHS{{ points.price }}</b></span>
                     <br>
-                    <a href="{% url 'purchase_points' points.id %}" class="btn btn-success">Purchase</a>
+                    <a href="{% url 'payments:purchase_points' points.id %}" class="btn btn-success">Purchase</a>
                 </center>
             </div>
             

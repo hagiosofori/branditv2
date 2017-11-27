@@ -232,7 +232,7 @@ def submit_entry(request, contest_id):
             entry.contest = current_contest
             entry.brandlancer = request.user
             entry.save()
-            return redirect(reverse("contests:dashboard"))
+            return redirect(reverse("dashboard"))
 
     prices = Price.objects.values()
     print(prices)
@@ -284,7 +284,12 @@ def make_winner(request, contest_id, entry_id):
     entry.is_winner = True
     contest.is_closed = True
     contest.save()
+    print(entry.brandlancer.profile.wallet)
+    print(contest.prize)
+    entry.brandlancer.profile.wallet += contest.prize
+    print(entry.brandlancer.profile.wallet)
     entry.save()
+    entry.brandlancer.profile.save()
     # current_winners.save()
 
     achievement = Achievement(brandlancer=entry.brandlancer, winning_entry=entry, prize_amount=contest.prize)

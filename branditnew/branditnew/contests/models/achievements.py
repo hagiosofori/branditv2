@@ -14,6 +14,8 @@ class Modes_of_Payment(models.Model):
 
 
 class Achievement(models.Model):
+    #no more need for payment-related fields. has been moved to payment_request.py
+    #mode_of_payment, is_paid, requested, payment_token
     brandlancer = models.ForeignKey(User, on_delete=models.CASCADE)
     winning_entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
     prize_amount = models.PositiveSmallIntegerField()

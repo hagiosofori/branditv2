@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="{% url 'custom_admin:transactions' %}">
                 <i class="fa fa-money"></i>
                 <span>
                     Transactions
@@ -22,6 +22,15 @@
                     <span class="badge">{{ num_new_transactions }}</span>
                     {% endif %}
                 </span> 
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <i></i>
+                <span>
+                    Payment Requests
+                    
+                </span>
             </a>
         </li>
         <li>
