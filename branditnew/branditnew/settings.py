@@ -154,7 +154,7 @@ MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 #where the user should be directed to after logging in
-LOGIN_REDIRECT_URL = '/contests/dashboard/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 LOGIN_URL = '/contests/login'
 LOGOUT_URL = 'contests/logout'

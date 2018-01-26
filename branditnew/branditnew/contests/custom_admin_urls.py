@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from . import views
-from .views.custom_admin_views import custom_admin_general_views, custom_admin_contest_views, custom_admin_general_views, custom_admin_print_order_views, custom_admin_project_views, custom_admin_project_submission_views, custom_admin_contest_entry_views, custom_admin_transaction_views
+from .views.custom_admin_views import custom_admin_general_views, custom_admin_contest_views, custom_admin_general_views, custom_admin_print_order_views, custom_admin_project_views, custom_admin_project_submission_views, custom_admin_contest_entry_views, custom_admin_transaction_views, custom_admin_payment_request_views
 
 
 
@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^print_orders/(?P<print_order_id>[0-9]+)/details', custom_admin_print_order_views.print_order_details, name="print_order_details"),
 
     url(r'^transactions/', custom_admin_transaction_views.transactions_list, name="transactions"),    
+
+    url(r'^payment_requests/',custom_admin_payment_request_views.payment_requests, name="payment_requests")
 ]

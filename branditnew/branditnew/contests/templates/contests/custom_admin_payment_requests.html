@@ -1,0 +1,66 @@
+{% extends "contests/custom_admin_base.html" %}
+
+{% block header %}
+Payment Requests
+{% endblock header %}
+
+{% block content %}
+{% if new_payment_requests %}
+<h3>New </h3>
+<table class="table table-bordered">
+    
+    <tr>
+        <th>Brandlancer</th>
+        <th>Amount</th>
+        <th>Mode of payment</th>
+        <th>Payment Details</th>
+        <th>Actions</th>
+    </tr>
+    {% for pay in new_payment_requests %}
+    <tr>
+        <td> 
+            <span class="label label-warning">new</span> 
+            {{ pay.brandlancer }}
+        </td>
+        <td>{{ pay.amount }}</td>
+        <td>{{ pay.mode_of_payment }}</td>
+        <td>{{ pay.payment_details }}</td>
+        <td>
+            <a href="" class="btn btn-success btn-sm">Mark as paid</a>
+            <a href="" class="btn btn-warning btn-sm">Edit</a>
+            <a href="" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<br><br><br>
+{% endif %}
+
+{% if old_payment_requests %}
+<table class="table table-bordered">  
+    <tr>
+        <th>Brandlancer</th>
+        <th>Amount</th>
+        <th>Mode of payment</th>
+        <th>Payment Details</th>
+        <th>Actions</th>
+    </tr>
+    {% for pay in old_payment_requests %}
+    <tr>
+        <td>  
+            {{ pay.brandlancer }}
+        </td>
+        <td>{{ pay.amount }}</td>
+        <td>{{ pay.mode_of_payment }}</td>
+        <td>{{ pay.payment_details }}</td>
+        <td>
+            <a href="" class="btn btn-success btn-sm">Mark as paid</a>
+            <a href="" class="btn btn-warning btn-sm">Edit</a>
+            <a href="" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+    
+{% endblock content %}
